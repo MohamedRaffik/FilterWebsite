@@ -1,0 +1,64 @@
+#filter-buttons div {
+    margin: 5px 5px;
+    text-align: center;
+}
+
+#filter-buttons {
+    float: left;
+    margin: 115px 35px 0px 35px;
+    width: 100px;
+}
+
+#logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.display-box {
+    float: left;
+}
+
+.display-btn button {
+    margin-left: 125px;
+}
+
+.display-img {
+    background: #45A29E;
+    border: 1.5px dashed black;
+    margin: 5px 5px;
+    max-height: 300px;
+    max-width: 300px;
+    min-height: 300px;
+    min-width: 300px;
+}
+
+.inner-text {
+    font-family: "Comic Sans MS";
+    line-height: 300px;
+    text-align: center;
+}
+
+body {
+    background: #0B0C10;
+}
+
+button {
+    background: #C5C6C7;
+    font-family: "Arial";
+}
+
+form {
+    height: 340px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    width: 800px;
+}
+
+p {
+    color: #66FCF1;
+    display: block;
+    font-family: "Arial";
+    font-size: 20px;
+}
