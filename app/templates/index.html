@@ -9,35 +9,37 @@
     <link href="../static/favicon.ico" type="image/x-icon" rel="shortcut icon">
     <link href="../static/style.css" type="text/css" rel="stylesheet">
     <script src="../static/logic.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   </head>
 
   <body>
     <header>
       <img id="logo" src="../static/logo.png" alt="FilterX Logo">
     </header>
-    <p>
-      Insert text here.
-    </p>
+    <div id="intro">
+      This website allows you to apply a filter to an image of your choice. Using this website is simple:
+      <ol id="instructions">
+        <li>Click 'Choose File' and select an image file of your choice.</li>
+        <li>Click one of the 3 filter buttons to apply that filter to your image.</li>
+        <li>That's it! Now you can download the filtered image or try another filter.</li>
+      </ol>
+    </div>
     <form action="index" method="post">
       <div class="display-box">
-        <div class="display-btn">
-          <button type="button" onclick="upload();">Upload</button>
-        </div>
+        <input type="file" onchange="upload(this);">
         <div class="display-img">
-          <div id="old-img" class="inner-text">Old image goes here.</div>
+          <img id="old-img" src="../static/placeholder.png" alt="Old image goes here.">
         </div>
       </div>
-      <div id="filter-buttons">
+      <div id="filter-btns">
         <div><button type="button" onclick="filter('black_and_white');">Black and White</button></div>
         <div><button type="button" onclick="filter('sepia');">Sepia</button></div>
         <div><button type="button" onclick="filter('casper');">Casper</button></div>
       </div>
       <div class="display-box">
+        <a href="../tmp/foo.jpg" download><button type="button">Download</button></a>
         <div class="display-img">
-          <div id="new-img" class="inner-text">New image goes here.</div>
-        </div>
-        <div class="display-btn">
-          <button type="button" onclick="download();">Download</button>
+          <img id="new-img" src="../static/placeholder.png" alt="New image goes here.">
         </div>
       </div>
     </form>

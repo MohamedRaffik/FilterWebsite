@@ -10,8 +10,17 @@ function filter(filter_type) {
     }
 }
 
-function upload() {
-    ;
+function upload(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(load_event) {
+            $('#old-img').attr('src', load_event.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+        //var old_img = document.getElementById('old-img');
+        //old_img.height = 300;
+        //old_img.width = 300;
+    }
 }
 
 function download() {

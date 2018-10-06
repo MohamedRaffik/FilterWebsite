@@ -1,12 +1,24 @@
-#filter-buttons div {
+#filter-btns div {
     margin: 5px 5px;
     text-align: center;
 }
 
-#filter-buttons {
+#filter-btns {
     float: left;
-    margin: 115px 35px 0px 35px;
+    margin: 300px 35px 0px 35px;
     width: 100px;
+}
+
+#instructions {
+    list-style-position: inside;
+}
+
+#intro {
+    color: #EDDBCD;
+    display: block;
+    font-family: "Arial";
+    font-size: 20px;
+    text-align: center;
 }
 
 #logo {
@@ -19,46 +31,26 @@
     float: left;
 }
 
-.display-btn button {
-    margin-left: 125px;
-}
-
 .display-img {
-    background: #45A29E;
-    border: 1.5px dashed black;
     margin: 5px 5px;
-    max-height: 300px;
-    max-width: 300px;
-    min-height: 300px;
-    min-width: 300px;
-}
-
-.inner-text {
-    font-family: "Comic Sans MS";
-    line-height: 300px;
-    text-align: center;
+    max-height: 600px;
+    max-width: 600px;
+    min-height: 600px;
+    min-width: 600px;
 }
 
 body {
-    background: #0B0C10;
+    background: #000000;
 }
 
 button {
-    background: #C5C6C7;
+    background: #CDCDCD;
     font-family: "Arial";
 }
 
 form {
-    height: 340px;
+    height: 640px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 30px;
-    width: 800px;
-}
-
-p {
-    color: #66FCF1;
-    display: block;
-    font-family: "Arial";
-    font-size: 20px;
+    width: 1390px;
 }
