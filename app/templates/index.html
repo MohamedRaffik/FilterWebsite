@@ -24,9 +24,10 @@
         <li>That's it! Now you can download the filtered image or try another filter.</li>
       </ol>
     </div>
-    <form action="index" method="post">
+    <div id="full-box">
       <div class="display-box">
-        <input type="file" onchange="upload(this);">
+        <p>Before</p>
+        <input type="file" accept="image/*" onchange="upload(this)">
         <div class="display-img">
           <img id="old-img" src="../static/placeholder.png" alt="Old image goes here.">
         </div>
@@ -37,11 +38,12 @@
         <div><button type="button" onclick="filter('casper');">Casper</button></div>
       </div>
       <div class="display-box">
-        <a href="../tmp/foo.jpg" download><button type="button">Download</button></a>
+        <p>After</p>
+        <button id="download-btn" type="button" onclick="download();">Download</button>
         <div class="display-img">
           <img id="new-img" src="../static/placeholder.png" alt="New image goes here.">
         </div>
       </div>
-    </form>
+    </div>
   </body>
 </html>

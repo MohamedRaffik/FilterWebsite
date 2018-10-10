@@ -5,8 +5,15 @@
 
 #filter-btns {
     float: left;
-    margin: 300px 35px 0px 35px;
+    margin: 350px 35px 0px 35px;
     width: 100px;
+}
+
+#full-box {
+    height: 740px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1390px;
 }
 
 #instructions {
@@ -14,8 +21,7 @@
 }
 
 #intro {
-    color: #EDDBCD;
-    display: block;
+    color: #4EC5C1;
     font-family: "Arial";
     font-size: 20px;
     text-align: center;
@@ -27,16 +33,28 @@
     margin-right: auto;
 }
 
+.display-box p {
+    color: #E5E338;
+    font-family: "Impact";
+    font-size: 30px;
+    text-align: center;
+}
+
 .display-box {
     float: left;
 }
 
-.display-img {
-    margin: 5px 5px;
+.display-img img {
+    height: auto;
     max-height: 600px;
     max-width: 600px;
-    min-height: 600px;
-    min-width: 600px;
+    width: auto;
+}
+
+.display-img {
+    margin: 5px 5px;
+    height: 600px;
+    width: 600px;
 }
 
 body {
@@ -46,11 +64,4 @@ body {
 button {
     background: #CDCDCD;
     font-family: "Arial";
-}
-
-form {
-    height: 640px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 1390px;
 }
