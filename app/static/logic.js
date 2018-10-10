@@ -25,15 +25,28 @@ function filter(filter_type) {
     }
     if ( !document.getElementById('old-img').src.
          endsWith('placeholder.png') ) {
-        if (filter_type == 'black_and_white') {
-            console.log('black and white filter');
-        }
-        else if (filter_type == 'sepia') {
-            console.log('sepia filter');
-        }
-        else if (filter_type == 'casper') {
-            console.log('casper filter');
-        }
+        var data = {
+            'filter': filter_type,
+            'imgString': document.getElementById('new-img').src
+        };
+        /*var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+          console.log(xhr.responseText);
+          }
+          };
+          xhr.open('POST', '/', true);
+          xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+          xhr.send('filterType=' + filter_type);*/
+        $.ajax({
+            type: 'POST',
+            url: '{{ url_for("/index") }}',
+            data: JSON.stringify(data, null, '\t'),
+            contentType: 'application/json;charset=UTF-8',
+            success: function(result) {
+                console.log(result);
+            }
+        });
     }
 }
 
