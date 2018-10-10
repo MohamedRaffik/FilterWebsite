@@ -1,16 +1,16 @@
 #filter-btns div {
-    margin: 5px 5px;
+    margin: 20px 5px;
     text-align: center;
 }
 
 #filter-btns {
     float: left;
-    margin: 350px 35px 0px 35px;
+    margin: 270px 35px 0px 35px;
     width: 100px;
 }
 
 #full-box {
-    height: 740px;
+    height: 730px;
     margin-left: auto;
     margin-right: auto;
     width: 1390px;
@@ -21,9 +21,10 @@
 }
 
 #intro {
-    color: #4EC5C1;
+    color: #FFFFFF;
     font-family: "Arial";
     font-size: 20px;
+    margin-bottom: 20px;
     text-align: center;
 }
 
@@ -33,14 +34,25 @@
     margin-right: auto;
 }
 
+#theme-btn {
+    float: right;
+}
+
 .display-box p {
-    color: #E5E338;
     font-family: "Impact";
     font-size: 30px;
+    margin-bottom: 20px;
+    margin-top: 20px;
     text-align: center;
 }
 
+.display-box p, button {
+    background: #AC2832;
+    color: #DFD297;
+}
+
 .display-box {
+    background: #696969;
     float: left;
 }
 
@@ -52,8 +64,8 @@
 }
 
 .display-img {
-    margin: 5px 5px;
     height: 600px;
+    margin: 5px 5px;
     width: 600px;
 }
 
@@ -62,6 +74,27 @@ body {
 }
 
 button {
-    background: #CDCDCD;
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 7px #696969;
+    cursor: pointer;
     font-family: "Arial";
+    font-size: 14px;
+    outline: none;
+    padding: 10px 10px;
+    width: 85px;
+}
+
+button:active {
+    box-shadow: 0 7px #696969;
+    transform: translateY(5px);
+}
+
+button:active, button:hover {
+    background: #DFD297;
+    color: #AC2832;
+}
+
+input {
+    height: 30px;
 }

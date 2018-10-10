@@ -1,12 +1,39 @@
+function change_theme() {
+    if (document.getElementById('theme-btn').textContent == 'Light Mode') {
+        // 'Dark Mode' -> 'Light Mode'
+        document.getElementById('theme-btn').textContent = 'Dark Mode';
+        document.getElementById('intro').style.color = '#000000';
+        document.body.style.background = '#F0FFFF';
+    }
+    else {
+        // 'Light Mode' -> 'Dark Mode'
+        document.getElementById('theme-btn').textContent = 'Light Mode';
+        document.getElementById('intro').style.color = '#FFFFFF';
+        document.body.style.background = '#000000';
+    }
+}
+
 function filter(filter_type) {
-    if (filter_type == 'black_and_white') {
-        ;
+    // Polyfill for String.endsWith()
+    if (!String.prototype.endsWith) {
+        String.prototype.endsWith = function(search, this_len) {
+            if (this_len === undefined || this_len > this.length) {
+                this_len = this.length;
+            }
+            return this.substring(this_len-search.length, this_len) === search;
+        };
     }
-    else if (filter_type == 'sepia') {
-        ;
-    }
-    else if (filter_type == 'casper') {
-        ;
+    if ( !document.getElementById('old-img').src.
+         endsWith('placeholder.png') ) {
+        if (filter_type == 'black_and_white') {
+            console.log('black and white filter');
+        }
+        else if (filter_type == 'sepia') {
+            console.log('sepia filter');
+        }
+        else if (filter_type == 'casper') {
+            console.log('casper filter');
+        }
     }
 }
 
@@ -24,13 +51,4 @@ function upload(input) {
         // console.log( content.substring(content.indexOf(',')+1) );
         reader.readAsDataURL(input.files[0]);
     }
-}
-
-function download() {
-    var link = document.createElement('a');
-    link.setAttribute('href', document.getElementById('new-img').src);
-    link.setAttribute('download', 'filterx-download.jpg');
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
 }
