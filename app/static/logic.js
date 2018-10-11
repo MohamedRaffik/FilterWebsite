@@ -13,7 +13,7 @@ function change_theme() {
     }
 }
 
-function filter(filter_type) {
+function filter(filter) {
     // Polyfill for String.endsWith()
     if (!String.prototype.endsWith) {
         String.prototype.endsWith = function(search, this_len) {
@@ -25,28 +25,17 @@ function filter(filter_type) {
     }
     if ( !document.getElementById('old-img').src.
          endsWith('placeholder.png') ) {
-        var data = {
-            'filter': filter_type,
-            'imgString': document.getElementById('new-img').src
-        };
-        /*var xhr = new XMLHttpRequest();
-          xhr.onreadystatechange = function() {
-          if (xhr.readyState == 4 && xhr.status == 200) {
-          console.log(xhr.responseText);
-          }
-          };
-          xhr.open('POST', '/', true);
-          xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
-          xhr.send('filterType=' + filter_type);*/
-        $.ajax({
-            type: 'POST',
-            url: '{{ url_for("/index") }}',
-            data: JSON.stringify(data, null, '\t'),
-            contentType: 'application/json;charset=UTF-8',
-            success: function(result) {
-                console.log(result);
+        var img_string = document.getElementById('new-img').src;
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.responseText);
             }
-        });
+        };
+        xhr.open('POST', '/', true);
+        xhr.setRequestHeader('content-type',
+                             'application/x-www-form-urlencoded;charset=UTF-8');
+        xhr.send('filter=' + filter + '&img_string=' + img_string);
     }
 }
 
@@ -59,9 +48,7 @@ function upload(input) {
             $('#new-img').attr('src', content);
         };
         // readAsDataURL represents the image as a base64 encoded string that
-        // starts with the regexp 'data:*/*;base64,' so may need to remove:
-        // var search_value = new RegExp('data:*/*;base64,');
-        // console.log( content.substring(content.indexOf(',')+1) );
+        // starts with the regexp 'data:*/*;base64,' so may need to remove
         reader.readAsDataURL(input.files[0]);
     }
 }
