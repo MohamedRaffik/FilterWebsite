@@ -7,9 +7,9 @@ from app import app
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        filter_type = request.form['filter']
+        filter_type = request.form['filter_type']
         if filter_type == 'black_and_white':
-            return 'filter: black_and_white'
+            return request.form['img_string']
         elif filter_type == 'sepia':
             return 'filter: sepia'
         elif filter_type == 'casper':

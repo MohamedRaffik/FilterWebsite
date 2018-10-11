@@ -13,7 +13,7 @@ function change_theme() {
     }
 }
 
-function filter(filter) {
+function filter(filter_type) {
     // Polyfill for String.endsWith()
     if (!String.prototype.endsWith) {
         String.prototype.endsWith = function(search, this_len) {
@@ -35,7 +35,9 @@ function filter(filter) {
         xhr.open('POST', '/', true);
         xhr.setRequestHeader('content-type',
                              'application/x-www-form-urlencoded;charset=UTF-8');
-        xhr.send('filter=' + filter + '&img_string=' + img_string);
+        xhr.send('filter_type=' + filter_type + '&img_string=' +
+                 encodeURIComponent(img_string) + '&t=' + new Date().getTime());
+        // Add time to keep AJAX call unique and not cached by browser
     }
 }
 
