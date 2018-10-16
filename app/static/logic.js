@@ -48,6 +48,7 @@ function upload(input) {
             var content = load_event.target.result;
             $('#old-img').attr('src', content);
             $('#new-img').attr('src', content);
+            //console.log(content)
         };
         // readAsDataURL represents the image as a base64 encoded string that
         // starts with the regexp 'data:*/*;base64,' so may need to remove
