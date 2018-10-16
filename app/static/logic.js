@@ -1,44 +1,31 @@
 function change_theme() {
-    if (document.getElementById('theme-btn').textContent == 'Light Mode') {
-        // 'Dark Mode' -> 'Light Mode'
+    var new_theme;
+    if (document.body.className == 'dark') {   // 'Dark Mode' -> 'Light Mode'
         document.getElementById('theme-btn').textContent = 'Dark Mode';
-        document.getElementById('intro').style.color = '#000000';
-        document.body.style.background = '#F0FFFF';
+        new_theme = 'light';
     }
-    else {
-        // 'Light Mode' -> 'Dark Mode'
+    else {   // 'Light Mode' -> 'Dark Mode'
         document.getElementById('theme-btn').textContent = 'Light Mode';
-        document.getElementById('intro').style.color = '#FFFFFF';
-        document.body.style.background = '#000000';
+        new_theme = 'dark';
     }
+    document.getElementById('intro').className = new_theme;
+    document.body.className = new_theme;
 }
 
 function filter(filter_type) {
-    // Polyfill for String.endsWith()
-    if (!String.prototype.endsWith) {
-        String.prototype.endsWith = function(search, this_len) {
-            if (this_len === undefined || this_len > this.length) {
-                this_len = this.length;
-            }
-            return this.substring(this_len-search.length, this_len) === search;
-        };
-    }
-    if ( !document.getElementById('old-img').src.
-         endsWith('placeholder.png') ) {
-        var img_string = document.getElementById('new-img').src;
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                console.log(xhr.responseText);
-            }
-        };
-        xhr.open('POST', '/', true);
-        xhr.setRequestHeader('content-type',
-                             'application/x-www-form-urlencoded;charset=UTF-8');
-        xhr.send('filter_type=' + filter_type + '&img_string=' +
-                 encodeURIComponent(img_string) + '&t=' + new Date().getTime());
-        // Add time to keep AJAX call unique and not cached by browser
-    }
+    var img_string = document.getElementById('new-img').src;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/', true);
+    xhr.setRequestHeader('content-type',
+                         'application/x-www-form-urlencoded;charset=UTF-8');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            document.getElementById('new-img').src = xhr.responseText;
+        }
+    };
+    // Add time to URL to keep AJAX call unique and not cached by browser
+    xhr.send('filter_type=' + filter_type + '&img_string=' +
+             encodeURIComponent(img_string) + '&t=' + new Date().getTime());
 }
 
 function upload(input) {
@@ -46,12 +33,11 @@ function upload(input) {
         var reader = new FileReader();
         reader.onload = function(load_event) {
             var content = load_event.target.result;
-            $('#old-img').attr('src', content);
-            $('#new-img').attr('src', content);
-            //console.log(content)
+            document.getElementById('old-img').src = content;
+            document.getElementById('new-img').src = content;
         };
         // readAsDataURL represents the image as a base64 encoded string that
-        // starts with the regexp 'data:*/*;base64,' so may need to remove
+        // starts with the regexp 'data:*/*;base64,'
         reader.readAsDataURL(input.files[0]);
     }
 }

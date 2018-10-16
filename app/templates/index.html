@@ -14,13 +14,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
   </head>
 
-  <body>
+  <body class="dark">
     <header>
       <img id="logo" src="../static/logo.png" alt="FilterX Logo">
       <button id="theme-btn" type="button" onclick="change_theme();">Light Mode</button>
     </header>
 
-    <div id="intro">
+    <div id="intro" class="dark">
       This website allows you to apply a filter to an image of your choice. Using this website is simple:
       <ol id="instructions">
         <li>Click 'Choose File' and select an image file of your choice.</li>
@@ -38,7 +38,7 @@
         <p>Before</p>
         <input type="file" accept="image/*" onchange="upload(this);">
         <div class="display-img">
-          <img id="old-img" src="../static/placeholder.png" alt="Old image goes here.">
+          <img id="old-img" src="../static/placeholder.jpg" alt="Old image goes here.">
         </div>
       </div>
 
@@ -52,10 +52,23 @@
         <p>After</p>
         <input type="file" style="visibility: hidden;">
         <div class="display-img">
-          <img id="new-img" src="../static/placeholder.png" alt="New image goes here.">
+          <img id="new-img" src="../static/placeholder.jpg" alt="New image goes here.">
         </div>
       </div>
       <!-- Close #full-box -->
     </div>
+
+    <script>
+     /* Set the src of #new-img to its base64 encoded string equivalent
+        (stored in placeholder.txt) after the page is done loading */
+     var xhr = new XMLHttpRequest();
+     xhr.open('GET', '../static/placeholder.txt', true);
+     xhr.onreadystatechange = function() {
+         if (xhr.readyState == 4 && xhr.status == 200) {
+             document.getElementById('new-img').src = xhr.response;
+         }
+     };
+     xhr.send();
+    </script>
   </body>
 </html>

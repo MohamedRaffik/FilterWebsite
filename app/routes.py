@@ -12,5 +12,3 @@ def index():
         new_img = filter.filter(request.form['img_string'], filter_type)
         return new_img
     return render_template('index.html')
-
-
