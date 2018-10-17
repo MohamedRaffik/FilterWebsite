@@ -1,14 +1,12 @@
 from base64 import b64encode, b64decode
-from PIL import Image
+from PIL import Image, ImageFilter
 from io import BytesIO
-from app import casper
+from app import Censor
 
 def filter(b64_img, filter_type):
-    cas_str = casper.Casper
+    censor_str = Censor.censor
     meta_data = b64_img[0 : b64_img.index(',')+1]
-    img = Image.open(
-        BytesIO( b64decode(b64_img[b64_img.index(',')+1:]) )
-    )
+    img = Image.open(BytesIO( b64decode(b64_img[b64_img.index(',')+1:])))
     width, height = img.size
 
     if filter_type == 'black_and_white':
@@ -26,12 +24,11 @@ def filter(b64_img, filter_type):
                 g = (pixel[0] * .349) + (pixel[1] * .686) + (pixel[2] * .168)
                 b = (pixel[0] * .272) + (pixel[1] * .534) + (pixel[2] * .131)
                 img.putpixel((i, j), (int(r), int(g), int(b)))
-    elif filter_type == 'casper':
-        casper_img = Image.open(
-            BytesIO( b64decode(cas_str[cas_str.index(',')+1:]) )
-        )
-        casper_img.resize((int(width/8), int(height/8)))
-        img.paste(casper_img, (int(width*7/8), int(height*7/8)))
+    elif filter_type == 'censor':
+        img = img.filter(ImageFilter.GaussianBlur(10))
+        censor_img = Image.open(BytesIO(b64decode(censor_str[censor_str.index(',')+1:])))
+        censor_img = censor_img.resize((width, int(height/5)))
+        img.paste(censor_img, (0, int(height*2/5)))
 
     buffered = BytesIO()
     # meta_data looks something like 'data:image/jpeg;base64,'

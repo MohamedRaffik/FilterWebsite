@@ -13,7 +13,7 @@ function change_theme() {
 }
 
 function filter(filter_type) {
-    var img_string = document.getElementById('new-img').src;
+    var img_string = document.getElementById('old-img').src;
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/', true);
     xhr.setRequestHeader('content-type',
