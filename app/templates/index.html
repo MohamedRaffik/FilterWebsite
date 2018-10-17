@@ -65,7 +65,7 @@
      xhr.open('GET', '../static/placeholder.txt', true);
      xhr.onreadystatechange = function() {
          if (xhr.readyState == 4 && xhr.status == 200) {
-             document.getElementById('new-img').src = xhr.response;
+             document.getElementById('old-img').src = xhr.response;
          }
      };
      xhr.send();
