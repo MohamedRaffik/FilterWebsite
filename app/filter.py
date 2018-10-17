@@ -6,7 +6,7 @@ from app import Censor
 def filter(b64_img, filter_type):
     censor_str = Censor.censor
     meta_data = b64_img[0 : b64_img.index(',')+1]
-    img = Image.open(BytesIO( b64decode(b64_img[b64_img.index(',')+1:])))
+    img = Image.open(BytesIO(b64decode(b64_img[b64_img.index(',')+1:])))
     width, height = img.size
 
     if filter_type == 'black_and_white':
@@ -32,7 +32,5 @@ def filter(b64_img, filter_type):
 
     buffered = BytesIO()
     # meta_data looks something like 'data:image/jpeg;base64,'
-    img.save(buffered, format=meta_data[
-        meta_data.index('/')+1 : meta_data.index(';')
-    ])
+    img.save(buffered, format=meta_data[meta_data.index('/')+1 : meta_data.index(';')])
     return meta_data + b64encode(buffered.getvalue()).decode('utf-8')
