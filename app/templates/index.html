@@ -50,7 +50,7 @@
 
       <div class="display-box">
         <p>After</p>
-        <input type="file" style="visibility: hidden;">
+        <div id="loading" style="visibility: hidden;"><img src="../static/load.gif" alt="Loading GIF"></div>
         <div class="display-img">
           <img id="new-img" src="../static/placeholder.jpg" alt="New image goes here.">
         </div>
@@ -59,7 +59,7 @@
     </div>
 
     <script>
-     /* Set the src of #new-img to its base64 encoded string equivalent
+     /* Set the src of #old-img to its base64 encoded string equivalent
         (stored in placeholder.txt) after the page is done loading */
      var xhr = new XMLHttpRequest();
      xhr.open('GET', '../static/placeholder.txt', true);

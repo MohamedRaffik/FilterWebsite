@@ -13,6 +13,7 @@ function change_theme() {
 }
 
 function filter(filter_type) {
+    document.getElementById('loading').style.visibility = 'visible';
     var img_string = document.getElementById('old-img').src;
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/', true);
@@ -21,6 +22,7 @@ function filter(filter_type) {
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             document.getElementById('new-img').src = xhr.responseText;
+            document.getElementById('loading').style.visibility = 'hidden';
         }
     };
     // Add time to URL to keep AJAX call unique and not cached by browser
