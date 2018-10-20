@@ -1,15 +1,8 @@
 html, body {
-    max-width: 100%;
     overflow-x: hidden;
 }
 
-#intro {
-    font-family: "Arial";
-    font-size: 1.25em;
-    text-align: left;
-    width: 100%;
-    height: 20%;
-}
+/* Themes */
 
 #intro.dark {
     color: #FFFFFF;
@@ -17,6 +10,7 @@ html, body {
 
 body.dark {
     background: #000000;
+    color: white;
 }
 
 #intro.light {
@@ -27,34 +21,72 @@ body.light {
     background: #E6E6FA;
 }
 
-#theme-btn {
+button#theme-btn {
     float: right;
+    background: #191970;
+    border-radius: 15px;
+    border: none;
+    box-shadow: 5px 5px #696969;
+    color: #FFCF40;
+    cursor: pointer;
+    font-family: "Arial";
+    font-size: 1em;
+    padding: 10px 5px;
+    width: 100px;
 }
 
-#instructions {
-    list-style-position: inside;
-    padding-left: 10%;
+/* Logo */
+
+#logo {
+    display: block;
+    flex: center;
+    margin: auto;
 }
 
-#instructions li {
+/* Introduction */
+#intro {
+    display: block;
+    flex: center;
+    font-family: "Arial";
+    font-size: 1.25em;
     text-align: left;
+    padding: 2.5% 10%;
 }
 
+/* Div for displaying original and filtered image */
 #full-box {
+    display: inline-block;
+    padding: 2.5% 2.5%;
     height: auto;
-    width: 100%;
 }
 
+/* Container to hold a <p> tag header, an file upload or loading bar, and an image*/
 .display-box {
     float: left;
     width: 45%;
+    height: auto;
 }
 
 .display-box p {
     font-family: "Impact";
-    font-size: 2em;
-    margin: 5% 0;
+    font-size: 1.5em;
+    margin: 1% auto;
     text-align: center;
+    background: #FFCF40;
+    color: #191970;
+}
+
+input#file-upload {
+    height: 22px;
+    margin: 1% 0;
+    width: 100%;
+}
+
+.display-img {
+    display: inline-block;
+    margin: 1% 0;
+    height: 100%;
+    width: 100%;
 }
 
 .display-img img {
@@ -62,63 +94,55 @@ body.light {
     width: 100%;
 }
 
-.display-img {
-    height: 100%;
-    width: 100%;
-}
-
-#loading, input {
+#loading {
+    display: inline-block;
     color: #696969;
-    height: 30px;
-    margin: 2.5% 0;
+    height: 22px;
+    width: 100%;
+    margin: 1% 0;
 }
 
+#loading img {
+    width: 100%;
+    height: 100%;
+}
+
+/* Div containing filter buttons */
 #filter-btns {
     float: left;
     width: 10%;
     margin-top: 20%;
 }
 
-#filter-btns div {
-    margin: 20% 5%;
+div#filter-btns div {
+    margin-top: center;
     text-align: center;
+    padding-left: 10%;
+    padding-right: 10%;
 }
 
-button#theme-btn {
-    float: left;
-    background: #191970;
-    border-radius: 15px;
-    border: none;
-    box-shadow: 0px 7px #696969;
-    color: #FFCF40;
-    cursor: pointer;
-    font-family: "Arial";
-    font-size: 14px;
-    outline: none;
-    padding: 10px 10px;
-    width: 100px;
-}
-
+/* Styling for buttons */
 div#filter-btns button {
     background: #191970;
     border-radius: 15px;
     border: none;
-    box-shadow: 0px 7px #696969;
+    box-shadow: 5px 5px #696969;
     color: #FFCF40;
     cursor: pointer;
     font-family: "Arial";
-    font-size: 14px;
-    outline: none;
-    padding: 10px 10px;
+    font-size: 1em;
+    padding: 10px 5px;
     width: 100%;
+    margin-bottom: 15%;
 }
 
+/* Styling for when filter buttons are clicked */
 button:active {
     box-shadow: 0px 7px #696969;
     transform: translateY(5px);
 }
 
-button:active, button:hover, .display-box p {
+button:active, button:hover {
     background: #FFCF40;
     color: #191970;
 }

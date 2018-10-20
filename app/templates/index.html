@@ -17,26 +17,25 @@
   <body class="dark">
     <header>
       <img id="logo" src="../static/logo.png" alt="FilterX Logo">
-      <button id="theme-btn" type="button" onclick="change_theme();">Light Mode</button>
     </header>
+
+    <button id="theme-btn" type="button" onclick="change_theme();">Light Mode</button>
 
     <div id="intro" class="dark">
       This website allows you to apply a filter to an image of your choice. Using this website is simple:
       <ol id="instructions">
         <li>Click 'Choose File' and select an image file of your choice.</li>
         <li>Click one of the 3 filter buttons to apply that filter to your image.</li>
-        <li>That's it! Now you can download the filtered image (by right clicking the<br>
-            image and selecting 'Save image as...') or try another filter.</li>
+        <li>That's it! Now you can download the filtered image (by right clicking the image and selecting 'Save image as...') or try another filter.</li>
       </ol>
-      <strong style="color: red;">Note:</strong> Due to EXIF flags (which vary from device to device), the uploaded image may <em>appear</em> to be rotated.<br>
-      However, downloading the filtered image will maintain the original orientation of your file.
+      <strong style="color: red;">Note:</strong> Due to EXIF flags (which vary from device to device), the uploaded image may <em>appear</em> to be rotated. However, downloading the filtered image will maintain the original orientation of your file.
     </div>
 
     <div id="full-box">
       <!-- Open #full-box -->
       <div class="display-box">
         <p>Before</p>
-        <input type="file" accept="image/*" onchange="upload(this);">
+        <input id="file-upload" type="file" accept="image/*" onchange="upload(this);">
         <div class="display-img">
           <img id="old-img" src="../static/placeholder.jpg" alt="Old image goes here.">
         </div>
