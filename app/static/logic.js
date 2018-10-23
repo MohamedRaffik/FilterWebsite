@@ -1,15 +1,10 @@
 function change_theme() {
-    var new_theme;
-    if (document.body.className == 'dark') {   // 'Dark Mode' -> 'Light Mode'
-        document.getElementById('theme-btn').textContent = 'Dark Mode';
-        new_theme = 'light';
+    if (document.body.className == 'dark') {
+        document.body.className = 'light';
     }
-    else {   // 'Light Mode' -> 'Dark Mode'
-        document.getElementById('theme-btn').textContent = 'Light Mode';
-        new_theme = 'dark';
+    else {
+        document.body.className = 'dark';
     }
-    document.getElementById('intro').className = new_theme;
-    document.body.className = new_theme;
 }
 
 function filter(filter_type) {

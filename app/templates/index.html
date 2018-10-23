@@ -19,9 +19,15 @@
       <img id="logo" src="../static/logo.png" alt="FilterX Logo">
     </header>
 
-    <button id="theme-btn" type="button" onclick="change_theme();">Light Mode</button>
+    <div id="theme-btn">
+      <span id="theme-name">Light Mode</span>
+      <label class="switch">
+        <input type="checkbox" onchange="change_theme();">
+        <span class="slider"></span>
+      </label>
+    </div>
 
-    <div id="intro" class="dark">
+    <div id="intro">
       This website allows you to apply a filter to an image of your choice. Using this website is simple:
       <ol id="instructions">
         <li>Click 'Choose File' and select an image file of your choice.</li>
@@ -49,7 +55,7 @@
 
       <div class="display-box">
         <p>After</p>
-        <div id="loading" style="visibility: hidden;"><img src="../static/load.gif" alt="Loading GIF"></div>
+        <div id="loading" style="visibility: hidden;">Loading...<img src="../static/load.gif" alt="Loading GIF"></div>
         <div class="display-img">
           <img id="new-img" src="../static/placeholder.jpg" alt="New image goes here.">
         </div>

@@ -3,44 +3,39 @@ html, body {
 }
 
 /* Themes */
-
-#intro.dark {
+body.dark {
+    background-image: url("dark_wallpaper.jpg");
     color: #FFFFFF;
 }
 
-body.dark {
-    background: #000000;
-    color: white;
-}
-
-#intro.light {
+body.light {
+    background-image: url("light_wallpaper.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
     color: #000000;
 }
 
-body.light {
-    background: #E6E6FA;
-}
-
-button#theme-btn {
-    float: right;
-    background: #191970;
-    border-radius: 15px;
-    border: none;
-    box-shadow: 5px 5px #696969;
-    color: #FFCF40;
-    cursor: pointer;
-    font-family: "Arial";
-    font-size: 1em;
-    padding: 10px 5px;
-    width: 100px;
-}
-
 /* Logo */
-
 #logo {
     display: block;
     flex: center;
     margin: auto;
+}
+
+/* Theme button */
+#theme-name {
+    font-family: "Arial Black";
+    font-size: 14px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 40px;
+}
+
+#theme-btn {
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Introduction */
@@ -49,8 +44,8 @@ button#theme-btn {
     flex: center;
     font-family: "Arial";
     font-size: 1.25em;
-    text-align: left;
     padding: 2.5% 10%;
+    text-align: left;
 }
 
 /* Div for displaying original and filtered image */
@@ -60,61 +55,58 @@ button#theme-btn {
     height: auto;
 }
 
-/* Container to hold a <p> tag header, an file upload or loading bar, and an image*/
+/* Container to hold a <p> tag header, a file upload or loading bar, and an image */
 .display-box {
+    background: #FAEBD7;
     float: left;
-    width: 45%;
     height: auto;
+    width: 45%;
 }
 
 .display-box p {
+    background: #FFCF40;
+    color: #191970;
     font-family: "Impact";
     font-size: 1.5em;
     margin: 1% auto;
     text-align: center;
-    background: #FFCF40;
-    color: #191970;
 }
 
-input#file-upload {
+#file-upload, #loading {
+    color: #000000;
+    display: inline-block;
+    margin: 1% 2%;
     height: 22px;
-    margin: 1% 0;
     width: 100%;
+}
+
+#loading img {
+    margin-left: 5%;
+    height: 50%;
+    width: 70%;
 }
 
 .display-img {
     display: inline-block;
     margin: 1% 0;
-    height: 100%;
-    width: 100%;
+    height: 90%;
+    width: 90%;
 }
 
 .display-img img {
+    margin-left: 5%;
     height: 100%;
     width: 100%;
-}
-
-#loading {
-    display: inline-block;
-    color: #696969;
-    height: 22px;
-    width: 100%;
-    margin: 1% 0;
-}
-
-#loading img {
-    width: 100%;
-    height: 100%;
 }
 
 /* Div containing filter buttons */
 #filter-btns {
     float: left;
-    width: 10%;
     margin-top: 20%;
+    width: 10%;
 }
 
-div#filter-btns div {
+#filter-btns div {
     margin-top: center;
     text-align: center;
     padding-left: 10%;
@@ -122,7 +114,7 @@ div#filter-btns div {
 }
 
 /* Styling for buttons */
-div#filter-btns button {
+button {
     background: #191970;
     border-radius: 15px;
     border: none;
@@ -131,18 +123,70 @@ div#filter-btns button {
     cursor: pointer;
     font-family: "Arial";
     font-size: 1em;
+    margin-bottom: 15%;
+    outline: none;
     padding: 10px 5px;
     width: 100%;
-    margin-bottom: 15%;
 }
 
-/* Styling for when filter buttons are clicked */
+/* Styling for when buttons are clicked */
 button:active {
-    box-shadow: 0px 7px #696969;
+    box-shadow: 5px 5px #696969;
     transform: translateY(5px);
 }
 
 button:active, button:hover {
     background: #FFCF40;
     color: #191970;
+}
+
+/* Styling for switches */
+.switch {
+    display: inline-block;
+    position: relative;
+    height: 34px;
+    width: 60px;
+}
+
+.switch input {
+    opacity: 0;
+    height: 0;
+    width: 0;
+}
+
+.slider {
+    background-color: #CCCCCC;
+    border-radius: 34px;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transition: .4s;
+}
+
+/* Styling for when switches are clicked */
+.slider:before {
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    bottom: 4px;
+    content: "";
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    height: 26px;
+    width: 26px;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
 }
