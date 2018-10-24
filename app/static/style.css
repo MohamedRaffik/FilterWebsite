@@ -4,12 +4,12 @@ html, body {
 
 /* Themes */
 body.dark {
-    background-image: url("dark_wallpaper.jpg");
+    background-image: url("./images/dark_wallpaper.jpg");
     color: #FFFFFF;
 }
 
 body.light {
-    background-image: url("light_wallpaper.jpg");
+    background-image: url("./images/light_wallpaper.jpg");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     color: #000000;
@@ -25,7 +25,7 @@ body.light {
 /* Theme button */
 #theme-name {
     font-family: "Arial Black";
-    font-size: 14px;
+    font-size: 0.9em;
     margin-left: 10px;
     margin-right: 10px;
     width: 40px;
@@ -57,14 +57,14 @@ body.light {
 
 /* Container to hold a <p> tag header, a file upload or loading bar, and an image */
 .display-box {
-    background: #FAEBD7;
+    background: #D3D3D3;
+    color: #000000;
     float: left;
     height: auto;
     width: 45%;
 }
 
 .display-box p {
-    background: #FFCF40;
     color: #191970;
     font-family: "Impact";
     font-size: 1.5em;
@@ -73,9 +73,9 @@ body.light {
 }
 
 #file-upload, #loading {
-    color: #000000;
     display: inline-block;
     margin: 1% 2%;
+    outline: none;
     height: 22px;
     width: 100%;
 }
@@ -94,9 +94,30 @@ body.light {
 }
 
 .display-img img {
-    margin-left: 5%;
+    border: 1px solid #000000;
+    margin: 3% 6%;
     height: 100%;
     width: 100%;
+}
+
+/* Styling for drag-and-drop box */
+#drop-area {
+    border-radius: 20px;
+    border: 2px dashed #191970;
+    margin: 0 5%;
+    width: 100%;
+}
+
+#drop-area img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    pointer-events: none;
+}
+
+#drop-area.highlight {
+    background: #FFCF40;
+    border-color: #191970;
 }
 
 /* Div containing filter buttons */
@@ -108,9 +129,9 @@ body.light {
 
 #filter-btns div {
     margin-top: center;
-    text-align: center;
     padding-left: 10%;
     padding-right: 10%;
+    text-align: center;
 }
 
 /* Styling for buttons */
@@ -121,12 +142,12 @@ button {
     box-shadow: 5px 5px #696969;
     color: #FFCF40;
     cursor: pointer;
-    font-family: "Arial";
+    font-family: "Times New Roman";
     font-size: 1em;
     margin-bottom: 15%;
     outline: none;
     padding: 10px 5px;
-    width: 100%;
+    width: 90%;
 }
 
 /* Styling for when buttons are clicked */
@@ -159,11 +180,11 @@ button:active, button:hover {
     border-radius: 34px;
     cursor: pointer;
     position: absolute;
+    transition: .4s;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    transition: .4s;
 }
 
 /* Styling for when switches are clicked */
