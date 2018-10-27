@@ -23,4 +23,4 @@ jobs:
           name: install dependencies
           command: |
             . venv/bin/activate
-            pip install -r --user requirements.txt
+            pip install --user -r requirements.txt
