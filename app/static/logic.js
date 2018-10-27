@@ -1,3 +1,5 @@
+var filter_buttons_active = true;
+
 function change_theme() {
     if (document.body.className == 'dark') {
         document.body.className = 'light';
@@ -8,8 +10,17 @@ function change_theme() {
 }
 
 function filter(filter_type) {
-    if (document.getElementById('new-img').className != 'default-img') {
-        document.getElementById('loading').style.visibility = 'visible';
+    if (!filter_buttons_active)
+        alert('Wait for current filter to finish processing!');
+    else if (document.getElementById('old-img').className == 'default')
+        alert('Upload an image before clicking a filter button!');
+    else if (document.getElementById('old-img').src.indexOf('.') != -1)
+        alert('Cannot filter image! Try uploading instead of drag-and-drop.');
+    else {
+        // Prevent multiple filter() calls while processing a filter
+        filter_buttons_active = false;
+        document.getElementById('socials').className = 'hide';
+        document.getElementById('loading').className = 'show';
         var waiting_song = new Audio('../static/sounds/runescape_harmony.mp3');
         waiting_song.play(); waiting_song.loop = true;
 
@@ -22,7 +33,9 @@ function filter(filter_type) {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 document.getElementById('new-img').src = xhr.responseText;
                 waiting_song.pause(); waiting_song.currentTime = 0;
-                document.getElementById('loading').style.visibility = 'hidden';
+                document.getElementById('loading').className = 'hide';
+                document.getElementById('socials').className = 'show';
+                filter_buttons_active = true;
             }
         };
         // Add time to URL to keep AJAX call unique and not cached by browser
@@ -32,37 +45,42 @@ function filter(filter_type) {
 }
 
 function update_images(b64_string) {
-    document.getElementById('drop-area').style.border = 'none';
-    document.getElementById('old-img').style.border = '1px solid #000000';
+    document.getElementById('drop-area').className = 'hide';
     document.getElementById('old-img').src = b64_string;
+    document.getElementById('old-img').className = 'not-default';
     document.getElementById('new-img').src = b64_string;
-    document.getElementById('new-img').className = 'not-default-img';
 }
 
 function upload(input) {
-    new Audio('../static/sounds/camera_sound.mp3').play();
     if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function(load_event) {
-            var b64_string = load_event.target.result;
-            update_images(b64_string);
-        };
-        // readAsDataURL represents the image as a base64 encoded string that
-        // starts with the regexp 'data:*/*;base64,'
-        reader.readAsDataURL(input.files[0]);
-    }
-    else {   // input is an image from another website being drag-and-dropped
-        var html_string = input.getData('text/html');
-        // html_string has the following substring: src="..." where ... is the
-        // base64 encoded string that starts with the regexp 'data:*/*;base64,'
-        var b64_string = html_string.substring(html_string.indexOf('src="')+5,
-                                               html_string.length-2);
-        if (b64_string.search('https://encrypted') == -1) {
-            update_images(b64_string);
-        }
+        // input is a FileList object obtained from file item (upload or drop)
+        if (input.files[0].type.search('image') == -1)
+            alert('Only image files can be uploaded! Try again.');
         else {
-            console.log(html_string);
-            alert('404 Not Found Error! Try again.');
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                var b64_string = event.target.result;
+                new Audio('../static/sounds/camera_sound.mp3').play();
+                update_images(b64_string);
+            };
+            // readAsDataURL represents the image as a base64 encoded string
+            // that starts with the regexp 'data:*/*;base64,'
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    else {
+        // input is a DataTransfer object obtained from remote item (drop)
+        var html_string = input.getData('text/html');
+        // html_string has the following substring: src="<b64_string>"
+        if (html_string == '' || html_string.indexOf('src="') == -1)
+            alert('Dropped item is not a valid image! Try again.');
+        else {
+            var start_pos = html_string.indexOf('src="')+5;
+            var b64_string = html_string.substring(
+                start_pos, html_string.indexOf('"', start_pos)
+            );
+            new Audio('../static/sounds/camera_sound.mp3').play();
+            update_images(b64_string);
         }
     }
 }

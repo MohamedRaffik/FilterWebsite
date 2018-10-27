@@ -72,7 +72,7 @@ body.light {
     text-align: center;
 }
 
-#file-upload, #loading {
+#file-upload, #loading.show, #socials.show {
     display: inline-block;
     margin: 1% 2%;
     outline: none;
@@ -80,10 +80,22 @@ body.light {
     width: 100%;
 }
 
+#loading.hide, #socials.hide {
+    display: none;
+}
+
 #loading img {
     margin-left: 5%;
     height: 50%;
     width: 70%;
+}
+
+#old-img.default {
+    border: none;
+}
+
+#old-img.not-default, #new-img {
+    border: 1px solid #000000;
 }
 
 .display-img {
@@ -94,18 +106,30 @@ body.light {
 }
 
 .display-img img {
-    border: 1px solid #000000;
     margin: 3% 6%;
+    user-select: none;
     height: 100%;
     width: 100%;
 }
 
 /* Styling for drag-and-drop box */
 #drop-area {
-    border-radius: 20px;
-    border: 2px dashed #191970;
     margin: 0 5%;
     width: 100%;
+}
+
+#drop-area.show {
+    border-radius: 20px;
+    border: 2px dashed #191970;
+}
+
+#drop-area.highlight {
+    background: #FFCF40;
+    border-color: #191970;
+}
+
+#drop-area.hide {
+    border: none;
 }
 
 #drop-area img {
@@ -113,11 +137,6 @@ body.light {
     margin-left: auto;
     margin-right: auto;
     pointer-events: none;
-}
-
-#drop-area.highlight {
-    background: #FFCF40;
-    border-color: #191970;
 }
 
 /* Div containing filter buttons */
