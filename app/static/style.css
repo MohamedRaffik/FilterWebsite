@@ -53,6 +53,7 @@ body.light {
     display: inline-block;
     padding: 2.5% 2.5%;
     height: auto;
+    width: 95%;
 }
 
 /* Container to hold a <p> tag header, a file upload or loading bar, and an image */
@@ -60,7 +61,7 @@ body.light {
     background: #D3D3D3;
     color: #000000;
     float: left;
-    height: auto;
+    height: 100%;
     width: 45%;
 }
 
@@ -74,10 +75,11 @@ body.light {
 
 #file-upload, #loading.show, #socials.show {
     display: inline-block;
-    margin: 1% 2%;
+    padding-left: 5%;
+    margin: 1% auto;
     outline: none;
     height: 22px;
-    width: 100%;
+    width: auto;
 }
 
 #loading.hide, #socials.hide {
@@ -99,25 +101,19 @@ body.light {
 }
 
 .display-img {
-    display: inline-block;
-    margin: 1% 0;
+		margin: 2.5% auto;
     height: 90%;
-    width: 90%;
+    width: 95%;
 }
 
 .display-img img {
-    margin: 3% 6%;
+    margin: 2.5% none;
     user-select: none;
     height: 100%;
     width: 100%;
 }
 
 /* Styling for drag-and-drop box */
-#drop-area {
-    margin: 0 5%;
-    width: 100%;
-}
-
 #drop-area.show {
     border-radius: 20px;
     border: 2px dashed #191970;
@@ -129,28 +125,28 @@ body.light {
 }
 
 #drop-area.hide {
-    border: none;
+    display: inline;
 }
 
 #drop-area img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    pointer-events: none;
+		pointer-events: none;
 }
 
 /* Div containing filter buttons */
 #filter-btns {
     float: left;
-    margin-top: 20%;
-    width: 10%;
+    height: auto;
+		width: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 10%;
+    padding-top: 10%;
 }
 
 #filter-btns div {
-    margin-top: center;
     padding-left: 10%;
     padding-right: 10%;
-    text-align: center;
 }
 
 /* Styling for buttons */
