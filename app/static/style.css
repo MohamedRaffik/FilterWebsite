@@ -226,3 +226,10 @@ input:focus + .slider {
 input:checked + .slider:before {
     transform: translateX(26px);
 }
+
+
+/* FACEBOOK STUFF */
+#socials {
+    height: 100px;
+    width: 100px;
+}
