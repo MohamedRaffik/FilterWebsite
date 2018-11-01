@@ -18,24 +18,14 @@ def filter(b64_img, filter_type):
     width, height = img.size
 
     if filter_type == 'black_and_white':
-        for i in range(width):
-            for j in range(height):
-                pixel = img.getpixel((i, j))
-                r, g, b = pixel[0], pixel[1], pixel[2]
-                avg = int((r + g + b) / 3)
-                img.putpixel((i, j), (avg, avg, avg))
+        img = img.convert("L")
+           
     elif filter_type == 'sepia':
         sepia = make_linear_ramp()
         img = img.convert("L")
         img.putpalette(sepia)
         img = img.convert("RGB")
-        '''for i in range(width):
-            for j in range(height):
-                pixel = img.getpixel((i, j))
-                r = (pixel[0] * .393) + (pixel[1] * .769) + (pixel[2] * .11)
-                g = (pixel[0] * .349) + (pixel[1] * .686) + (pixel[2] * .168)
-                b = (pixel[0] * .272) + (pixel[1] * .534) + (pixel[2] * .131)
-                img.putpixel((i, j), (int(r), int(g), int(b)))'''
+   
     elif filter_type == 'censor':
         img = img.filter(ImageFilter.GaussianBlur(10))
         censor_img = Image.open(BytesIO(b64decode(censor_str[censor_str.index(',')+1:])))
