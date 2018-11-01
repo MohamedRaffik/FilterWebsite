@@ -64,7 +64,12 @@
     <div id="intro">
       This website allows you to apply a filter to an image of your choice. Using this website is simple:
       <ol id="instructions">
-        <li>Click 'Choose File' and select an image file of your choice (or drag and drop an image into the box).</li>
+        <li>Upload an image by:</li>
+        <ul>
+          <li>Click 'Choose File' and select an image file of your choice</li>
+          <li>Drag and drop an image into the image area of the 'Before' box</li>
+          <li>Enter the image URL into the text field (next to file upload) and click 'Submit'</li>
+        </ul>
         <li>Click one of the 3 filter buttons to apply that filter to your image.</li>
         <li>That's it! Now you can download the filtered image (by right clicking the image and selecting 'Save image as...') or try another filter. You can also upload a new image to filter by following step 1.</li>
       </ol>
@@ -75,7 +80,11 @@
       <!-- Open #full-box -->
       <div class="display-box">
         <p>Before</p>
-        <input id="file-upload" type="file" accept="image/*" onchange="upload(this);">
+        <div id="upload-options">
+          <input id="file-upload" type="file" accept="image/*" onchange="upload(this);">
+          <input id="url-input" type="text">
+          <button id="url-submit" type="button" onclick=";">Submit</button>
+        </div>
         <div class="display-img">
           <div id="drop-area" class="show"><img id="old-img" class="default" src="../static/images/drag_and_drop.png" alt="Old image goes here."></div>
         </div>

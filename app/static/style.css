@@ -73,13 +73,21 @@ body.light {
     text-align: center;
 }
 
-#file-upload, #loading.show, #socials.show {
+#upload-options, #loading.show, #socials.show {
     display: inline-block;
     padding-left: 5%;
     margin: 1% auto;
     outline: none;
     height: 22px;
     width: auto;
+}
+
+#url-input {
+    ;
+}
+
+#url-submit {
+    ;
 }
 
 #loading.hide, #socials.hide {
@@ -101,7 +109,7 @@ body.light {
 }
 
 .display-img {
-		margin: 2.5% auto;
+    margin: 2.5% auto;
     height: 90%;
     width: 95%;
 }
@@ -129,14 +137,14 @@ body.light {
 }
 
 #drop-area img {
-		pointer-events: none;
+    pointer-events: none;
 }
 
 /* Div containing filter buttons */
 #filter-btns {
     float: left;
     height: auto;
-		width: 10%;
+    width: 10%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -149,8 +157,8 @@ body.light {
     padding-right: 10%;
 }
 
-/* Styling for buttons */
-button {
+/* Styling for filter buttons */
+#filter-btns button {
     background: #191970;
     border-radius: 15px;
     border: none;
@@ -159,19 +167,20 @@ button {
     cursor: pointer;
     font-family: "Times New Roman";
     font-size: 1em;
+    font-size: 1vw;
     margin-bottom: 15%;
     outline: none;
     padding: 10px 5px;
     width: 90%;
 }
 
-/* Styling for when buttons are clicked */
-button:active {
+/* Styling for when filter buttons are clicked */
+#filter-btns button:active {
     box-shadow: 5px 5px #696969;
     transform: translateY(5px);
 }
 
-button:active, button:hover {
+#filter-btns button:active, #filter-btns button:hover {
     background: #FFCF40;
     color: #191970;
 }
