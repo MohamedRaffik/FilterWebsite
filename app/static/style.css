@@ -15,6 +15,16 @@ body.light {
     color: #000000;
 }
 
+body.dark .display-box {
+    background: #D3D3D3;
+    color: #000000;
+}
+
+body.light .display-box {
+    background: #FFF5EE;
+    color: #000000;
+}
+
 /* Logo */
 #logo {
     display: block;
@@ -58,8 +68,6 @@ body.light {
 
 /* Container to hold a <p> tag header, a file upload or loading bar, and an image */
 .display-box {
-    background: #D3D3D3;
-    color: #000000;
     float: left;
     height: 100%;
     width: 45%;
@@ -75,19 +83,23 @@ body.light {
 
 #upload-options, #loading.show, #socials.show {
     display: inline-block;
-    padding-left: 5%;
-    margin: 1% auto;
+    margin: 2% auto;
     outline: none;
-    height: 22px;
+    padding-left: 5%;
+    height: 30px;
     width: auto;
 }
 
-#url-input {
-    ;
+#url-upload {
+    display: inline-block;
+}
+
+#url-input:invalid {
+    outline: 1px solid #FF0000;
 }
 
 #url-submit {
-    ;
+    margin-right: 3px;
 }
 
 #loading.hide, #socials.hide {
@@ -142,14 +154,14 @@ body.light {
 
 /* Div containing filter buttons */
 #filter-btns {
-    float: left;
-    height: auto;
-    width: 10%;
     display: flex;
     flex-direction: column;
+    float: left;
     justify-content: space-between;
     padding-bottom: 10%;
     padding-top: 10%;
+    height: auto;
+    width: 10%;
 }
 
 #filter-btns div {
@@ -235,7 +247,6 @@ input:focus + .slider {
 input:checked + .slider:before {
     transform: translateX(26px);
 }
-
 
 /* FACEBOOK STUFF */
 #socials {

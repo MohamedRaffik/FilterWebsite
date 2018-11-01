@@ -15,14 +15,14 @@ function filter(filter_type) {
     else if (document.getElementById('old-img').className == 'default')
         alert('Upload an image before clicking a filter button!');
     else if (document.getElementById('old-img').src.indexOf('.') != -1)
-        alert('Cannot filter image! Try uploading instead of drag-and-drop.');
+        alert('Cannot filter image! Try URL upload instead of drag-and-drop.');
     else {
         // Prevent multiple filter() calls while processing a filter
         filter_buttons_active = false;
         document.getElementById('socials').className = 'hide';
         document.getElementById('loading').className = 'show';
         var waiting_song = new Audio('../static/sounds/runescape_harmony.mp3');
-        waiting_song.play(); waiting_song.loop = true;
+        waiting_song.volume = 0.5; waiting_song.play(); waiting_song.loop = true;
 
         var img_string = document.getElementById('old-img').src;
         var xhr = new XMLHttpRequest();
@@ -49,6 +49,15 @@ function update_images(b64_string) {
     document.getElementById('old-img').src = b64_string;
     document.getElementById('old-img').className = 'not-default';
     document.getElementById('new-img').src = b64_string;
+}
+
+function url_upload() {
+    var url = document.getElementById('url-input').value;
+    if (url == '')
+        alert('URL cannot be empty! Try again.');
+    else {
+        console.log(url);
+    }
 }
 
 function upload(input) {
