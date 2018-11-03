@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
     <title>FilterX</title>
+    <script>
+     // Change the version number after making changes
+     window.version_number = '2.1';
+    </script>
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="pragma" content="no-cache">
     <link href="../static/images/favicon.ico" type="image/x-icon" rel="shortcut icon">
-    <link href="../static/style.css" type="text/css" rel="stylesheet">
-    <script src="../static/logic.js" type="text/javascript"></script>
-    <script src="../static/socials.js" type="text/javascript"></script>
+    <!-- If you add more custom CSS or JS here, give them class="css" or class="js", respectively -->
+    <link class="css" href="../static/style.css?version=" type="text/css" rel="stylesheet">
+    <script class="js" src="../static/logic.js?version=" type="text/javascript"></script>
+    <script class="js" src="../static/socials.js?version=" type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
   </head>
 
@@ -77,5 +85,20 @@
       </div>
       <!-- Close #full-box -->
     </div>
+
+    <footer>
+      <img src="../static/images/favicon.ico" alt="FilterX Icon" style="margin-right: 10px; height: 25px; width: 25px;">
+      <pre>© 2018 FilterX, Inc. If you have any questions or concerns, contact us at <a href="mailto:filterx.website@gmail.com">filterx.website@gmail.com</a></pre>
+    </footer>
+
+    <script>
+     // Cache-busting code
+     var css_links = document.getElementsByClassName('css');
+     var js_scripts = document.getElementsByClassName('js');
+     for (var i = 0; i < css_links.length; ++i)
+         css_links[i].href += window.version_number;
+     for (var i = 0; i < js_scripts.length; ++i)
+         js_scripts[i].src += window.version_number;
+    </script>
   </body>
 </html>

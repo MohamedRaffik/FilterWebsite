@@ -1,5 +1,5 @@
 html, body {
-    overflow-x: hidden;
+    min-width: 715px;
 }
 
 /* Themes */
@@ -21,8 +21,12 @@ body.dark .display-box {
 }
 
 body.light .display-box {
-    background: #FFF5EE;
+    background: #FAEBD7;
     color: #000000;
+}
+
+body.dark footer {
+    background: #000000;
 }
 
 /* Logo */
@@ -100,6 +104,12 @@ body.light .display-box {
 
 #url-submit {
     margin-right: 3px;
+}
+
+#socials {
+    /* FACEBOOK STUFF */
+    height: 100px;
+    width: 100px;
 }
 
 #loading.hide, #socials.hide {
@@ -248,8 +258,23 @@ input:checked + .slider:before {
     transform: translateX(26px);
 }
 
-/* FACEBOOK STUFF */
-#socials {
-    height: 100px;
-    width: 100px;
+/* Trademark and other stuff at bottom of page */
+footer {
+    padding: 1%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer pre {
+    font-family: "Times New Roman";
+    font-size: 1em;
+}
+
+footer a {
+    color: #FFCF40;
+}
+
+footer a:hover {
+    color: #0000FF;
 }
