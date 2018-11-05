@@ -15,14 +15,14 @@ function filter(filter_type) {
     else if (document.getElementById('old-img').className == 'default')
         alert('Upload an image before clicking a filter button!');
     else if (document.getElementById('old-img').src.indexOf('.') != -1)
-        alert('Cannot filter image! Try URL upload instead of drag-and-drop.');
+        alert('Cannot filter image! Try another upload method.');
     else {
         // Prevent multiple filter() calls while processing a filter
         filter_buttons_active = false;
         document.getElementById('socials').className = 'hide';
         document.getElementById('loading').className = 'show';
-        var waiting_song = new Audio('../static/sounds/runescape_harmony.mp3');
-        waiting_song.volume = 0.5; waiting_song.play(); waiting_song.loop = true;
+        var wait_song = new Audio('../static/sounds/runescape_harmony.mp3');
+        wait_song.volume = 0.25; wait_song.play(); wait_song.loop = true;
 
         var img_string = document.getElementById('old-img').src;
         var xhr = new XMLHttpRequest();
@@ -31,8 +31,8 @@ function filter(filter_type) {
                              'application/x-www-form-urlencoded;charset=UTF-8');
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
+                wait_song.pause();
                 document.getElementById('new-img').src = xhr.responseText;
-                waiting_song.pause(); waiting_song.currentTime = 0;
                 document.getElementById('loading').className = 'hide';
                 document.getElementById('socials').className = 'show';
                 filter_buttons_active = true;
@@ -49,28 +49,29 @@ function update_images(b64_string) {
     document.getElementById('old-img').src = b64_string;
     document.getElementById('old-img').className = 'not-default';
     document.getElementById('new-img').src = b64_string;
+    document.getElementById('new-img').className = 'not-default';
 }
 
-function url_upload() {
-    var url = document.getElementById('url-input').value;
-    if (url == '')
-        alert('URL cannot be empty! Try again.');
+function url_upload(url) {
+    if (url.indexOf('://') == -1)
+        alert('Invalid image URL! Try again.');
     else {
         console.log(url);
     }
 }
 
 function upload(input) {
-    if (input.files && input.files[0]) {
+    if (!input)
+        alert('Unable to upload item! Try another upload method.');
+    else if (input.files && input.files[0]) {
         // input is a FileList object obtained from file item (upload or drop)
-        if (input.files[0].type.search('image') == -1)
+        if (input.files[0].type.indexOf('image') == -1)
             alert('Only image files can be uploaded! Try again.');
         else {
             var reader = new FileReader();
             reader.onload = function(event) {
-                var b64_string = event.target.result;
                 new Audio('../static/sounds/camera_sound.mp3').play();
-                update_images(b64_string);
+                update_images(event.target.result);
             };
             // readAsDataURL represents the image as a base64 encoded string
             // that starts with the regexp 'data:*/*;base64,'
@@ -81,7 +82,7 @@ function upload(input) {
         // input is a DataTransfer object obtained from remote item (drop)
         var html_string = input.getData('text/html');
         // html_string has the following substring: src="<b64_string>"
-        if (html_string == '' || html_string.indexOf('src="') == -1)
+        if (!html_string || html_string.indexOf('src="') == -1)
             alert('Dropped item is not a valid image! Try again.');
         else {
             var start_pos = html_string.indexOf('src="')+5;
@@ -114,13 +115,13 @@ window.onload = function() {
     }
 
     drop_area.addEventListener('drop', handle_drop, false);
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(event => {
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(function(event) {
         drop_area.addEventListener(event, prevent_default, false);
     });
-    ['dragenter', 'dragover'].forEach(event => {
+    ['dragenter', 'dragover'].forEach(function(event) {
         drop_area.addEventListener(event, highlight, false);
     });
-    ['dragleave', 'drop'].forEach(event => {
+    ['dragleave', 'drop'].forEach(function(event) {
         drop_area.addEventListener(event, unhighlight, false);
     });
 }

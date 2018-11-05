@@ -2,19 +2,15 @@
 <html>
   <head>
     <title>FilterX</title>
-    <script>
-     // Change the version number after making changes
-     window.version_number = '2.1';
-    </script>
     <meta charset="UTF-8">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0">
     <meta http-equiv="pragma" content="no-cache">
     <link href="../static/images/favicon.ico" type="image/x-icon" rel="shortcut icon">
-    <!-- If you add more custom CSS or JS here, give them class="css" or class="js", respectively -->
-    <link class="css" href="../static/style.css?version=" type="text/css" rel="stylesheet">
-    <script class="js" src="../static/logic.js?version=" type="text/javascript"></script>
-    <script class="js" src="../static/socials.js?version=" type="text/javascript"></script>
+    <!-- IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
+    <link href="../static/style.css?version=2.0" type="text/css" rel="stylesheet">
+    <script src="../static/logic.js?version=2.0" type="text/javascript"></script>
+    <script src="../static/socials.js?version=1.0" type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
   </head>
 
@@ -32,7 +28,7 @@
     </div>
 
     <div id="intro">
-      This website allows you to apply a filter to an image of your choice. Using this website is simple:
+      This website allows you to apply a filter to an image of your choice.<a href="#footer-note" title="See note at bottom of page" style="color: red; text-decoration: none;">***</a> Using this website is simple:
       <ol id="instructions">
         <li>Upload an image (in one of the following ways):</li>
         <ul>
@@ -54,7 +50,7 @@
           <input id="file-upload" type="file" accept="image/*" onchange="upload(this);">
           <div id="url-upload">
             <input id="url-input" type="url" size="30" placeholder="http://www.example.com">
-            <button id="url-submit" type="button" onclick="url_upload();">Submit</button>
+            <button id="url-submit" type="button" onclick="url_upload(document.getElementById('url-input').value);">Submit</button>
           </div>
         </div>
         <div class="display-img">
@@ -80,25 +76,15 @@
         </div>
         <div id="loading" class="hide">Loading...<img src="../static/images/load.gif" alt="Loading GIF"></div>
         <div class="display-img">
-          <img id="new-img" src="../static/images/placeholder.jpg" alt="New image goes here.">
+          <img id="new-img" class="default" src="../static/images/placeholder.jpg" alt="New image goes here.">
         </div>
       </div>
       <!-- Close #full-box -->
     </div>
 
     <footer>
-      <img src="../static/images/favicon.ico" alt="FilterX Icon" style="margin-right: 10px; height: 25px; width: 25px;">
-      <pre>© 2018 FilterX, Inc. If you have any questions or concerns, contact us at <a href="mailto:filterx.website@gmail.com">filterx.website@gmail.com</a></pre>
+      <img src="../static/images/favicon.ico" alt="FilterX Icon" style="margin-right: 10px; pointer-events: none; height: 25px; width: 25px;">
+      <span>© 2018 FilterX, Inc. If you have any questions or concerns, contact us at <a href="mailto:filterx.website@gmail.com">filterx.website@gmail.com</a><br><strong id="footer-note" style="color: red;">***</strong>This website was designed specifically for desktop browsers, so it may not function properly on other devices.</span>
     </footer>
-
-    <script>
-     // Cache-busting code
-     var css_links = document.getElementsByClassName('css');
-     var js_scripts = document.getElementsByClassName('js');
-     for (var i = 0; i < css_links.length; ++i)
-         css_links[i].href += window.version_number;
-     for (var i = 0; i < js_scripts.length; ++i)
-         js_scripts[i].src += window.version_number;
-    </script>
   </body>
 </html>

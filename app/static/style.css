@@ -34,6 +34,7 @@ body.dark footer {
     display: block;
     flex: center;
     margin: auto;
+    pointer-events: none;
 }
 
 /* Theme button */
@@ -118,12 +119,17 @@ body.dark footer {
 
 #loading img {
     margin-left: 5%;
+    pointer-events: none;
     height: 50%;
     width: 70%;
 }
 
 #old-img.default {
     border: none;
+}
+
+#old-img.default, #new-img.default {
+    pointer-events: none;
 }
 
 #old-img.not-default, #new-img {
@@ -146,7 +152,7 @@ body.dark footer {
 /* Styling for drag-and-drop box */
 #drop-area.show {
     border-radius: 20px;
-    border: 2px dashed #191970;
+    border: 2px dashed #000000;
 }
 
 #drop-area.highlight {
@@ -155,11 +161,7 @@ body.dark footer {
 }
 
 #drop-area.hide {
-    display: inline;
-}
-
-#drop-area img {
-    pointer-events: none;
+    /* Don't need to do anything */
 }
 
 /* Div containing filter buttons */
@@ -266,9 +268,10 @@ footer {
     justify-content: center;
 }
 
-footer pre {
+footer span {
     font-family: "Times New Roman";
     font-size: 1em;
+    text-align: center;
 }
 
 footer a {
