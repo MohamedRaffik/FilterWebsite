@@ -45,6 +45,8 @@ function filter(filter_type) {
 }
 
 function update_images(b64_string) {
+    var click_sound = new Audio('../static/sounds/camera_sound.mp3');
+    click_sound.volume = 0.5; click_sound.play();
     document.getElementById('drop-area').className = 'hide';
     document.getElementById('old-img').src = b64_string;
     document.getElementById('old-img').className = 'not-default';
@@ -53,7 +55,8 @@ function update_images(b64_string) {
 }
 
 function url_upload(url) {
-    if (url.indexOf('://') == -1)
+    var pattern = new RegExp('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$');
+    if (!pattern.test(url))
         alert('Invalid image URL! Try again.');
     else {
         console.log(url);
@@ -70,7 +73,6 @@ function upload(input) {
         else {
             var reader = new FileReader();
             reader.onload = function(event) {
-                new Audio('../static/sounds/camera_sound.mp3').play();
                 update_images(event.target.result);
             };
             // readAsDataURL represents the image as a base64 encoded string
@@ -81,16 +83,20 @@ function upload(input) {
     else {
         // input is a DataTransfer object obtained from remote item (drop)
         var html_string = input.getData('text/html');
-        // html_string has the following substring: src="<b64_string>"
+        // html_string has the following substring: src="src_string"
+        // where src_string is possibly a base64 encoded string
         if (!html_string || html_string.indexOf('src="') == -1)
             alert('Dropped item is not a valid image! Try again.');
         else {
             var start_pos = html_string.indexOf('src="')+5;
-            var b64_string = html_string.substring(
+            var src_string = html_string.substring(
                 start_pos, html_string.indexOf('"', start_pos)
             );
-            new Audio('../static/sounds/camera_sound.mp3').play();
-            update_images(b64_string);
+            if (src_string.indexOf(';base64,') == -1)
+                alert('Unable to upload image! Try another upload method.');
+            else {
+                update_images(src_string);
+            }
         }
     }
 }

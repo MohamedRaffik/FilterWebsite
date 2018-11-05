@@ -99,10 +99,6 @@ body.dark footer {
     display: inline-block;
 }
 
-#url-input:invalid {
-    outline: 1px solid #FF0000;
-}
-
 #url-submit {
     margin-right: 3px;
 }
