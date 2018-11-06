@@ -86,13 +86,17 @@ body.dark footer {
     text-align: center;
 }
 
-#upload-options, #loading.show, #socials.show {
+#upload-options.show, #upload-loading.show, #filter-loading.show, #socials.show {
     display: inline-block;
     margin: 2% auto;
     outline: none;
     padding-left: 5%;
     height: 30px;
     width: auto;
+}
+
+#upload-options.hide, #upload-loading.hide, #filter-loading.hide, #socials.hide {
+    display: none;
 }
 
 #url-upload {
@@ -109,11 +113,7 @@ body.dark footer {
     width: 100px;
 }
 
-#loading.hide, #socials.hide {
-    display: none;
-}
-
-#loading img {
+#upload-loading img, #filter-loading img {
     margin-left: 5%;
     pointer-events: none;
     height: 50%;
@@ -154,6 +154,10 @@ body.dark footer {
 #drop-area.highlight {
     background: #FFCF40;
     border-color: #191970;
+}
+
+#drop-area.highlight #old-img.not-default {
+    opacity: 0;
 }
 
 #drop-area.hide {

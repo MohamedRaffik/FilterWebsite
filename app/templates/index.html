@@ -46,13 +46,14 @@
       <!-- Open #full-box -->
       <div class="display-box">
         <p>Before</p>
-        <div id="upload-options">
+        <div id="upload-options" class="show">
           <input id="file-upload" type="file" accept="image/*" onchange="upload(this);">
           <div id="url-upload">
-            <input id="url-input" type="url" size="30" placeholder="http://www.example.com">
+            <input id="url-input" type="url" size="30" maxlength="2000" placeholder="http://www.example.com">
             <button id="url-submit" type="button" onclick="url_upload(document.getElementById('url-input').value);">Submit</button>
           </div>
         </div>
+        <div id="upload-loading" class="hide">Loading...<img src="../static/images/load.gif" alt="Loading GIF"></div>
         <div class="display-img">
           <div id="drop-area" class="show"><img id="old-img" class="default" src="../static/images/drag_and_drop.png" alt="Old image goes here."></div>
         </div>
@@ -74,7 +75,7 @@
           </fb:login-button>
           Social Buttons and Download Button go here
         </div>
-        <div id="loading" class="hide">Loading...<img src="../static/images/load.gif" alt="Loading GIF"></div>
+        <div id="filter-loading" class="hide">Loading...<img src="../static/images/load.gif" alt="Loading GIF"></div>
         <div class="display-img">
           <img id="new-img" class="default" src="../static/images/placeholder.jpg" alt="New image goes here.">
         </div>
