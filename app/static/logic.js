@@ -44,6 +44,20 @@ function filter(filter_type) {
     }
 }
 
+function upload_from_url() {
+    var url_string = document.getElementById('url-input').value;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/urlInput', true);
+    xhr.setRequestHeader('content-type',
+                         ' application/x-www-form-urlencoded; charset=UTF-8');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            update_images(xhr.responseText);
+        }
+    };
+    xhr.send('img_url=' + url_string + '&t=' + new Date().getTime());
+}
+
 function update_images(b64_string) {
     document.getElementById('drop-area').className = 'hide';
     document.getElementById('old-img').src = b64_string;
