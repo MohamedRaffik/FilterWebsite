@@ -1,54 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
     <title>FilterX</title>
-    <link href="{{ url_for('static', filename='./images/favicon.ico') }}" type="image/x-icon" rel="shortcut icon">
-    <link href="{{ url_for('static', filename='./style.css') }}" type="text/css" rel="stylesheet">
-    <script src="{{ url_for('static', filename='./logic.js') }}" type="text/javascript"></script>
-
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="pragma" content="no-cache">
     <link href="../static/images/favicon.ico" type="image/x-icon" rel="shortcut icon">
-    <link href="../static/style.css" type="text/css" rel="stylesheet">
-    <script src="../static/logic.js" type="text/javascript"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
+    <!-- IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
+    <link href="../static/style.css?version=2.1" type="text/css" rel="stylesheet">
+    <script src="../static/logic.js?version=2.1" type="text/javascript"></script>
+    <script src="../static/socials.js?version=1.0" type="text/javascript"></script>
+    <script src="../static/download.js?version=1.0" type="text/javascript"></script>
   </head>
 
   <body class="dark">
-
-		<script>
-		  window.fbAsyncInit = function() {
-		    FB.init({
-		      appId      : '341845619901852',
-		      cookie     : true,
-		      xfbml      : true,
-		      version    : 'v3.2'
-		    });
-		      
-		    FB.AppEvents.logPageView();   
-		      
-		  };
-
-		  (function(d, s, id){
-		     var js, fjs = d.getElementsByTagName(s)[0];
-		     if (d.getElementById(id)) {return;}
-		     js = d.createElement(s); js.id = id;
-		     js.src = "https://connect.facebook.net/en_US/sdk.js";
-		     fjs.parentNode.insertBefore(js, fjs);
-		   }(document, 'script', 'facebook-jssdk'));
-
-
-			FB.getLoginStatus(function(response) {
-			    statusChangeCallback(response);
-			});
-
-
-			function checkLoginState() {
-			  FB.getLoginStatus(function(response) {
-			    statusChangeCallback(response);
-			  });
-			}
-		</script>
     <header>
       <img id="logo" src="../static/images/logo.png" alt="FilterX Logo">
     </header>
@@ -62,16 +28,16 @@
     </div>
 
     <div id="intro">
-      This website allows you to apply a filter to an image of your choice. Using this website is simple:
+      This website allows you to apply a filter to an image of your choice.<a href="#footer-note" title="See note at bottom of page" style="color: red; text-decoration: none;">***</a> Using this website is simple:
       <ol id="instructions">
-        <li>Upload an image by:</li>
+        <li>Upload an image (in one of the following ways):</li>
         <ul>
           <li>Click 'Choose File' and select an image file of your choice</li>
           <li>Drag and drop an image into the image area of the 'Before' box</li>
           <li>Enter the image URL into the text field (next to file upload) and click 'Submit'</li>
         </ul>
-        <li>Click one of the 3 filter buttons to apply that filter to your image.</li>
-        <li>That's it! Now you can download the filtered image (by right clicking the image and selecting 'Save image as...') or try another filter. You can also upload a new image to filter by following step 1.</li>
+        <li>Click one of the filter buttons to apply that filter to your image.</li>
+        <li>That's it! Now you can download the filtered image (by right clicking the image and selecting 'Save image as...'), share the image with others, or try another filter. You can also upload a new image to filter by following step 1.</li>
       </ol>
       <strong style="color: red;">Note:</strong> Due to EXIF flags (which vary from device to device), the uploaded image may <em>appear</em> to be rotated. However, downloading the filtered image will maintain the original orientation of your file.
     </div>
@@ -80,11 +46,14 @@
       <!-- Open #full-box -->
       <div class="display-box">
         <p>Before</p>
-        <div id="upload-options">
+        <div id="upload-options" class="show">
           <input id="file-upload" type="file" accept="image/*" onchange="upload(this);">
-          <input id="url-input" type="text">
-          <button id="url-submit" type="button" onclick=";">Submit</button>
+          <div id="url-upload">
+            <input id="url-input" type="url" size="30" maxlength="2000" placeholder="http://www.example.com">
+            <button id="url-submit" type="button" onclick="url_upload(document.getElementById('url-input').value);">Submit</button>
+          </div>
         </div>
+        <div id="upload-loading" class="hide">Loading...<img src="../static/images/load.gif" alt="Loading GIF"></div>
         <div class="display-img">
           <div id="drop-area" class="show"><img id="old-img" class="default" src="../static/images/drag_and_drop.png" alt="Old image goes here."></div>
         </div>
@@ -104,14 +73,20 @@
           <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
 <script type="IN/Share" data-url="http://filterx.herokuapp.com/"></script>
           <a data-pin-do="buttonPin" data-pin-tall="true" data-pin-round="true" href="https://www.pinterest.com/pin/create/button/?url=http%3A%2F%2Ffilterx.herokuapp.com%2F&media=https%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_32.png" /></a>
+          <button id="download-btn" type="button" onclick="download_image();">Download</button>
         </div>
-        <div id="loading" class="hide">Loading...<img src="../static/images/load.gif" alt="Loading GIF"></div>
+        <div id="filter-loading" class="hide">Loading...<img src="../static/images/load.gif" alt="Loading GIF"></div>
         <div class="display-img">
-          <img id="new-img" src="../static/images/placeholder.jpg" alt="New image goes here.">
+          <img id="new-img" class="default" src="../static/images/placeholder.jpg" alt="New image goes here.">
         </div>
       </div>
       <!-- Close #full-box -->
     </div>
     <script async defer src="//assets.pinterest.com/js/pinit.js"></script>
+    <footer>
+      <img src="../static/images/favicon.ico" alt="FilterX Icon" style="margin-right: 10px; pointer-events: none; height: 25px; width: 25px;">
+      <span>© 2018 FilterX, Inc. If you have any questions or concerns, contact us at <a href="mailto:filterx.website@gmail.com">filterx.website@gmail.com</a><br><strong id="footer-note" style="color: red;">***</strong>This website was designed specifically for desktop browsers, so it may not function properly on other devices.</span>
+    </footer>
+>>>>>>> eb6e55c26e0c96a09e8df4ca1fc183ed57a6b27b
   </body>
 </html>
