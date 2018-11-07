@@ -91,7 +91,7 @@ body.dark footer {
     margin: 2% auto;
     outline: none;
     padding-left: 5%;
-    height: 30px;
+    height: 40px;
     width: auto;
 }
 
@@ -103,14 +103,8 @@ body.dark footer {
     display: inline-block;
 }
 
-#url-submit {
+#url-submit, #download-btn {
     margin-right: 3px;
-}
-
-#socials {
-    /* FACEBOOK STUFF */
-    height: 100px;
-    width: 100px;
 }
 
 #upload-loading img, #filter-loading img {
@@ -147,7 +141,7 @@ body.dark footer {
 
 /* Styling for drag-and-drop box */
 #drop-area {
-    
+    ;
 }
 
 #drop-area.show {
@@ -173,10 +167,6 @@ body.dark footer {
 
 #drop-area.highlight #old-img.not-default {
     opacity: 0;
-}
-
-#drop-area.hide {
-    /* Don't need to do anything */
 }
 
 /* Div containing filter buttons */
