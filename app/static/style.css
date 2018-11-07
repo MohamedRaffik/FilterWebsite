@@ -122,6 +122,10 @@ body.light {
 }
 
 /* Styling for drag-and-drop box */
+#drop-area {
+    
+}
+
 #drop-area.show {
     border-radius: 20px;
     border: 2px dashed #191970;
@@ -133,10 +137,13 @@ body.light {
 }
 
 #drop-area.hide {
-    display: inline;
+    border: none;
 }
 
 #drop-area img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     pointer-events: none;
 }
 
