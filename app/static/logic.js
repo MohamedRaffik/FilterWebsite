@@ -45,7 +45,7 @@ function filter(filter_type) {
     }
 }
 
-function is_valid_b64_img(str) {
+function is_valid_b64img(str) {
     return str.search('data:image/.*;base64,') != -1;
 }
 
@@ -55,7 +55,7 @@ function is_valid_url(url) {
 }
 
 function update_images(b64_string) {
-    if (!is_valid_b64_img(b64_string))
+    if (!is_valid_b64img(b64_string))
         alert('Unable to upload item! Try another upload method.');
     else {
         var click_sound = new Audio('../static/sounds/camera_sound.mp3');
@@ -65,6 +65,14 @@ function update_images(b64_string) {
         document.getElementById('old-img').className = 'not-default';
         document.getElementById('new-img').src = b64_string;
         document.getElementById('new-img').className = 'not-default';
+    }
+}
+
+function download_image() {
+    if (document.getElementById('new-img').className == 'default')
+        alert('Upload an image before clicking the download button!');
+    else {
+        download(document.getElementById('new-img').src, 'filterx_download.jpg', 'image/jpeg');
     }
 }
 
@@ -145,7 +153,7 @@ function upload(input) {
                 }
             }
 
-            if (is_valid_b64_img(text_string)) {
+            if (is_valid_b64img(text_string)) {
                 update_images(text_string);
             }
             else if (!text_string || !is_valid_url(text_string))
