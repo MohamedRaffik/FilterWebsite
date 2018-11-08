@@ -89,7 +89,6 @@ body.dark footer {
 #upload-options.show, #upload-loading.show, #filter-loading.show, #socials.show {
     display: inline-block;
     margin: 2% auto;
-    outline: none;
     padding-left: 5%;
     height: 40px;
     width: auto;
@@ -99,12 +98,21 @@ body.dark footer {
     display: none;
 }
 
+#file-upload {
+    outline: none;
+}
+
 #url-upload {
     display: inline-block;
 }
 
 #url-submit, #download-btn {
     margin-right: 3px;
+}
+
+.social-btn {
+    display: inline-block;
+    margin-right: 1px;
 }
 
 #upload-loading img, #filter-loading img {
@@ -140,10 +148,6 @@ body.dark footer {
 }
 
 /* Styling for drag-and-drop box */
-#drop-area {
-    ;
-}
-
 #drop-area.show {
     border-radius: 20px;
     border: 2px dashed #000000;
@@ -158,7 +162,7 @@ body.dark footer {
     border: none;
 }
 
-#drop-area img {
+#drop-area img, #align-area img {
     display: block;
     margin-left: auto;
     margin-right: auto;

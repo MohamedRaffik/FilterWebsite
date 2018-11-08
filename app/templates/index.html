@@ -71,21 +71,29 @@
         <p>After</p>
         <div id="socials" class="show">
           <!-- Open #socials -->
-          <div class="fb-share-button" data-href="http://filterx.herokuapp.com/" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+          <div class="social-btn">
+            <div class="fb-share-button" data-href="http://filterx.herokuapp.com/" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+          </div>
 
-          <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check this website! They have many filters for your images and you can even download them!!!" data-url="http://filterx.herokuapp.com/" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+          <div class="social-btn">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check this website! They have many filters for your images and you can even download them!!!" data-url="http://filterx.herokuapp.com/" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+          </div>
 
-          <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
-          <script type="IN/Share" data-url="http://filterx.herokuapp.com/"></script>
+          <div class="social-btn">
+            <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+            <script type="IN/Share" data-url="http://filterx.herokuapp.com/"></script>
+          </div>
 
-          <a data-pin-do="buttonPin" data-pin-tall="true" data-pin-round="true" href="https://www.pinterest.com/pin/create/button/?url=http%3A%2F%2Ffilterx.herokuapp.com%2F&media=https%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_32.png" alt="Pinterest Icon"></a>
+          <div class="social-btn">
+            <a data-pin-do="buttonPin" data-pin-tall="true" data-pin-round="true" href="https://www.pinterest.com/pin/create/button/?url=http%3A%2F%2Ffilterx.herokuapp.com%2F&media=https%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_32.png" alt="Pinterest Icon"></a>
+          </div>
 
           <button id="download-btn" type="button" onclick="download_image();"><img src="../static/images/download.png" alt="Download Button" style="height: 25px; width: 25px;"></button>
           <!-- Close #socials -->
         </div>
         <div id="filter-loading" class="hide">Loading...<img src="../static/images/load.gif" alt="Loading GIF"></div>
         <div class="display-img">
-          <img id="new-img" class="default" src="../static/images/placeholder.jpg" alt="New image goes here.">
+          <div id="align-area"><img id="new-img" class="default" src="../static/images/placeholder.jpg" alt="New image goes here."></div>
         </div>
       </div>
       <!-- Close #full-box -->
