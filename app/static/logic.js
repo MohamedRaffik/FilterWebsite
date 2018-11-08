@@ -97,19 +97,23 @@ function url_upload(url) {
             filter_buttons_active = false; upload_active = false;
             document.getElementById('upload-options').className = 'hide';
             document.getElementById('upload-loading').className = 'show';
+            var proxy_url = 'https://cors-anywhere.herokuapp.com/';
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/urlInput', true);
-            xhr.setRequestHeader('content-type',
-                                 ' application/x-www-form-urlencoded; charset=UTF-8');
+            xhr.open('GET', proxy_url + url, true);
+            xhr.responseType = 'blob';
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    update_images(xhr.responseText);
-                    document.getElementById('upload-loading').className = 'hide';
-                    document.getElementById('upload-options').className = 'show';
-                    filter_buttons_active = true; upload_active = true;
+                    var reader = new FileReader();
+                    reader.onload = function() {
+                        update_images(reader.result);
+                        document.getElementById('upload-loading').className = 'hide';
+                        document.getElementById('upload-options').className = 'show';
+                        filter_buttons_active = true; upload_active = true;
+                    };
+                    reader.readAsDataURL(xhr.response);
                 }
             };
-            xhr.send('img_url=' + url + '&t=' + new Date().getTime());
+            xhr.send();
         }
     }
 }

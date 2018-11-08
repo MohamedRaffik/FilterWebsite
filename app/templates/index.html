@@ -8,8 +8,8 @@
     <meta http-equiv="pragma" content="no-cache">
     <link href="../static/images/favicon.ico" type="image/x-icon" rel="shortcut icon">
     <!-- IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
-    <link href="../static/style.css?version=2.2" type="text/css" rel="stylesheet">
-    <script src="../static/logic.js?version=2.2" type="text/javascript"></script>
+    <link href="../static/style.css?version=2.3" type="text/css" rel="stylesheet">
+    <script src="../static/logic.js?version=2.3" type="text/javascript"></script>
     <script src="../static/socials.js?version=1.0" type="text/javascript"></script>
     <script src="../static/download.js?version=1.0" type="text/javascript"></script>
   </head>
@@ -64,12 +64,13 @@
         <div><button type="button" onclick="filter('sepia');">Sepia</button></div>
         <div><button type="button" onclick="filter('censor');">Censor</button></div>
         <div><button type="button" onclick="filter('mirror');">Mirror</button></div>
-         <div><button type="button" onclick="filter('rotate');">Rotate</button></div>
+        <div><button type="button" onclick="filter('rotate');">Rotate</button></div>
       </div>
 
       <div class="display-box">
         <p>After</p>
         <div id="socials" class="show">
+          <!-- Open #socials -->
           <div class="fb-share-button" data-href="http://filterx.herokuapp.com/" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
 
           <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check this website! They have many filters for your images and you can even download them!!!" data-url="http://filterx.herokuapp.com/" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -80,7 +81,7 @@
           <a data-pin-do="buttonPin" data-pin-tall="true" data-pin-round="true" href="https://www.pinterest.com/pin/create/button/?url=http%3A%2F%2Ffilterx.herokuapp.com%2F&media=https%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_32.png" alt="Pinterest Icon"></a>
 
           <button id="download-btn" type="button" onclick="download_image();"><img src="../static/images/download.png" alt="Download Button" style="height: 25px; width: 25px;"></button>
-
+          <!-- Close #socials -->
         </div>
         <div id="filter-loading" class="hide">Loading...<img src="../static/images/load.gif" alt="Loading GIF"></div>
         <div class="display-img">

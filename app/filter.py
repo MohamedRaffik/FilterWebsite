@@ -2,20 +2,6 @@ from base64 import b64encode, b64decode
 from PIL import Image, ImageFilter, ImageOps, ImagePalette
 from io import BytesIO
 from app import Censor
-from urllib import request
-
-def urlImg_to_b64(url):
-    user_agent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'
-    header = {'User-Agent': user_agent}
-    req = request.Request(url, headers=header)
-    # info looks like 'image/jpeg'
-    info = request.urlopen(req).info()['Content-Type']
-    img = Image.open(BytesIO(request.urlopen(req).read()))
-    buffered = BytesIO()
-    # meta_data looks something like 'data:image/jpeg;base64,'
-    img.save(buffered, format=info.split('/')[-1])
-    return 'data:{0};base64,'.format(info) + b64encode(buffered.getvalue()).decode('utf-8')
-
 
 def make_linear_ramp(white=(255,240,192)):
     ramp = []
@@ -32,13 +18,13 @@ def filter(b64_img, filter_type):
     width, height = img.size
 
     if filter_type == 'black_and_white':
-        img = img.convert("L")
+        img = img.convert('L')
 
     elif filter_type == 'sepia':
         sepia = make_linear_ramp()
-        img = img.convert("L")
+        img = img.convert('L')
         img.putpalette(sepia)
-        img = img.convert("RGB")
+        img = img.convert('RGB')
 
     elif filter_type == 'censor':
         img = img.filter(ImageFilter.GaussianBlur(10))
