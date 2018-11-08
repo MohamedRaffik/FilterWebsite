@@ -2,6 +2,20 @@ from base64 import b64encode, b64decode
 from PIL import Image, ImageFilter, ImageOps, ImagePalette
 from io import BytesIO
 from app import Censor
+from urllib import request
+
+def urlImg_to_b64(url):
+    user_agent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'
+    header = {'User-Agent': user_agent}
+    req = request.Request(url, headers=header)
+    # info looks like 'image/jpeg'
+    info = request.urlopen(req).info()['Content-Type']
+    img = Image.open(BytesIO(request.urlopen(req).read()))
+    buffered = BytesIO()
+    # meta_data looks something like 'data:image/jpeg;base64,'
+    img.save(buffered, format=info.split('/')[-1])
+    return 'data:{0};base64,'.format(info) + b64encode(buffered.getvalue()).decode('utf-8')
+
 
 def make_linear_ramp(white=(255,240,192)):
     ramp = []
@@ -31,7 +45,7 @@ def filter(b64_img, filter_type):
         censor_img = Image.open(BytesIO(b64decode(censor_str[censor_str.index(',')+1:])))
         censor_img = censor_img.resize((width, int(height/5)))
         img.paste(censor_img, (0, int(height*2/5)))
-        
+
     elif filter_type == 'mirror':
         for i in range (int (width/2)):
             for j in range (height):

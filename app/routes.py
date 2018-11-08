@@ -12,3 +12,9 @@ def index():
         new_img = filter.filter(request.form['img_string'], filter_type)
         return new_img
     return render_template('index.html')
+
+@app.route('/urlInput', methods=['POST'])
+def url_input():
+    if request.method == 'POST':
+        b64_from_url = filter.urlImg_to_b64(request.form['img_url'])
+        return b64_from_url
