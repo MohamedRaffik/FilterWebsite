@@ -22,8 +22,6 @@ function filter(filter_type) {
         filter_buttons_active = false; upload_active = false;
         document.getElementById('socials').className = 'hide';
         document.getElementById('filter-loading').className = 'show';
-        var wait_song = new Audio('../static/sounds/runescape_harmony.mp3');
-        wait_song.volume = 0.25; wait_song.play(); wait_song.loop = true;
 
         var img_string = document.getElementById('old-img').src;
         var xhr = new XMLHttpRequest();
@@ -32,7 +30,6 @@ function filter(filter_type) {
                              'application/x-www-form-urlencoded;charset=UTF-8');
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                wait_song.pause();
                 document.getElementById('new-img').src = xhr.responseText;
                 document.getElementById('filter-loading').className = 'hide';
                 document.getElementById('socials').className = 'show';
