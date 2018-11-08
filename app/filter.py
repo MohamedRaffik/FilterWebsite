@@ -31,6 +31,11 @@ def filter(b64_img, filter_type):
         censor_img = Image.open(BytesIO(b64decode(censor_str[censor_str.index(',')+1:])))
         censor_img = censor_img.resize((width, int(height/5)))
         img.paste(censor_img, (0, int(height*2/5)))
+        
+    elif filter_type == 'mirror':
+        for i in range (int (width/2)):
+            for j in range (height):
+                img.putpixel((i,j), img.getpixel((width - i - 1, j)))
 
     buffered = BytesIO()
     # meta_data looks something like 'data:image/jpeg;base64,'
