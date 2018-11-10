@@ -18,7 +18,7 @@ function filter(filter_type) {
     else if (document.getElementById('old-img').src.indexOf('.') != -1)
         alert('Cannot filter image! Try another upload method.');
     else {
-        // Prevent upload as well as filter() calls while processing a filter
+        // Prevent upload and filter() calls while processing a filter
         filter_buttons_active = false; upload_active = false;
         document.getElementById('socials').className = 'hide';
         document.getElementById('filter-loading').className = 'show';
@@ -69,7 +69,8 @@ function download_image() {
     if (document.getElementById('new-img').className == 'default')
         alert('Upload an image before clicking the download button!');
     else {
-        download(document.getElementById('new-img').src, 'filterx_download.jpg', 'image/jpeg');
+        download(document.getElementById('new-img').src,
+                 'filterx_download.jpg', 'image/jpeg');
     }
 }
 
@@ -90,7 +91,7 @@ function url_upload(url) {
         if (!is_valid_url(url))
             alert('Invalid URL! Try again.');
         else {
-            // Prevent upload as well as filter() calls while processing an upload
+            // Prevent upload and filter() calls while processing an upload
             filter_buttons_active = false; upload_active = false;
             document.getElementById('upload-options').className = 'hide';
             document.getElementById('upload-loading').className = 'show';

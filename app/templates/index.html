@@ -7,14 +7,41 @@
     <meta http-equiv="expires" content="0">
     <meta http-equiv="pragma" content="no-cache">
     <link href="../static/images/favicon.ico" type="image/x-icon" rel="shortcut icon">
+    <!-- Open Graph Markup -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="FilterX">
+    <meta property="og:url" content="https://filterx.herokuapp.com/">
+    <meta property="og:description" content="Apply a filter to an image of your choice.">
+    <meta property="og:image" content="https://res.cloudinary.com/filterx/image/upload/v1541878844/filterx_snapshot.png">
+    <meta name="twitter:card" content="summary_large_image">
     <!-- IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
     <link href="../static/style.css?version=2.5" type="text/css" rel="stylesheet">
-    <script src="../static/logic.js?version=2.5" type="text/javascript"></script>
-    <script src="../static/socials.js?version=1.0" type="text/javascript"></script>
+    <script src="../static/logic.js?version=2.6" type="text/javascript"></script>
+    <script src="../static/socials.js?version=1.1" type="text/javascript"></script>
     <script src="../static/download.js?version=1.0" type="text/javascript"></script>
   </head>
 
   <body class="dark">
+    <!-- Load and initialize the Facebook SDK -->
+    <script>
+     window.fbAsyncInit = function() {
+         FB.init({
+             appId            : '341845619901852',
+             autoLogAppEvents : true,
+             xfbml            : true,
+             version          : 'v3.2'
+         });
+     };
+
+     (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "https://connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+    </script>
+
     <header>
       <img id="logo" src="../static/images/logo.png" alt="FilterX Logo">
     </header>
@@ -72,20 +99,20 @@
         <div id="socials" class="show">
           <!-- Open #socials -->
           <div class="social-btn">
-            <div class="fb-share-button" data-href="http://filterx.herokuapp.com/" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+            <div class="fb-share-button" data-href="https://filterx.herokuapp.com/" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ffilterx.herokuapp.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore" onclick="share('facebook');">Share</a></div>
           </div>
 
           <div class="social-btn">
-            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check this website! They have many filters for your images and you can even download them!!!" data-url="http://filterx.herokuapp.com/" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check this website! They have many filters for your images and you can even download them!!!" data-url="https://filterx.herokuapp.com/" data-show-count="false" onclick="share('twitter');">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
           </div>
 
           <div class="social-btn">
             <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
-            <script type="IN/Share" data-url="http://filterx.herokuapp.com/"></script>
+            <script type="IN/Share" data-url="https://filterx.herokuapp.com/"></script>
           </div>
 
           <div class="social-btn">
-            <a data-pin-do="buttonPin" data-pin-tall="true" data-pin-round="true" href="https://www.pinterest.com/pin/create/button/?url=http%3A%2F%2Ffilterx.herokuapp.com%2F&media=https%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_32.png" alt="Pinterest Icon"></a>
+            <a data-pin-do="buttonPin" data-pin-tall="true" data-pin-round="true" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Ffilterx.herokuapp.com%2F&media=https%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_32.png" alt="Pinterest Icon"></a>
           </div>
 
           <button id="download-btn" type="button" onclick="download_image();"><img src="../static/images/download.png" alt="Download Button" style="height: 25px; width: 25px;"></button>
