@@ -1,5 +1,9 @@
 html, body {
-    min-width: 715px;
+    min-width: 725px;
+}
+
+img {
+    pointer-events: none;
 }
 
 /* Themes */
@@ -34,7 +38,6 @@ body.dark footer {
     display: block;
     flex: center;
     margin: auto;
-    pointer-events: none;
 }
 
 /* Theme button */
@@ -111,13 +114,23 @@ body.dark footer {
 }
 
 .social-btn {
+    cursor: pointer;
     display: inline-block;
-    margin-right: 1px;
+    margin-right: 3px;
+}
+
+#facebook-btn img {
+    height: 20px;
+    width: 60px;
+}
+
+#download-btn img {
+    height: 25px;
+    width: 25px;
 }
 
 #upload-loading img, #filter-loading img {
     margin-left: 5%;
-    pointer-events: none;
     height: 50%;
     width: 70%;
 }
@@ -126,12 +139,12 @@ body.dark footer {
     border: none;
 }
 
-#old-img.default, #new-img.default {
-    pointer-events: none;
-}
-
 #old-img.not-default, #new-img {
     border: 1px solid #000000;
+}
+
+#old-img.not-default, #new-img.not-default {
+    pointer-events: auto;
 }
 
 .display-img {
@@ -274,6 +287,12 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+#footer-icon {
+    margin-right: 10px;
+    height: 25px;
+    width: 25px;
 }
 
 footer span {

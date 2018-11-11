@@ -15,33 +15,13 @@
     <meta property="og:image" content="https://res.cloudinary.com/filterx/image/upload/v1541878844/filterx_snapshot.png">
     <meta name="twitter:card" content="summary_large_image">
     <!-- IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
-    <link href="../static/style.css?version=2.5" type="text/css" rel="stylesheet">
+    <link href="../static/style.css?version=2.6" type="text/css" rel="stylesheet">
     <script src="../static/logic.js?version=2.6" type="text/javascript"></script>
-    <script src="../static/socials.js?version=1.1" type="text/javascript"></script>
+    <script src="../static/socials.js?version=1.2" type="text/javascript"></script>
     <script src="../static/download.js?version=1.0" type="text/javascript"></script>
   </head>
 
   <body class="dark">
-    <!-- Load and initialize the Facebook SDK -->
-    <script>
-     window.fbAsyncInit = function() {
-         FB.init({
-             appId            : '341845619901852',
-             autoLogAppEvents : true,
-             xfbml            : true,
-             version          : 'v3.2'
-         });
-     };
-
-     (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "https://connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-     }(document, 'script', 'facebook-jssdk'));
-    </script>
-
     <header>
       <img id="logo" src="../static/images/logo.png" alt="FilterX Logo">
     </header>
@@ -76,7 +56,7 @@
         <div id="upload-options" class="show">
           <input id="file-upload" type="file" accept="image/*" onchange="upload(this);">
           <div id="url-upload">
-            <input id="url-input" type="url" size="30" maxlength="2000" placeholder="http://www.example.com">
+            <input id="url-input" type="url" size="25" maxlength="2000" placeholder="http://www.example.com">
             <button id="url-submit" type="button" onclick="url_upload(document.getElementById('url-input').value);">Submit</button>
           </div>
         </div>
@@ -98,12 +78,10 @@
         <p>After</p>
         <div id="socials" class="show">
           <!-- Open #socials -->
-          <div class="social-btn">
-            <div class="fb-share-button" data-href="https://filterx.herokuapp.com/" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ffilterx.herokuapp.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore" onclick="share('facebook');">Share</a></div>
-          </div>
+          <div id="facebook-btn" class="social-btn" title="Share on Facebook" onclick="share_to('facebook');"><img src="../static/images/facebook_share.jpg" alt="Share on Facebook"></div>
 
           <div class="social-btn">
-            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check this website! They have many filters for your images and you can even download them!!!" data-url="https://filterx.herokuapp.com/" data-show-count="false" onclick="share('twitter');">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check this website! They have many filters for your images and you can even download them!!!" data-url="https://filterx.herokuapp.com/" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
           </div>
 
           <div class="social-btn">
@@ -112,10 +90,10 @@
           </div>
 
           <div class="social-btn">
-            <a data-pin-do="buttonPin" data-pin-tall="true" data-pin-round="true" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Ffilterx.herokuapp.com%2F&media=https%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_32.png" alt="Pinterest Icon"></a>
+            <a data-pin-do="buttonPin" data-pin-tall="true" data-pin-round="true" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Ffilterx.herokuapp.com%2F&media=https%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_32.png" alt="Share on Pinterest"></a>
           </div>
 
-          <button id="download-btn" type="button" onclick="download_image();"><img src="../static/images/download.png" alt="Download Button" style="height: 25px; width: 25px;"></button>
+          <button id="download-btn" type="button" title="Download" onclick="download_image();"><img src="../static/images/download.png" alt="Download Button"></button>
           <!-- Close #socials -->
         </div>
         <div id="filter-loading" class="hide">Loading...<img src="../static/images/load.gif" alt="Loading GIF"></div>
@@ -127,7 +105,7 @@
     </div>
     <script async src="//assets.pinterest.com/js/pinit.js"></script>
     <footer>
-      <img src="../static/images/favicon.ico" alt="FilterX Icon" style="margin-right: 10px; pointer-events: none; height: 25px; width: 25px;">
+      <img id="footer-icon" src="../static/images/favicon.ico" alt="FilterX Icon">
       <span>© 2018 FilterX, Inc. If you have any questions or concerns, contact us at <a href="mailto:filterx.website@gmail.com">filterx.website@gmail.com</a><br><strong id="footer-note" style="color: red;">***</strong>This website was designed specifically for desktop browsers, so it may not function properly on other devices.</span>
     </footer>
   </body>
