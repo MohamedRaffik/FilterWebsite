@@ -3,6 +3,8 @@ from PIL import Image, ImageFilter, ImageOps, ImagePalette
 from io import BytesIO
 from app import Censor
 
+
+#for use in sepia filtering
 def make_linear_ramp(white=(255,240,192)):
     ramp = []
     r, g, b = white
@@ -37,6 +39,27 @@ def filter(b64_img, filter_type):
             for j in range (height):
                 img.putpixel((i,j), img.getpixel((width - i - 1, j)))
 
+    elif filter_type == 'upside_down':
+        img = img.rotate(180)
+
+    elif filter_type == 'flip':
+        img = img.transpose(Image.FLIP_LEFT_RIGHT)
+
+    elif filter_type == 'hazy_rememberance':
+        img = img.filter(ImageFilter.CONTOUR)
+        img = img.filter(ImageFilter.SHARPEN)
+        img = img.filter(ImageFilter.DETAIL)
+        img = img.filter(ImageFilter.SMOOTH)
+        img = img.filter(ImageFilter.FIND_EDGES)
+
+    elif filter_type == 'feeling_green':
+        mat = (
+            0.412453, 0.357580, 0.180423, 0,
+            0.212671, 0.715160, 0.072169, 0,
+            0.019334, 0.119193, 0.950227, 0 )
+        img = img.convert("RGB", mat)
+        
+        
     buffered = BytesIO()
     # meta_data looks something like 'data:image/jpeg;base64,'
     img.save(buffered, format=meta_data[meta_data.index('/')+1 : meta_data.index(';')])
