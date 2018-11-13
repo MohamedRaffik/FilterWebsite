@@ -45,7 +45,7 @@ def filter(b64_img, filter_type):
     elif filter_type == 'flip':
         img = img.transpose(Image.FLIP_LEFT_RIGHT)
 
-    elif filter_type == 'hazy_rememberance':
+    elif filter_type == 'hazy_remembrance':
         img = img.filter(ImageFilter.CONTOUR)
         img = img.filter(ImageFilter.SHARPEN)
         img = img.filter(ImageFilter.DETAIL)

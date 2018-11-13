@@ -185,25 +185,22 @@ body.dark footer {
     opacity: 0;
 }
 
-/* Div containing filter buttons */
-#filter-btns {
-    display: flex;
-    flex-direction: column;
+/* Div containing filter select and button */
+#filter-box {
     float: left;
-    justify-content: space-between;
-    padding-bottom: 10%;
-    padding-top: 10%;
+    padding: 10% 0;
+    text-align: center;
     height: auto;
     width: 10%;
 }
 
-#filter-btns div {
-    padding-left: 10%;
-    padding-right: 10%;
+/* Drop-down menu of filters */
+#filter-select {
+    width: 90%;
 }
 
-/* Styling for filter buttons */
-#filter-btns button {
+/* Styling for filter button */
+#filter-box button {
     background: #191970;
     border-radius: 15px;
     border: none;
@@ -212,20 +209,19 @@ body.dark footer {
     cursor: pointer;
     font-family: "Times New Roman";
     font-size: 1em;
-    font-size: 1vw;
-    margin-bottom: 15%;
+    margin-top: 15px;
     outline: none;
     padding: 10px 5px;
-    width: 90%;
+    width: 75%;
 }
 
-/* Styling for when filter buttons are clicked */
-#filter-btns button:active {
+/* Styling for when filter button is clicked */
+#filter-box button:active {
     box-shadow: 5px 5px #696969;
     transform: translateY(5px);
 }
 
-#filter-btns button:active, #filter-btns button:hover {
+#filter-box button:active, #filter-box button:hover {
     background: #FFCF40;
     color: #191970;
 }
