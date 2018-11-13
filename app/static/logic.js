@@ -1,4 +1,4 @@
-var filter_buttons_active = true;
+var filter_button_active = true;
 var upload_active = true;
 
 function change_theme() {
@@ -11,15 +11,17 @@ function change_theme() {
 }
 
 function filter(filter_type) {
-    if (!filter_buttons_active)
+    if (!filter_button_active)
         alert('Wait for current upload or filter to finish processing!');
     else if (document.getElementById('old-img').className == 'default')
-        alert('Upload an image before clicking a filter button!');
+        alert('Upload an image before clicking the filter button!');
+    else if (filter_type == 'none')
+        alert('Select a filter before clicking the filter button!');
     else if (document.getElementById('old-img').src.indexOf('.') != -1)
         alert('Cannot filter image! Try another upload method.');
     else {
         // Prevent upload and filter() calls while processing a filter
-        filter_buttons_active = false; upload_active = false;
+        filter_button_active = false; upload_active = false;
         document.getElementById('socials').className = 'hide';
         document.getElementById('filter-loading').className = 'show';
 
@@ -33,7 +35,7 @@ function filter(filter_type) {
                 document.getElementById('new-img').src = xhr.responseText;
                 document.getElementById('filter-loading').className = 'hide';
                 document.getElementById('socials').className = 'show';
-                filter_buttons_active = true; upload_active = true;
+                filter_button_active = true; upload_active = true;
             }
         };
         // Add time to URL to keep AJAX call unique and not cached by browser
@@ -92,7 +94,7 @@ function url_upload(url) {
             alert('Invalid URL! Try again.');
         else {
             // Prevent upload and filter() calls while processing an upload
-            filter_buttons_active = false; upload_active = false;
+            filter_button_active = false; upload_active = false;
             document.getElementById('upload-options').className = 'hide';
             document.getElementById('upload-loading').className = 'show';
             var proxy_url = 'https://cors-anywhere.herokuapp.com/';
@@ -106,7 +108,7 @@ function url_upload(url) {
                         update_images(reader.result);
                         document.getElementById('upload-loading').className = 'hide';
                         document.getElementById('upload-options').className = 'show';
-                        filter_buttons_active = true; upload_active = true;
+                        filter_button_active = true; upload_active = true;
                     };
                     reader.readAsDataURL(xhr.response);
                 }

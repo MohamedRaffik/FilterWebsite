@@ -43,8 +43,8 @@
           <li>Drag and drop an image into the image area of the 'Before' box</li>
           <li>Enter the image URL into the text field (next to file upload) and click 'Submit'</li>
         </ul>
-        <li>Click one of the filter buttons to apply that filter to your image.</li>
-        <li>That's it! Now you can download the filtered image, share the image with others, or try another filter. You can also upload a new image to filter by following step 1.</li>
+        <li>Choose one of the filters from the drop-down menu and click 'Filter' to apply that filter to your image.</li>
+        <li>That's it! Now you can share the image with others, download the filtered image, or try another filter. You can also upload a new image to filter by following step 1.</li>
       </ol>
       <strong style="color: red;">Note:</strong> Due to EXIF flags (which vary from device to device), the uploaded image may <em>appear</em> to be rotated. However, downloading the filtered image will maintain the original orientation of your file.
     </div>
@@ -66,15 +66,19 @@
         </div>
       </div>
 
-      <div id="filter-btns">
-        <div><button type="button" onclick="filter('black_and_white');">Black and White</button></div>
-        <div><button type="button" onclick="filter('sepia');">Sepia</button></div>
-        <div><button type="button" onclick="filter('censor');">Censor</button></div>
-        <div><button type="button" onclick="filter('mirror');">Mirror</button></div>
-        <div><button type="button" onclick="filter('upside_down');">Upside Down</button></div>
-        <div><button type="button" onclick="filter('flip');">Flip It!</button></div>
-        <div><button type="button" onclick="filter('hazy_rememberance');">Hazy Rememberance</button></div>
-        <div><button type="button" onclick="filter('feeling_green');">Feeling Green?</button></div>
+      <div id="filter-box">
+        <select id="filter-select">
+          <option value="none" selected disabled hidden>Choose a filter</option>
+          <option value="black_and_white">Black and White</option>
+          <option value="sepia">Sepia</option>
+          <option value="censor">Censor</option>
+          <option value="mirror">Mirror</option>
+          <option value="upside_down">Upside Down</option>
+          <option value="flip">Flip It!</option>
+          <option value="hazy_remembrance">Hazy Remembrance</option>
+          <option value="feeling_green">Feeling Green?</option>
+        </select>
+        <button type="button" onclick="filter(document.getElementById('filter-select').value);">Filter</button>
       </div>
 
       <div class="display-box">
