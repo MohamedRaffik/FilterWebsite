@@ -6,6 +6,10 @@ img {
     pointer-events: none;
 }
 
+button {
+    cursor: pointer;
+}
+
 /* Themes */
 body.dark {
     background-image: url("./images/dark_wallpaper.jpg");
