@@ -74,6 +74,13 @@ def filter(b64_img, filter_type):
             position = ((img.width - logo_img.width), (img.height - logo_img.height))
             img.paste(logo_img, position, logo_img)
 
+    #swaps color channels blue and red  
+    elif filter_type == 'swap_blue_red':
+        for i in range (width):
+            for j in range (height):
+                r, g, b = img.getpixel((i,j))
+                img.putpixel((i,j), (b, g, r))
+
         
     buffered = BytesIO()
     # meta_data looks something like 'data:image/jpeg;base64,'
