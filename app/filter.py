@@ -76,10 +76,8 @@ def filter(b64_img, filter_type):
 
     #swaps color channels blue and red  
     elif filter_type == 'swap_blue_red':
-        for i in range (width):
-            for j in range (height):
-                r, g, b = img.getpixel((i,j))
-                img.putpixel((i,j), (b, g, r))
+        r, g, b = img.split()
+        img = Image.merge('RGB', (b, g, r))
 
         
     buffered = BytesIO()
