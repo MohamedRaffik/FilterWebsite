@@ -1,0 +1,87 @@
+img {
+    pointer-events: none;
+}
+
+/* Section for uploading image */
+#upload-section {
+    text-align: center;
+}
+
+#upload-text {
+    margin: 1% auto;
+}
+
+#file-upload {
+    margin: 1% auto;
+    outline: none;
+}
+
+#url-upload {
+    margin: 1% auto;
+}
+
+#url-input, #url-submit {
+    margin-bottom: 1%;
+}
+
+/* Section for displaying original and filtered image */
+#full-box-section {
+    background: #4682B4;
+}
+
+#full-box {
+    display: inline-block;
+    margin: 0 auto;
+    padding: 2.5% 2.5%;
+    height: 100%;
+    width: 100%;
+}
+
+/* Container to hold a <p> tag header and an image */
+.display-box {
+    background: #FFFFFF;
+    float: left;
+    height: 100%;
+    width: 45%;
+}
+
+.display-box p {
+    color: #191970;
+    font-family: "Impact";
+    font-size: 1.5em;
+    margin: 1% auto;
+    text-align: center;
+}
+
+#old-img.not-default, #new-img.not-default {
+    border: 1px solid #000000;
+    pointer-events: auto;
+}
+
+.display-img {
+    margin: 2.5% auto;
+    height: 90%;
+    width: 95%;
+}
+
+.display-img img {
+    margin: 2.5% none;
+    user-select: none;
+    height: 100%;
+    width: 100%;
+}
+
+/* Styling for drag-and-drop area */
+#drop-area.highlight {
+    background: #4682B4;
+}
+
+#drop-area.highlight img {
+    opacity: 0;
+}
+
+#drop-area img, #align-area img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

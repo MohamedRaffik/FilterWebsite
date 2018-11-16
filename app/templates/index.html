@@ -1,121 +1,144 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+<!--
+     Snapshot by TEMPLATED
+     templated.co @templatedco
+     Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
 <html>
   <head>
     <title>FilterX</title>
+    <link href="../static/images/favicon.ico" type="image/x-icon" rel="shortcut icon">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0">
     <meta http-equiv="pragma" content="no-cache">
-    <link href="../static/images/favicon.ico" type="image/x-icon" rel="shortcut icon">
+
     <!-- Open Graph Markup -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="FilterX">
     <meta property="og:url" content="https://filterx.herokuapp.com/">
-    <meta property="og:description" content="Apply a filter to an image of your choice.">
-    <meta property="og:image" content="https://res.cloudinary.com/filterx/image/upload/v1541878844/filterx_snapshot.png">
+    <meta property="og:description" content="Filter, download, and share your images!">
+    <meta property="og:image" content="https://res.cloudinary.com/filterx/image/upload/v1542348499/filterx_snapshot.png">
     <meta name="twitter:card" content="summary_large_image">
+
     <!-- IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
-    <link href="../static/style.css?version=2.7" type="text/css" rel="stylesheet">
-    <script src="../static/logic.js?version=2.7" type="text/javascript"></script>
-    <script src="../static/socials.js?version=1.2" type="text/javascript"></script>
-    <script src="../static/download.js?version=1.0" type="text/javascript"></script>
+    <link type="text/css" rel="stylesheet" href="../static/css/main.css">
+    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=2.8">
+    <script type="text/javascript" src="../static/js/logic.js?version=2.8"></script>
+    <script type="text/javascript" src="../static/js/socials.js?version=1.2" ></script>
+    <script type="text/javascript" src="../static/js/download.js?version=1.0"></script>
   </head>
 
-  <body class="dark">
-    <header>
-      <img id="logo" src="../static/images/logo.png" alt="FilterX Logo">
-    </header>
+  <body>
+    <div class="page-wrap">
+      <!-- Open .page-wrap -->
 
-    <div id="theme-btn">
-      <span id="theme-name">Light Mode</span>
-      <label class="switch">
-        <input type="checkbox" onchange="change_theme();">
-        <span class="slider"></span>
-      </label>
-    </div>
-
-    <div id="intro">
-      This website allows you to apply a filter to an image of your choice.<a href="#footer-note" title="See note at bottom of page" style="color: red; text-decoration: none;">***</a> Using this website is simple:
-      <ol id="instructions">
-        <li>Upload an image (in one of the following ways):</li>
+      <nav id="nav">
         <ul>
-          <li>Click 'Choose File' and select an image file of your choice</li>
-          <li>Drag and drop an image into the image area of the 'Before' box</li>
-          <li>Enter the image URL into the text field (next to file upload) and click 'Submit'</li>
+          <li><a href="index.html" class="active"><span class="icon fa-home"></span></a></li>
+          <li><a href="#full-box-section"><span class="icon fa-camera-retro"></span></a></li>
+          <li><a href="#contact"><span class="icon fa-file-text-o"></span></a></li>
         </ul>
-        <li>Choose one of the filters from the drop-down menu and click 'Filter' to apply that filter to your image.</li>
-        <li>That's it! Now you can share the image with others, download the filtered image, or try another filter. You can also upload a new image to filter by following step 1.</li>
-      </ol>
-      <strong style="color: red;">Note:</strong> Due to EXIF flags (which vary from device to device), the uploaded image may <em>appear</em> to be rotated. However, downloading the filtered image will maintain the original orientation of your file.
+      </nav>
+
+      <section id="main">
+        <!-- Open #main -->
+
+        <section id="banner">
+          <div class="inner">
+            <h1>FilterX</h1>
+            <p>Filter, download, and share your images!</p>
+            <ul class="actions">
+              <li><a href="#upload-section" class="button alt scrolly big">Continue</a></li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="upload-section">
+          <h1 id="upload-text">Upload</h1>
+          <div id="upload-options">
+            <input id="file-upload" type="file" accept="image/*" onchange="upload(this);">
+            <p>or upload by remote image URL:</p>
+
+            <div id="url-upload">
+              <input id="url-input" type="url" size="40" maxlength="2000" placeholder="http://www.example.com">
+              <button id="url-submit" type="button" onclick="url_upload(document.getElementById('url-input').value);">Submit</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="full-box-section">
+          <div id="full-box">
+            <div class="display-box" style="margin-right: 5%;">
+              <p>Before</p>
+              <div class="display-img">
+                <div id="drop-area"><img id="old-img" class="default" src="../static/images/drag_and_drop.jpg" alt="Old image goes here."></div>
+              </div>
+            </div>
+
+            <div class="display-box" style="margin-left: 5%;">
+              <p>After</p>
+              <div class="display-img">
+                <div id="align-area"><img id="new-img" class="default" src="../static/images/placeholder.jpg" alt="New image goes here."></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact">
+          <div class="social column">
+            <h3>About Us</h3>
+            <p>This website was developed by Captain Hasan and his fellow comrades: Chuck, Harneet, and Mohamed.</p>
+            <p>If you have any questions or concerns, contact us at <a href="mailto:filterx.website@gmail.com">filterx.website@gmail.com</a></p>
+            <h3>Share This Website</h3>
+            <ul class="icons">
+              <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+              <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+              <li><a href="#" class="icon fa-envelope"><span class="label">E-mail</span></a></li>
+            </ul>
+          </div>
+
+          <div class="column">
+            <h3>Get in Touch</h3>
+            <form action="#" method="post">
+              <div class="field half first">
+                <label for="name">Name</label>
+                <input name="name" id="name" type="text" placeholder="Name">
+              </div>
+              <div class="field half">
+                <label for="email">Email</label>
+                <input name="email" id="email" type="email" placeholder="Email">
+              </div>
+              <div class="field">
+                <label for="message">Message</label>
+                <textarea name="message" id="message" rows="6" placeholder="Message"></textarea>
+              </div>
+              <ul class="actions">
+                <li><input value="Send Message" class="button" type="submit"></li>
+              </ul>
+            </form>
+          </div>
+        </section>
+
+        <footer id="footer">
+          <div class="copyright">
+            &copy; 2018 FilterX, Inc. Template by <a href="https://templated.co/" target="_blank">TEMPLATED</a>.
+          </div>
+        </footer>
+
+        <!-- Close #main -->
+      </section>
+
+      <!-- Close .page-wrap -->
     </div>
 
-    <div id="full-box">
-      <!-- Open #full-box -->
-      <div class="display-box">
-        <p>Before</p>
-        <div id="upload-options" class="show">
-          <input id="file-upload" type="file" accept="image/*" onchange="upload(this);">
-          <div id="url-upload">
-            <input id="url-input" type="url" size="25" maxlength="2000" placeholder="http://www.example.com">
-            <button id="url-submit" type="button" onclick="url_upload(document.getElementById('url-input').value);">Submit</button>
-          </div>
-        </div>
-        <div id="upload-loading" class="hide">Loading...<img src="../static/images/load.gif" alt="Loading GIF"></div>
-        <div class="display-img">
-          <div id="drop-area" class="show"><img id="old-img" class="default" src="../static/images/drag_and_drop.png" alt="Old image goes here."></div>
-        </div>
-      </div>
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/jquery.poptrox.min.js"></script>
+    <script src="../static/js/jquery.scrolly.min.js"></script>
+    <script src="../static/js/skel.min.js"></script>
+    <script src="../static/js/util.js"></script>
+    <script src="../static/js/main.js"></script>
 
-      <div id="filter-box">
-        <select id="filter-select">
-          <option value="none" selected disabled hidden>Choose a filter</option>
-          <option value="black_and_white">Black and White</option>
-          <option value="sepia">Sepia</option>
-          <option value="censor">Censor</option>
-          <option value="mirror">Mirror</option>
-          <option value="upside_down">Upside Down</option>
-          <option value="flip">Flip It!</option>
-          <option value="hazy_remembrance">Hazy Remembrance</option>
-          <option value="feeling_green">Feeling Green?</option>
-          <option value="joker_logo">Joker Logo</option>
-          <option value="swap_blue_red">Fire or Ice</option>
-        </select>
-        <button type="button" onclick="filter(document.getElementById('filter-select').value);">Filter</button>
-      </div>
-
-      <div class="display-box">
-        <p>After</p>
-        <div id="socials" class="show">
-          <!-- Open #socials -->
-          <div id="facebook-btn" class="social-btn" title="Share on Facebook" onclick="share_to('facebook');"><img src="../static/images/facebook_share.jpg" alt="Share on Facebook"></div>
-
-          <div class="social-btn">
-            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check this website! They have many filters for your images and you can even download them!!!" data-url="https://filterx.herokuapp.com/" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-          </div>
-
-          <div class="social-btn">
-            <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
-            <script type="IN/Share" data-url="https://filterx.herokuapp.com/"></script>
-          </div>
-
-          <div class="social-btn">
-            <a data-pin-do="buttonPin" data-pin-tall="true" data-pin-round="true" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Ffilterx.herokuapp.com%2F&media=https%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_32.png" alt="Share on Pinterest"></a>
-          </div>
-
-          <button id="download-btn" type="button" title="Download" onclick="download_image();"><img src="../static/images/download.png" alt="Download Button"></button>
-          <!-- Close #socials -->
-        </div>
-        <div id="filter-loading" class="hide">Loading...<img src="../static/images/load.gif" alt="Loading GIF"></div>
-        <div class="display-img">
-          <div id="align-area"><img id="new-img" class="default" src="../static/images/placeholder.jpg" alt="New image goes here."></div>
-        </div>
-      </div>
-      <!-- Close #full-box -->
-    </div>
-    <script async src="//assets.pinterest.com/js/pinit.js"></script>
-    <footer>
-      <img id="footer-icon" src="../static/images/favicon.ico" alt="FilterX Icon">
-      <span>© 2018 FilterX, Inc. If you have any questions or concerns, contact us at <a href="mailto:filterx.website@gmail.com">filterx.website@gmail.com</a><br><strong id="footer-note" style="color: red;">***</strong>This website was designed specifically for desktop browsers, so it may not function properly on other devices.</span>
-    </footer>
   </body>
 </html>

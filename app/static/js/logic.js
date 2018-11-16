@@ -1,15 +1,6 @@
 var filter_button_active = true;
 var upload_active = true;
 
-function change_theme() {
-    if (document.body.className == 'dark') {
-        document.body.className = 'light';
-    }
-    else {
-        document.body.className = 'dark';
-    }
-}
-
 function filter(filter_type) {
     if (!filter_button_active)
         alert('Wait for current upload or filter to finish processing!');
@@ -22,9 +13,6 @@ function filter(filter_type) {
     else {
         // Prevent upload and filter() calls while processing a filter
         filter_button_active = false; upload_active = false;
-        document.getElementById('socials').className = 'hide';
-        document.getElementById('filter-loading').className = 'show';
-
         var img_string = document.getElementById('old-img').src;
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/', true);
@@ -33,8 +21,6 @@ function filter(filter_type) {
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 document.getElementById('new-img').src = xhr.responseText;
-                document.getElementById('filter-loading').className = 'hide';
-                document.getElementById('socials').className = 'show';
                 filter_button_active = true; upload_active = true;
             }
         };
@@ -58,8 +44,7 @@ function update_images(b64_string) {
         alert('Unable to upload item! Try another upload method.');
     else {
         var click_sound = new Audio('../static/sounds/camera_sound.mp3');
-        click_sound.volume = 0.5; click_sound.play();
-        document.getElementById('drop-area').className = 'hide';
+        click_sound.volume = 0.25; click_sound.play();
         document.getElementById('old-img').src = b64_string;
         document.getElementById('old-img').className = 'not-default';
         document.getElementById('new-img').src = b64_string;
@@ -95,8 +80,6 @@ function url_upload(url) {
         else {
             // Prevent upload and filter() calls while processing an upload
             filter_button_active = false; upload_active = false;
-            document.getElementById('upload-options').className = 'hide';
-            document.getElementById('upload-loading').className = 'show';
             var proxy_url = 'https://cors-anywhere.herokuapp.com/';
             var xhr = new XMLHttpRequest();
             xhr.open('GET', proxy_url + url, true);
@@ -106,8 +89,6 @@ function url_upload(url) {
                     var reader = new FileReader();
                     reader.onload = function() {
                         update_images(reader.result);
-                        document.getElementById('upload-loading').className = 'hide';
-                        document.getElementById('upload-options').className = 'show';
                         filter_button_active = true; upload_active = true;
                     };
                     reader.readAsDataURL(xhr.response);
