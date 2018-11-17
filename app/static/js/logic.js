@@ -106,7 +106,7 @@ function upload(input) {
         if (!input)
             alert('Unable to upload item! Try another upload method.');
         else if (input.files && input.files[0]) {
-            // input is a FileList object obtained from file item (upload or drop)
+            // input is a FileList object obtained from file item
             if (input.files[0].type.indexOf('image') == -1)
                 alert('Only image files can be uploaded! Try again.');
             else {
@@ -120,7 +120,7 @@ function upload(input) {
             }
         }
         else {
-            // input is a DataTransfer object obtained from remote item (drop)
+            // input is a DataTransfer object obtained from remote item
             var text_string = input.getData('text');
             var html_string = input.getData('text/html');
             var start_pos = html_string.indexOf('src="');
@@ -147,7 +147,6 @@ function upload(input) {
 }
 
 // Configure drag-and-drop functionality
-
 window.onload = function() {
     var drop_area = document.getElementById('drop-area');
 
@@ -176,3 +175,11 @@ window.onload = function() {
         drop_area.addEventListener(event, unhighlight, false);
     });
 };
+
+// Configure nav button functionality
+jQuery(document).ready(function() {
+    jQuery('.nav-btn').click(function(event) {
+        jQuery('.active').removeClass('active');
+        jQuery(this).addClass('active');
+    });
+});

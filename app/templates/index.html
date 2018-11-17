@@ -22,11 +22,13 @@
     <meta property="og:image" content="https://res.cloudinary.com/filterx/image/upload/v1542348499/filterx_snapshot.png">
     <meta name="twitter:card" content="summary_large_image">
 
-    <!-- IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
     <link type="text/css" rel="stylesheet" href="../static/css/main.css">
-    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=2.8">
-    <script type="text/javascript" src="../static/js/logic.js?version=2.8"></script>
-    <script type="text/javascript" src="../static/js/socials.js?version=1.2" ></script>
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
+    <script type="text/javascript" src="../static/js/jquery.min.js"></script>
+    <!-- IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
+    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.0">
+    <script type="text/javascript" src="../static/js/logic.js?version=3.0"></script>
+    <script type="text/javascript" src="../static/js/socials.js?version=2.0" ></script>
     <script type="text/javascript" src="../static/js/download.js?version=1.0"></script>
   </head>
 
@@ -36,9 +38,11 @@
 
       <nav id="nav">
         <ul>
-          <li><a href="index.html" class="active"><span class="icon fa-home"></span></a></li>
-          <li><a href="#full-box-section"><span class="icon fa-camera-retro"></span></a></li>
-          <li><a href="#contact"><span class="icon fa-file-text-o"></span></a></li>
+          <li><a href="#banner" class="nav-btn scrolly active"><span class="icon fa-home"></span></a></li>
+          <li><a href="#upload-section" class="nav-btn scrolly"><span class="icon fa-upload"></span></a></li>
+          <li><a href="#filter-section" class="nav-btn scrolly"><span class="icon fa-camera-retro"></span></a></li>
+          <li><a href="#social-section" class="nav-btn scrolly"><span class="icon fa-download"></span></a></li>
+          <li><a href="#contact" class="nav-btn scrolly"><span class="icon fa-share-alt"></span></a></li>
         </ul>
       </nav>
 
@@ -47,7 +51,7 @@
 
         <section id="banner">
           <div class="inner">
-            <h1>FilterX</h1>
+            <h1 id="logo">FilterX</h1>
             <p>Filter, download, and share your images!</p>
             <ul class="actions">
               <li><a href="#upload-section" class="button alt scrolly big">Continue</a></li>
@@ -56,34 +60,71 @@
         </section>
 
         <section id="upload-section">
-          <h1 id="upload-text">Upload</h1>
-          <div id="upload-options">
-            <input id="file-upload" type="file" accept="image/*" onchange="upload(this);">
-            <p>or upload by remote image URL:</p>
-
-            <div id="url-upload">
-              <input id="url-input" type="url" size="40" maxlength="2000" placeholder="http://www.example.com">
-              <button id="url-submit" type="button" onclick="url_upload(document.getElementById('url-input').value);">Submit</button>
-            </div>
-          </div>
+          <h2>Upload</h2>
+          <input id="file-upload" type="file" accept="image/*" onchange="upload(this);">
+          <p>or upload by remote image URL:</p>
+          <ul class="actions">
+            <li><input id="url-input" type="text" size="40" maxlength="2000" placeholder="http://www.example.com"></li>
+            <li><button class="fa-arrow-right icon" type="button" onclick="url_upload(document.getElementById('url-input').value);">Submit</button></li>
+          </ul>
         </section>
 
-        <section id="full-box-section">
-          <div id="full-box">
-            <div class="display-box" style="margin-right: 5%;">
-              <p>Before</p>
-              <div class="display-img">
-                <div id="drop-area"><img id="old-img" class="default" src="../static/images/drag_and_drop.jpg" alt="Old image goes here."></div>
-              </div>
-            </div>
-
-            <div class="display-box" style="margin-left: 5%;">
-              <p>After</p>
-              <div class="display-img">
-                <div id="align-area"><img id="new-img" class="default" src="../static/images/placeholder.jpg" alt="New image goes here."></div>
-              </div>
+        <section id="filter-section">
+          <div class="display-box" style="margin-right: 5%;">
+            <p>Before</p>
+            <div class="display-img">
+              <div id="drop-area"><img id="old-img" class="default" src="../static/images/drag_and_drop.jpg" alt="Old image goes here."></div>
             </div>
           </div>
+
+          <div class="display-box" style="margin-left: 5%;">
+            <p>After</p>
+            <div class="display-img">
+              <div id="align-area"><img id="new-img" class="default" src="../static/images/placeholder.jpg" alt="New image goes here."></div>
+            </div>
+          </div>
+
+          <ul id="filter-box" class="actions">
+            <li><select id="filter-select">
+              <option value="none" selected disabled hidden>Choose a filter</option>
+              <option value="black_and_white">Black and White</option>
+              <option value="sepia">Sepia</option>
+              <option value="censor">Censor</option>
+              <option value="mirror">Mirror</option>
+              <option value="upside_down">Upside Down</option>
+              <option value="flip">Flip It!</option>
+              <option value="hazy_remembrance">Hazy Remembrance</option>
+              <option value="feeling_green">Feeling Green?</option>
+              <option value="joker_logo">Joker Logo</option>
+              <option value="swap_blue_red">Fire or Ice</option>
+            </select></li>
+            <li><button id="filter-btn" class="fa-filter icon" type="button" onclick="filter(document.getElementById('filter-select').value);">Filter</button></li>
+          </ul>
+        </section>
+
+        <section id="social-section">
+          <h2>Download and Share</h2>
+          <ul id="social-btns" class="actions">
+            <li><button class="fa-download icon" type="button" onclick="download_image();">Download</button></li>
+            <li><button class="fa-facebook-square icon" type="button" onclick="share_to('facebook');">Share</button></li>
+            <li><button class="fa-twitter-square icon" type="button" onclick="share_to('twitter');">Share</button></li>
+            <li><button class="fa-linkedin-square icon" type="button" onclick="share_to('linkedin');">Share</button></li>
+            <li><button class="fa-pinterest-square icon" type="button" onclick="share_to('pinterest');">Share</button></li>
+            <!--
+                 <div class="social-btn">
+                 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check this website! They have many filters for your images and you can even download them!!!" data-url="https://filterx.herokuapp.com/" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                 </div>
+
+                 <div class="social-btn">
+                 <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+                 <script type="IN/Share" data-url="https://filterx.herokuapp.com/"></script>
+                 </div>
+
+                 <div class="social-btn">
+                 <a href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Ffilterx.herokuapp.com%2F&media=https%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest" data-pin-do="buttonPin" data-pin-tall="true" data-pin-round="true"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_32.png" alt="Share on Pinterest"></a>
+                 </div>
+            -->
+          </ul>
         </section>
 
         <section id="contact">
@@ -93,29 +134,29 @@
             <p>If you have any questions or concerns, contact us at <a href="mailto:filterx.website@gmail.com">filterx.website@gmail.com</a></p>
             <h3>Share This Website</h3>
             <ul class="icons">
-              <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-              <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-              <li><a href="#" class="icon fa-envelope"><span class="label">E-mail</span></a></li>
+              <li><a href="#contact" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+              <li><a href="#contact" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+              <li><a href="#contact" class="icon fa-envelope"><span class="label">Email</span></a></li>
             </ul>
           </div>
 
           <div class="column">
             <h3>Get in Touch</h3>
-            <form action="#" method="post">
+            <form>
               <div class="field half first">
                 <label for="name">Name</label>
-                <input name="name" id="name" type="text" placeholder="Name">
+                <input id="name" name="name" type="text" placeholder="Name">
               </div>
               <div class="field half">
                 <label for="email">Email</label>
-                <input name="email" id="email" type="email" placeholder="Email">
+                <input id="email" name="email" type="email" placeholder="Email">
               </div>
               <div class="field">
                 <label for="message">Message</label>
-                <textarea name="message" id="message" rows="6" placeholder="Message"></textarea>
+                <textarea id="message" name="message" rows="6" placeholder="Message"></textarea>
               </div>
               <ul class="actions">
-                <li><input value="Send Message" class="button" type="submit"></li>
+                <li><input class="button" value="Send Message"></li>
               </ul>
             </form>
           </div>
@@ -133,7 +174,6 @@
       <!-- Close .page-wrap -->
     </div>
 
-    <script src="../static/js/jquery.min.js"></script>
     <script src="../static/js/jquery.poptrox.min.js"></script>
     <script src="../static/js/jquery.scrolly.min.js"></script>
     <script src="../static/js/skel.min.js"></script>

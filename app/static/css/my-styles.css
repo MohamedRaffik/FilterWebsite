@@ -1,43 +1,36 @@
+html, body {
+    min-width: 600px;
+}
+
 img {
     pointer-events: none;
 }
 
+#logo {
+    font-family: 'Lobster';
+}
+
 /* Section for uploading image */
 #upload-section {
+    padding-top: 10px;
     text-align: center;
 }
 
-#upload-text {
-    margin: 1% auto;
-}
-
 #file-upload {
-    margin: 1% auto;
+    margin-bottom: 20px;
     outline: none;
 }
 
-#url-upload {
-    margin: 1% auto;
-}
-
-#url-input, #url-submit {
-    margin-bottom: 1%;
-}
-
-/* Section for displaying original and filtered image */
-#full-box-section {
+/* Section for displaying original and filtered image,
+   as well as the filter drop-down menu and button */
+#filter-section {
     background: #4682B4;
-}
-
-#full-box {
-    display: inline-block;
-    margin: 0 auto;
-    padding: 2.5% 2.5%;
-    height: 100%;
+    padding: 2.5% 2.5% 0 2.5%;
+    text-align: center;
+    height: auto;
     width: 100%;
 }
 
-/* Container to hold a <p> tag header and an image */
 .display-box {
     background: #FFFFFF;
     float: left;
@@ -73,7 +66,7 @@ img {
 
 /* Styling for drag-and-drop area */
 #drop-area.highlight {
-    background: #4682B4;
+    background: #000000;
 }
 
 #drop-area.highlight img {
@@ -84,4 +77,42 @@ img {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+/* Styling for filter drop-down menu and button */
+#filter-box {
+    display: inline-block;
+    margin-top: 20px;
+}
+
+#filter-select {
+    background: #B0C4DE;
+    color: #000000;
+}
+
+#filter-btn {
+    background: #FFFF00;
+    color: #000000;
+}
+
+#filter-btn:active, #filter-btn:hover {
+    background: #FFD700;
+}
+
+/* Section for downloading and sharing filtered image */
+#social-section {
+    background: #C0C0C0;
+    padding-bottom: 1px;
+    padding-top: 10px;
+    text-align: center;
+}
+
+#social-btns button {
+    background: #3CB371;
+    margin-bottom: 10px;
+    height: auto;
+}
+
+#social-btns button:active, #social-btns button:hover {
+    background: #2E8B57;
 }

@@ -19,25 +19,22 @@ function upload_to_cloudinary(b64_string, callback) {
 
 function share_to(website) {
     if (document.getElementById('new-img').className == 'default') {
-        alert('Upload an image before clicking the share button!');
+        alert('Upload an image before clicking a share button!');
         return false;
     }
-    var callback;
     if (website == 'facebook') {
-        callback = function(url) {
+        var callback = function(url) {
             var link = document.createElement('a');
             link.href = 'https://www.facebook.com/sharer/sharer.php?u=' +
                 encodeURIComponent(url);
             link.target = '_blank';
             link.click();
         };
+        upload_to_cloudinary(document.getElementById('new-img').src, callback);
     }
-    else if (website == 'twitter') {
-        callback = function(url) {
-            console.log('Twitter Share: ' + url);
-        };
+    else {
+        console.log(website + ' share');
     }
-    upload_to_cloudinary(document.getElementById('new-img').src, callback);
     // Allow anchor tag's href to follow through after function call
     return true;
 }
