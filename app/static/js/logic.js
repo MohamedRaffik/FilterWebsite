@@ -70,7 +70,6 @@ function update_images(b64_string, add_to_slider) {
     if (!is_valid_b64img(b64_string))
         alert('Unable to upload item! Try another upload method.');
     else {
-        console.log(b64_string);
         var click_sound = new Audio('../static/sounds/camera_sound.mp3');
         click_sound.volume = 0.25; click_sound.play();
         document.getElementById('old-img').src = b64_string;
