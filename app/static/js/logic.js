@@ -20,7 +20,9 @@ function filter(filter_type) {
                              'application/x-www-form-urlencoded;charset=UTF-8');
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                document.getElementById('new-img').src = xhr.responseText;
+                var b64_string = xhr.responseText;
+                document.getElementById('new-img').src = b64_string;
+                add_img_to_slider(b64_string);
                 filter_button_active = true; upload_active = true;
             }
         };
@@ -46,6 +48,24 @@ function get_img_type(b64_string) {
     return b64_string.substring(start_pos, end_pos);
 }
 
+function add_img_to_slider(b64_string) {
+    /* slickRemove(index, removeBefore)
+       Remove slide by index. If removeBefore is set true, remove slide
+       preceding index, or the first slide if no index is specified. If
+       removeBefore is set to false, remove the slide following index,
+       or the last slide if no index is set. */
+    // Remove the last slide:
+    $('.img-slider').slick('slickRemove', false);
+    /* slickAdd(HTML String/DOM object, index, addBefore)
+       Add a slide. If an index is provided, will add at that index, or
+       before if addBefore is set. If no index is provided, add to the
+       end or to the beginning if addBefore is set. */
+    var new_slide = '<div><img class="not-default" src="' +
+        b64_string + '" alt="Recent image"></div>';
+    // Add new_slide at the front:
+    $('.img-slider').slick('slickAdd', new_slide, 0, true);
+}
+
 function update_images(b64_string, add_to_slider) {
     if (!is_valid_b64img(b64_string))
         alert('Unable to upload item! Try another upload method.');
@@ -57,21 +77,7 @@ function update_images(b64_string, add_to_slider) {
         document.getElementById('new-img').src = b64_string;
         document.getElementById('new-img').className = 'not-default';
         if (add_to_slider) {
-            /* slickRemove(index, removeBefore)
-               Remove slide by index. If removeBefore is set true, remove
-               slide preceding index, or the first slide if no index is
-               specified. If removeBefore is set to false, remove the slide
-               following index, or the last slide if no index is set. */
-            // Remove the last slide:
-            $('.img-slider').slick('slickRemove', false);
-            /* slickAdd(HTML String/DOM object, index, addBefore)
-               Add a slide. If an index is provided, will add at that index,
-               or before if addBefore is set. If no index is provided, add
-               to the end or to the beginning if addBefore is set. */
-            var new_slide = '<div><img class="not-default" src="'
-                + b64_string + '" alt="Recent image"></div>';
-            // Add new_slide at the front:
-            $('.img-slider').slick('slickAdd', new_slide, 0, true);
+            add_img_to_slider(b64_string);
         }
     }
 }
