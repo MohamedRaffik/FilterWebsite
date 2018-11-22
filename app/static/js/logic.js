@@ -70,6 +70,7 @@ function update_images(b64_string, add_to_slider) {
     if (!is_valid_b64img(b64_string))
         alert('Unable to upload item! Try another upload method.');
     else {
+        console.log(b64_string);
         var click_sound = new Audio('../static/sounds/camera_sound.mp3');
         click_sound.volume = 0.25; click_sound.play();
         document.getElementById('old-img').src = b64_string;
@@ -88,7 +89,14 @@ function download_image() {
     else {
         var b64_string = document.getElementById('new-img').src;
         var img_type = get_img_type(b64_string);
-        download(b64_string, 'filterx-download.'+img_type, 'image/'+img_type);
+        var ext;
+        if (img_type == 'x-icon')
+            ext = '.ico';
+        else if (img_type == 'svg+xml')
+            ext = '.svg';
+        else
+            ext = '.'+img_type;
+        download(b64_string, 'filterx-download'+ext, 'image/'+img_type);
     }
 }
 
