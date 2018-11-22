@@ -1,18 +1,28 @@
+@import url('https://fonts.googleapis.com/css?family=Lobster');
+
 html, body {
-    min-width: 600px;
+    min-width: 700px;
+}
+
+section .inner-alt {
+    padding: 1em;
 }
 
 img {
     pointer-events: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 #logo {
-    font-family: 'Lobster';
+    font-family: "Lobster";
 }
 
 /* Section for uploading image */
 #upload-section {
-    padding-top: 10px;
+    background: #F5F5F5;
     text-align: center;
 }
 
@@ -21,8 +31,7 @@ img {
     outline: none;
 }
 
-/* Section for displaying original and filtered image,
-   as well as the filter drop-down menu and button */
+/* Section for displaying original and filtered image, as well as the filter drop-down menu and button */
 #filter-section {
     background: #4682B4;
     padding: 2.5% 2.5% 0 2.5%;
@@ -59,7 +68,6 @@ img {
 
 .display-img img {
     margin: 2.5% none;
-    user-select: none;
     height: 100%;
     width: 100%;
 }
@@ -99,11 +107,54 @@ img {
     background: #FFD700;
 }
 
+/* Section for recent images */
+#images-section {
+    background: #FFF8DC;
+    text-align: center;
+}
+
+.img-slider {
+    margin: 0 auto;
+    width: 600px;
+}
+
+.img-slider img.not-default {
+    pointer-events: auto;
+}
+
+/* The dot representing the section of the slider that is currently displayed */
+.slick-active {
+    opacity: 1;
+}
+
+/* The first div box in the section of the slider that is currently displayed */
+.slick-current {
+    opacity: 1;
+}
+
+/* The previous and next arrows */
+.slick-prev:before, .slick-next:before {
+    color: #000000;
+}
+
+/* The div wrapper around the images */
+.slick-slide {
+    margin: 0 20px;
+    opacity: 1;
+    transition: all ease-in-out .3s;
+}
+
+.slick-slide:hover {
+    opacity: .6;
+}
+
+.slick-slide img {
+    width: 100%;
+}
+
 /* Section for downloading and sharing filtered image */
 #social-section {
     background: #C0C0C0;
-    padding-bottom: 1px;
-    padding-top: 10px;
     text-align: center;
 }
 

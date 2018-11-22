@@ -39,7 +39,14 @@ function is_valid_url(url) {
     return a.host && a.host != window.location.host;
 }
 
-function update_images(b64_string) {
+function get_img_type(b64_string) {
+    // b64_string starts with 'data:image/img_type;base64,'
+    var start_pos = b64_string.indexOf('data:image/') + 11;
+    var end_pos = b64_string.indexOf(';', start_pos);
+    return b64_string.substring(start_pos, end_pos);
+}
+
+function update_images(b64_string, add_to_slider) {
     if (!is_valid_b64img(b64_string))
         alert('Unable to upload item! Try another upload method.');
     else {
@@ -49,6 +56,23 @@ function update_images(b64_string) {
         document.getElementById('old-img').className = 'not-default';
         document.getElementById('new-img').src = b64_string;
         document.getElementById('new-img').className = 'not-default';
+        if (add_to_slider) {
+            /* slickRemove(index, removeBefore)
+               Remove slide by index. If removeBefore is set true, remove
+               slide preceding index, or the first slide if no index is
+               specified. If removeBefore is set to false, remove the slide
+               following index, or the last slide if no index is set. */
+            // Remove the last slide:
+            $('.img-slider').slick('slickRemove', false);
+            /* slickAdd(HTML String/DOM object, index, addBefore)
+               Add a slide. If an index is provided, will add at that index,
+               or before if addBefore is set. If no index is provided, add
+               to the end or to the beginning if addBefore is set. */
+            var new_slide = '<div><img class="not-default" src="'
+                + b64_string + '" alt="Recent image"></div>';
+            // Add new_slide at the front:
+            $('.img-slider').slick('slickAdd', new_slide, 0, true);
+        }
     }
 }
 
@@ -56,8 +80,9 @@ function download_image() {
     if (document.getElementById('new-img').className == 'default')
         alert('Upload an image before clicking the download button!');
     else {
-        download(document.getElementById('new-img').src,
-                 'filterx_download.jpg', 'image/jpeg');
+        var b64_string = document.getElementById('new-img').src;
+        var img_type = get_img_type(b64_string);
+        download(b64_string, 'filterx-download.'+img_type, 'image/'+img_type);
     }
 }
 
@@ -88,7 +113,7 @@ function url_upload(url) {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var reader = new FileReader();
                     reader.onload = function() {
-                        update_images(reader.result);
+                        update_images(reader.result, true);
                         filter_button_active = true; upload_active = true;
                     };
                     reader.readAsDataURL(xhr.response);
@@ -112,7 +137,7 @@ function upload(input) {
             else {
                 var reader = new FileReader();
                 reader.onload = function() {
-                    update_images(reader.result);
+                    update_images(reader.result, true);
                 };
                 // readAsDataURL represents the image as a base64 encoded string
                 // that starts with the regexp 'data:*/*;base64,'
@@ -135,7 +160,7 @@ function upload(input) {
             }
 
             if (is_valid_b64img(text_string)) {
-                update_images(text_string);
+                update_images(text_string, true);
             }
             else if (!text_string || !is_valid_url(text_string))
                 alert('Dropped item is not a valid image! Try again.');
@@ -176,10 +201,72 @@ window.onload = function() {
     });
 };
 
-// Configure nav button functionality
-jQuery(document).ready(function() {
-    jQuery('.nav-btn').click(function(event) {
-        jQuery('.active').removeClass('active');
-        jQuery(this).addClass('active');
+$(document).ready(function() {
+
+    // Configure nav button functionality
+    $('.nav-btn').click(function(event) {
+        event.preventDefault();
+        event.stopPropagation();
     });
+
+    // Documentation at https://github.com/ajlkn/jquery.scrollex
+    $('.page-section').scrollex({
+        /* Mode: where the viewport edge(s) must fall within the element's
+           contact area for it to be considered "active" */
+        mode: 'top',
+        // Padding (of contact area): + for inward, - for outward
+        top: '-1%',
+        bottom: '1%',
+        // Enter event: when element becomes "active"
+        enter: function() {
+            var id = $(this)[0].id;
+            $('.nav-btn[href=#'+id+']').addClass('active');
+        },
+        // Leave event: when element becomes "inactive"
+        leave: function() {
+            var id = $(this)[0].id;
+            $('.nav-btn[href=#'+id+']').removeClass('active');
+        }
+    });
+
+    /* Configure image slider functionality
+       Documentation at http://kenwheeler.github.io/slick */
+    $('.img-slider').slick({
+        dots: true,
+        infinite: false,
+        speed: 750,
+        slidesToShow: 4,
+        slidesToScroll: 4,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                }
+            },
+            {
+                breakpoint: 752,
+                settings: {
+                    arrows: false,
+                    slidesToShow: 2,
+                    slidesToScroll: 2
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    arrows: false,
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
+    });
+
+    $('.img-slider').on('dblclick', 'img', function() {
+        var b64_string = $(this)[0].src;
+        update_images(b64_string, false);
+    });
+
 });

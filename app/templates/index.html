@@ -19,17 +19,21 @@
     <meta property="og:title" content="FilterX">
     <meta property="og:url" content="https://filterx.herokuapp.com/">
     <meta property="og:description" content="Filter, download, and share your images!">
-    <meta property="og:image" content="https://res.cloudinary.com/filterx/image/upload/v1542348499/filterx_snapshot.png">
+    <meta property="og:image" content="https://res.cloudinary.com/filterx/image/upload/v1542575791/filterx_snapshot.png">
     <meta name="twitter:card" content="summary_large_image">
 
+    <!-- Main CSS and JS -->
     <link type="text/css" rel="stylesheet" href="../static/css/main.css">
-    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
     <script type="text/javascript" src="../static/js/jquery.min.js"></script>
-    <!-- IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
-    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.0">
-    <script type="text/javascript" src="../static/js/logic.js?version=3.0"></script>
+    <script type="text/javascript" src="../static/js/skel.min.js"></script>
+    <!-- slick CSS and JS - http://kenwheeler.github.io/slick/ -->
+    <link type="text/css" rel="stylesheet" href="../static/css/slick.css">
+    <link type="text/css" rel="stylesheet" href="../static/css/slick-theme.css">
+    <script type="text/javascript" src="../static/js/slick.min.js"></script>
+    <!-- My CSS and JS - IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
+    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.1">
+    <script type="text/javascript" src="../static/js/logic.js?version=3.1"></script>
     <script type="text/javascript" src="../static/js/socials.js?version=2.0" ></script>
-    <script type="text/javascript" src="../static/js/download.js?version=1.0"></script>
   </head>
 
   <body>
@@ -41,6 +45,7 @@
           <li><a href="#banner" class="nav-btn scrolly active"><span class="icon fa-home"></span></a></li>
           <li><a href="#upload-section" class="nav-btn scrolly"><span class="icon fa-upload"></span></a></li>
           <li><a href="#filter-section" class="nav-btn scrolly"><span class="icon fa-camera-retro"></span></a></li>
+          <li><a href="#images-section" class="nav-btn scrolly"><span class="icon fa-th-list"></span></a></li>
           <li><a href="#social-section" class="nav-btn scrolly"><span class="icon fa-download"></span></a></li>
           <li><a href="#contact" class="nav-btn scrolly"><span class="icon fa-share-alt"></span></a></li>
         </ul>
@@ -49,7 +54,7 @@
       <section id="main">
         <!-- Open #main -->
 
-        <section id="banner">
+        <section id="banner" class="page-section">
           <div class="inner">
             <h1 id="logo">FilterX</h1>
             <p>Filter, download, and share your images!</p>
@@ -59,17 +64,19 @@
           </div>
         </section>
 
-        <section id="upload-section">
-          <h2>Upload</h2>
-          <input id="file-upload" type="file" accept="image/*" onchange="upload(this);">
-          <p>or upload by remote image URL:</p>
-          <ul class="actions">
-            <li><input id="url-input" type="text" size="40" maxlength="2000" placeholder="http://www.example.com"></li>
-            <li><button class="fa-arrow-right icon" type="button" onclick="url_upload(document.getElementById('url-input').value);">Submit</button></li>
-          </ul>
+        <section id="upload-section" class="page-section">
+          <div class="inner-alt">
+            <h2>Upload</h2>
+            <input id="file-upload" type="file" accept="image/*" onchange="upload(this);">
+            <p>or upload by remote image URL:</p>
+            <ul class="actions">
+              <li><input id="url-input" type="text" size="40" maxlength="2000" placeholder="http://www.example.com"></li>
+              <li><button class="fa-arrow-right icon" type="button" onclick="url_upload(document.getElementById('url-input').value);">Submit</button></li>
+            </ul>
+          </div>
         </section>
 
-        <section id="filter-section">
+        <section id="filter-section" class="page-section">
           <div class="display-box" style="margin-right: 5%;">
             <p>Before</p>
             <div class="display-img">
@@ -80,7 +87,7 @@
           <div class="display-box" style="margin-left: 5%;">
             <p>After</p>
             <div class="display-img">
-              <div id="align-area"><img id="new-img" class="default" src="../static/images/placeholder.jpg" alt="New image goes here."></div>
+              <div id="align-area"><img id="new-img" class="default" src="https://via.placeholder.com/600.jpg/000000/000000" alt="New image goes here."></div>
             </div>
           </div>
 
@@ -102,32 +109,53 @@
           </ul>
         </section>
 
-        <section id="social-section">
-          <h2>Download and Share</h2>
-          <ul id="social-btns" class="actions">
-            <li><button class="fa-download icon" type="button" onclick="download_image();">Download</button></li>
-            <li><button class="fa-facebook-square icon" type="button" onclick="share_to('facebook');">Share</button></li>
-            <li><button class="fa-twitter-square icon" type="button" onclick="share_to('twitter');">Share</button></li>
-            <li><button class="fa-linkedin-square icon" type="button" onclick="share_to('linkedin');">Share</button></li>
-            <li><button class="fa-pinterest-square icon" type="button" onclick="share_to('pinterest');">Share</button></li>
-            <!--
-                 <div class="social-btn">
-                 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check this website! They have many filters for your images and you can even download them!!!" data-url="https://filterx.herokuapp.com/" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                 </div>
-
-                 <div class="social-btn">
-                 <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
-                 <script type="IN/Share" data-url="https://filterx.herokuapp.com/"></script>
-                 </div>
-
-                 <div class="social-btn">
-                 <a href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Ffilterx.herokuapp.com%2F&media=https%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest" data-pin-do="buttonPin" data-pin-tall="true" data-pin-round="true"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_32.png" alt="Share on Pinterest"></a>
-                 </div>
-            -->
-          </ul>
+        <section id="images-section" class="page-section">
+          <div class="inner-alt">
+            <h2>Recent Images</h2>
+            <p>You can double click an image (that's not a default image) from the slider below to upload it!</p>
+            <div class="img-slider">
+              <div><img class="default" src="https://via.placeholder.com/300.jpg/000000/000000" alt="Placeholder"></div>
+              <div><img class="default" src="https://via.placeholder.com/300.jpg/2F4F4F/2F4F4F" alt="Placeholder"></div>
+              <div><img class="default" src="https://via.placeholder.com/300.jpg/696969/696969" alt="Placeholder"></div>
+              <div><img class="default" src="https://via.placeholder.com/300.jpg/708090/708090" alt="Placeholder"></div>
+              <div><img class="default" src="https://via.placeholder.com/300.jpg/778899/778899" alt="Placeholder"></div>
+              <div><img class="default" src="https://via.placeholder.com/300.jpg/808080/808080" alt="Placeholder"></div>
+              <div><img class="default" src="https://via.placeholder.com/300.jpg/A9A9A9/A9A9A9" alt="Placeholder"></div>
+              <div><img class="default" src="https://via.placeholder.com/300.jpg/C0C0C0/C0C0C0" alt="Placeholder"></div>
+              <div><img class="default" src="https://via.placeholder.com/300.jpg/D3D3D3/D3D3D3" alt="Placeholder"></div>
+              <div><img class="default" src="https://via.placeholder.com/300.jpg/DCDCDC/DCDCDC" alt="Placeholder"></div>
+            </div>
+          </div>
         </section>
 
-        <section id="contact">
+        <section id="social-section" class="page-section">
+          <div class="inner-alt">
+            <h2>Download and Share</h2>
+            <ul id="social-btns" class="actions">
+              <li><button class="fa-download icon" type="button" onclick="download_image();">Download</button></li>
+              <li><button class="fa-facebook-square icon" type="button" onclick="share_to('facebook');">Share</button></li>
+              <li><button class="fa-twitter-square icon" type="button" onclick="share_to('twitter');">Share</button></li>
+              <li><button class="fa-linkedin-square icon" type="button" onclick="share_to('linkedin');">Share</button></li>
+              <li><button class="fa-pinterest-square icon" type="button" onclick="share_to('pinterest');">Share</button></li>
+              <!--
+                   <div class="social-btn">
+                   <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check this website! They have many filters for your images and you can even download them!!!" data-url="https://filterx.herokuapp.com/" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                   </div>
+
+                   <div class="social-btn">
+                   <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+                   <script type="IN/Share" data-url="https://filterx.herokuapp.com/"></script>
+                   </div>
+
+                   <div class="social-btn">
+                   <a href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Ffilterx.herokuapp.com%2F&media=https%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest" data-pin-do="buttonPin" data-pin-tall="true" data-pin-round="true"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_32.png" alt="Share on Pinterest"></a>
+                   </div>
+              -->
+            </ul>
+          </div>
+        </section>
+
+        <section id="contact" class="page-section">
           <div class="social column">
             <h3>About Us</h3>
             <p>This website was developed by Captain Hasan and his fellow comrades: Chuck, Harneet, and Mohamed.</p>
@@ -175,8 +203,9 @@
     </div>
 
     <script src="../static/js/jquery.poptrox.min.js"></script>
+    <script src="../static/js/jquery.scrollex.min.js"></script>
     <script src="../static/js/jquery.scrolly.min.js"></script>
-    <script src="../static/js/skel.min.js"></script>
+    <script src="../static/js/download.min.js"></script>
     <script src="../static/js/util.js"></script>
     <script src="../static/js/main.js"></script>
 
