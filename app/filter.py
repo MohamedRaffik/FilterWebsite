@@ -12,12 +12,46 @@ def make_linear_ramp(white=(255,240,192)):
         ramp.extend((int(r*i/255), int(g*i/255), int(b*i/255)))
     return ramp
 
+def convert_from_b64(b64_img):
+    # Convert b64 string to an Image object
+    img = Image.open(BytesIO(b64decode(b64_img[b64_img.index(',')+1:])))
+    info = Image.open(BytesIO(b64decode(b64_img[b64_img.index(',')+1:]))).info
+    return img, info
+
+def convert_to_b64(img, meta_data):
+    buffered = BytesIO()
+    # meta_data looks something like 'data:image/jpeg;base64,'
+    img.save(buffered, format=meta_data[meta_data.index('/')+1 : meta_data.index(';')])
+    return meta_data + b64encode(buffered.getvalue()).decode('utf-8')
+
+def motion_filter(b64_img, filter_type, type_of):
+    meta_data = b64_img[:b64_img.index(',')+1]
+    gif, info = convert_from_b64(b64_img)
+    frames = []
+    try:
+        while 1:
+            buffer = BytesIO()
+            gif.save(buffer, format='png')
+            b64_frame = convert_to_b64(Image.open(buffer).convert('RGB'), "data:image/png;base64,")
+            img, img_info = convert_from_b64(filter(b64_frame, filter_type))
+            frames.append(img)
+            gif.seek(gif.tell()+1)
+    except EOFError:
+        pass
+    buffered = BytesIO()
+    if type_of == 'gif':
+        frames[0].save(buffered, format='gif', save_all=True, append_images=frames[1:], background=info['background'], version=info['version'], 
+    duration=info['duration'], loop=info['loop'], extension=info['extension'])
+    elif type_of =='webp':
+        frames[0].save(buffered, format='webp', save_all=True, append_images=frames[1:]) 
+    return meta_data + b64encode(buffered.getvalue()).decode('utf-8')
+
 
 def filter(b64_img, filter_type):
     censor_str = Censor.censor
     logo_str = Logo.logo
     meta_data = b64_img[0 : b64_img.index(',')+1]
-    img = Image.open(BytesIO(b64decode(b64_img[b64_img.index(',')+1:])))
+    img, info = convert_from_b64(b64_img)
     width, height = img.size
 
     #applies a black and white filter over the image
@@ -79,8 +113,4 @@ def filter(b64_img, filter_type):
         r, g, b = img.split()
         img = Image.merge('RGB', (b, g, r))
 
-        
-    buffered = BytesIO()
-    # meta_data looks something like 'data:image/jpeg;base64,'
-    img.save(buffered, format=meta_data[meta_data.index('/')+1 : meta_data.index(';')])
-    return meta_data + b64encode(buffered.getvalue()).decode('utf-8')
+    return convert_to_b64(img, meta_data)
