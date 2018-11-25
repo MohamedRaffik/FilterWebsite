@@ -8,8 +8,6 @@ function filter(filter_type) {
         alert('Upload an image before clicking the filter button!');
     else if (filter_type == 'none')
         alert('Select a filter before clicking the filter button!');
-    else if (document.getElementById('old-img').src.indexOf('.') != -1)
-        alert('Cannot filter image! Try another upload method.');
     else {
         // Prevent upload and filter() calls while processing a filter
         filter_button_active = false; upload_active = false;
@@ -76,9 +74,8 @@ function update_images(b64_string, add_to_slider) {
         document.getElementById('old-img').className = 'not-default';
         document.getElementById('new-img').src = b64_string;
         document.getElementById('new-img').className = 'not-default';
-        if (add_to_slider) {
+        if (add_to_slider)
             add_img_to_slider(b64_string);
-        }
     }
 }
 
@@ -152,8 +149,8 @@ function upload(input) {
                 reader.onload = function() {
                     update_images(reader.result, true);
                 };
-                // readAsDataURL represents the image as a base64 encoded string
-                // that starts with the regexp 'data:*/*;base64,'
+                /* readAsDataURL represents the image as a base64 encoded string
+                   that starts with the regexp 'data:image/*;base64,' */
                 reader.readAsDataURL(input.files[0]);
             }
         }
@@ -173,13 +170,15 @@ function upload(input) {
             }
 
             if (is_valid_b64img(text_string)) {
-                update_images(text_string, true);
+                var add_to_slider = true;
+                if (document.getElementById('new-img').src == text_string)
+                    add_to_slider = false;
+                update_images(text_string, add_to_slider);
             }
             else if (!text_string || !is_valid_url(text_string))
                 alert('Dropped item is not a valid image! Try again.');
-            else {
+            else
                 url_upload(text_string);
-            }
         }
     }
 }
@@ -228,8 +227,8 @@ $(document).ready(function() {
            contact area for it to be considered "active" */
         mode: 'top',
         // Padding (of contact area): + for inward, - for outward
-        top: '-1%',
-        bottom: '1%',
+        top: -5,
+        bottom: 5,
         // Enter event: when element becomes "active"
         enter: function() {
             var id = $(this)[0].id;
@@ -255,7 +254,7 @@ $(document).ready(function() {
                 breakpoint: 1024,
                 settings: {
                     slidesToShow: 3,
-                    slidesToScroll: 3,
+                    slidesToScroll: 3
                 }
             },
             {

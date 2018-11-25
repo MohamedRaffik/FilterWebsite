@@ -1,5 +1,5 @@
-// Uploads b64_string as an image to Cloudinary, and then invokes callback
-// with the argument as the url of the uploaded image
+/* Uploads b64_string as an image to Cloudinary, and then invokes callback
+   with the argument as the url of the uploaded image */
 function upload_to_cloudinary(b64_string, callback) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'https://api.cloudinary.com/v1_1/filterx/upload', true);

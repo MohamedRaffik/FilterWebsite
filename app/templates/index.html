@@ -4,7 +4,7 @@
      templated.co @templatedco
      Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 -->
-<html>
+<html lang="en">
   <head>
     <title>FilterX</title>
     <link href="../static/images/favicon.ico" type="image/x-icon" rel="shortcut icon">
@@ -22,18 +22,16 @@
     <meta property="og:image" content="https://res.cloudinary.com/filterx/image/upload/v1542575791/filterx_snapshot.png">
     <meta name="twitter:card" content="summary_large_image">
 
-    <!-- Main CSS and JS -->
+    <!-- Main CSS and jQuery -->
     <link type="text/css" rel="stylesheet" href="../static/css/main.css">
     <script type="text/javascript" src="../static/js/jquery.min.js"></script>
-    <script type="text/javascript" src="../static/js/skel.min.js"></script>
     <!-- slick CSS and JS - http://kenwheeler.github.io/slick/ -->
-    <link type="text/css" rel="stylesheet" href="../static/css/slick.css">
-    <link type="text/css" rel="stylesheet" href="../static/css/slick-theme.css">
+    <link type="text/css" rel="stylesheet" href="../static/css/slick.min.css">
     <script type="text/javascript" src="../static/js/slick.min.js"></script>
     <!-- My CSS and JS - IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
-    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.1">
-    <script type="text/javascript" src="../static/js/logic.js?version=3.4"></script>
-    <script type="text/javascript" src="../static/js/socials.js?version=2.0" ></script>
+    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.5">
+    <script type="text/javascript" src="../static/js/logic.js?version=3.5"></script>
+    <script type="text/javascript" src="../static/js/socials.js?version=3.5" ></script>
   </head>
 
   <body>
@@ -66,8 +64,11 @@
 
         <section id="upload-section" class="page-section">
           <div class="inner-alt">
-            <h2>Upload</h2>
-            <input id="file-upload" type="file" accept="image/*" onchange="upload(this);">
+            <h2>Upload Image</h2>
+            <input id="file-upload" class="inputfile" type="file" accept="image/*" onchange="upload(this);">
+            <label for="file-upload">
+              <span class="fa-upload icon"></span><span id="upload-text">Upload File</span>
+            </label>
             <p>or upload by remote image URL:</p>
             <ul class="actions">
               <li><input id="url-input" type="text" size="40" maxlength="2000" placeholder="http://www.example.com"></li>
@@ -80,7 +81,7 @@
           <div class="display-box" style="margin-right: 5%;">
             <p>Before</p>
             <div class="display-img">
-              <div id="drop-area"><img id="old-img" class="default" src="../static/images/drag_and_drop.jpg" alt="Old image goes here."></div>
+              <div id="drop-area"><img id="old-img" class="default" src="../static/images/drag_and_drop.jpg" alt="Old image goes here." draggable="false"></div>
             </div>
           </div>
 
@@ -202,12 +203,12 @@
       <!-- Close .page-wrap -->
     </div>
 
-    <script src="../static/js/jquery.poptrox.min.js"></script>
     <script src="../static/js/jquery.scrollex.min.js"></script>
     <script src="../static/js/jquery.scrolly.min.js"></script>
     <script src="../static/js/download.min.js"></script>
-    <script src="../static/js/util.js"></script>
-    <script src="../static/js/main.js"></script>
+    <script src="../static/js/skel.min.js"></script>
+    <script src="../static/js/util.min.js"></script>
+    <script src="../static/js/main.js?version=3.5"></script>
 
   </body>
 </html>

@@ -4,16 +4,16 @@ html, body {
     min-width: 700px;
 }
 
-section .inner-alt {
-    padding: 1em;
-}
-
 img {
     pointer-events: none;
-    user-select: none;
-    -moz-user-select: none;
+       -moz-user-select: none;
     -webkit-user-select: none;
-    -ms-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+section .inner-alt {
+    padding: 1em;
 }
 
 #logo {
@@ -26,9 +26,46 @@ img {
     text-align: center;
 }
 
-#file-upload {
-    margin-bottom: 20px;
-    outline: none;
+/* Make the default input[type="file"] element "invisible" */
+.inputfile {
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    height: 0.1px;
+    width: 0.1px;
+}
+
+/* Styling for file upload "button" */
+#upload-text {
+    font-family: "Arial";
+    margin-left: 10px;
+}
+
+.inputfile + label {
+       -moz-appearance: none;
+    -webkit-appearance: none;
+        -ms-appearance: none;
+            appearance: none;
+       -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+        -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    background: #3CB371;
+    border-radius: 4px;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 13pt;
+    font-weight: 700;
+    line-height: 2.95em;
+    padding: 0 1.5em;
+    text-align: center;
+}
+
+.inputfile + label:hover {
+    background: #2E8B57;
 }
 
 /* Section for displaying original and filtered image, as well as the filter drop-down menu and button */
@@ -55,11 +92,6 @@ img {
     text-align: center;
 }
 
-#old-img.not-default, #new-img.not-default {
-    border: 1px solid #000000;
-    pointer-events: auto;
-}
-
 .display-img {
     margin: 2.5% auto;
     height: 90%;
@@ -70,6 +102,11 @@ img {
     margin: 2.5% none;
     height: 100%;
     width: 100%;
+}
+
+#old-img.not-default, #new-img.not-default {
+    border: 1px solid #000000;
+    pointer-events: auto;
 }
 
 /* Styling for drag-and-drop area */
@@ -137,11 +174,14 @@ img {
     color: #000000;
 }
 
-/* The div wrapper around the images */
+/* The div wrapper around each of the images */
 .slick-slide {
     margin: 0 20px;
     opacity: 1;
-    transition: all ease-in-out .3s;
+       -moz-transition: all ease-in-out .3s;
+    -webkit-transition: all ease-in-out .3s;
+        -ms-transition: all ease-in-out .3s;
+            transition: all ease-in-out .3s;
 }
 
 .slick-slide:hover {
@@ -154,7 +194,7 @@ img {
 
 /* Section for downloading and sharing filtered image */
 #social-section {
-    background: #C0C0C0;
+    background: #D3D3D3;
     text-align: center;
 }
 
