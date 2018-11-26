@@ -32,8 +32,7 @@
 	different features we wish to implement by the end of next week. To keep track of ideas, we heavily rely on
 	Trello. At the end of the week, our team used IdeaBoards to re-evaluate how our sprint went. For example,
 	the sprint's good aspects, the bad aspects, and how we can change the bad into good. Our application went
-	through
-	two versions and as of now, we have the V3 hosted on Heroku.
+	through two versions and as of now, we have the V3 hosted on Heroku.
 
 ### Version History
 	V1 
