@@ -1,5 +1,7 @@
 # FilterX
-	FilterX is a simple web application hosted on Heroku (http://filterx.herokuapp.com). This application provides you with many types of filters for your image of choice.
+	FilterX is a simple web application hosted on Heroku (http://filterx.herokuapp.com).
+	This application provides you with many types of filters for your image of choice.
+	Have fun and be creative with our filters!
 
 ## Features
 	- Multiple upload methods
@@ -25,11 +27,11 @@
 	Slack
 	Trello
 
-## Motivation/Inspiration
-	Required website for a Hunter College elective course, CSCI 39549.
-
 ## Contributors
 	- Hasan Abdullah (Team Leader)
 	- Harneet Multani (Back-end)
 	- Mohamed Raffik (Back-end)
 	- Chuk Ho Wu (Front-end)
+
+## Motivation/Inspiration
+	Required website for a Hunter College elective course, CSCI 39549.
