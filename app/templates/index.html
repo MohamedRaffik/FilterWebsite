@@ -26,6 +26,7 @@
       <img id="logo" src="../static/images/logo.png" alt="FilterX Logo">
     </header>
 
+    <!-- div allows for user to switch theme modes. there are two theme modes, light and Dark (default)  -->
     <div id="theme-btn">
       <span id="theme-name">Light Mode</span>
       <label class="switch">
@@ -34,6 +35,7 @@
       </label>
     </div>
 
+    <!-- a quick step by step that show users how to upload an image file and selecting a filter -->
     <div id="intro">
       This website allows you to apply a filter to an image of your choice.<a href="#footer-note" title="See note at bottom of page" style="color: red; text-decoration: none;">***</a> Using this website is simple:
       <ol id="instructions">
@@ -49,8 +51,11 @@
       <strong style="color: red;">Note:</strong> Due to EXIF flags (which vary from device to device), the uploaded image may <em>appear</em> to be rotated. However, downloading the filtered image will maintain the original orientation of your file.
     </div>
 
+    <!-- the full-box div is where the main content of our website focuses on. this div contains the divs for the uploaded image, filters and the filtered image. -->
     <div id="full-box">
       <!-- Open #full-box -->
+
+      <!-- a div containing the uploaded image as well as different upload methods -->
       <div class="display-box">
         <p>Before</p>
         <div id="upload-options" class="show">
@@ -66,6 +71,7 @@
         </div>
       </div>
 
+      <!-- contains the different filter options for the uploaded image to be filtered to -->
       <div id="filter-box">
         <select id="filter-select">
           <option value="none" selected disabled hidden>Choose a filter</option>
@@ -83,14 +89,19 @@
         <button type="button" onclick="filter(document.getElementById('filter-select').value);">Filter</button>
       </div>
 
+      <!-- contains the div that is holding the filtered image as well options such as download and sharing to social media -->
       <div class="display-box">
         <p>After</p>
         <div id="socials" class="show">
           <!-- Open #socials -->
           <div id="facebook-btn" class="social-btn" title="Share on Facebook" onclick="share_to('facebook');"><img src="../static/images/facebook_share.jpg" alt="Share on Facebook"></div>
 
-          <div class="social-btn">
-            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check this website! They have many filters for your images and you can even download them!!!" data-url="https://filterx.herokuapp.com/" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+          <div class="social-btn" title="Share on Titter" onclick="share_to('twitter');" alt="Share on Twitter">
+
+            <a id="twitter-du" href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check out my filtered image!" data-url="http://filterx.herokuapp.com/" data-lang="en">Tweet</a>
+
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
           </div>
 
           <div class="social-btn">
@@ -105,12 +116,14 @@
           <button id="download-btn" type="button" title="Download" onclick="download_image();"><img src="../static/images/download.png" alt="Download Button"></button>
           <!-- Close #socials -->
         </div>
+
         <div id="filter-loading" class="hide">Loading...<img src="../static/images/load.gif" alt="Loading GIF"></div>
         <div class="display-img">
           <div id="align-area"><img id="new-img" class="default" src="../static/images/placeholder.jpg" alt="New image goes here."></div>
         </div>
       </div>
       <!-- Close #full-box -->
+      
     </div>
     <script async src="//assets.pinterest.com/js/pinit.js"></script>
     <footer>

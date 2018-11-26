@@ -34,7 +34,9 @@ function share_to(website) {
     }
     else if (website == 'twitter') {
         callback = function(url) {
-            console.log('Twitter Share: ' + url);
+            var url = document.getElementById('twitter-du');
+            url.data-url = "http://google.com";
+            console.log('Twitter Share url: ' + url);
         };
     }
     upload_to_cloudinary(document.getElementById('new-img').src, callback);
