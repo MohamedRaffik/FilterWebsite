@@ -5,10 +5,10 @@
 
 ## Features
 	- Multiple upload methods
-		1. File upload
-		2. URL
-		3. Drag and drop from website
-		4. Try to find it!
+	* File upload
+	* URL
+	* Drag and drop from website
+	* Try to find it!
 	- Share to social media (Facebook, Twitter, LinkedIn, Pintrest)
 	- Download the filtered image
 	- Light and Dark theme
@@ -36,29 +36,29 @@
 	Our application went through two versions and as of now, we have the V3 hosted on Heroku.
 
 ### Version History
-	#### V1 
-		- 3 filters
-		- One upload method
-		- Very blocky UI
-	#### V2 
-		- 10 filters
-		- Multiple upload methods
-		- Filters re-designed to be more efficient
-		- Social media integration
-	#### V3 (final)
-		- UI changes
-		- Navigation bars
-		- Choose from recent images
-		- Contact us section
+	V1 
+	- 3 filters
+	- One upload method
+	- Very blocky UI
+	V2 
+	- 10 filters
+	- Multiple upload methods
+	- Filters re-designed to be more efficient
+	- Social media integration
+	V3 (final)
+	- UI changes
+	- Navigation bars
+	- Choose from recent images
+	- Contact us section
 
 ### Contributors
-	- Hasan Abdullah (Team Leader)
+	- @github/HasanAbdullah31 (Team Leader)
 	- Harneet Multani (Back-end)
-	- Mohamed Raffik (Back-end)
-	- Chuk Ho Wu (Front-end)
+	- @github/MohamedRaffik (Back-end)
+	- @github/chuckolate (Front-end)
 
 ### Motivation/Inspiration
 	Required website for a Hunter College elective course, CSCI 39549.
 
 ### Contact Us
-	If you have any questions for concerns, please contact us at: filterx.website@gmail.com
+	If you have any questions for concerns, please contact us at: **_filterx.website@gmail.com_**
