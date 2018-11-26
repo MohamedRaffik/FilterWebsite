@@ -11,6 +11,7 @@ function filter(filter_type) {
     else {
         // Prevent upload and filter() calls while processing a filter
         filter_button_active = false; upload_active = false;
+        $('#align-area').LoadingOverlay('show');
         var img_string = document.getElementById('old-img').src;
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/', true);
@@ -19,8 +20,11 @@ function filter(filter_type) {
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 var b64_string = xhr.responseText;
-                document.getElementById('new-img').src = b64_string;
-                add_img_to_slider(b64_string);
+                $('#align-area').LoadingOverlay('hide');
+                if (document.getElementById('new-img').src != b64_string) {
+                    document.getElementById('new-img').src = b64_string;
+                    add_img_to_slider(b64_string);
+                }
                 filter_button_active = true; upload_active = true;
             }
         };
@@ -64,17 +68,18 @@ function add_img_to_slider(b64_string) {
     $('.img-slider').slick('slickAdd', new_slide, 0, true);
 }
 
-function update_images(b64_string, add_to_slider) {
+function update_images(b64_string) {
     if (!is_valid_b64img(b64_string))
         alert('Unable to upload item! Try another upload method.');
     else {
+        var add_to_slide = document.getElementById('new-img').src != b64_string;
         var click_sound = new Audio('../static/sounds/camera_sound.mp3');
         click_sound.volume = 0.25; click_sound.play();
         document.getElementById('old-img').src = b64_string;
         document.getElementById('old-img').className = 'not-default';
         document.getElementById('new-img').src = b64_string;
         document.getElementById('new-img').className = 'not-default';
-        if (add_to_slider)
+        if (add_to_slide)
             add_img_to_slider(b64_string);
     }
 }
@@ -115,6 +120,7 @@ function url_upload(url) {
         else {
             // Prevent upload and filter() calls while processing an upload
             filter_button_active = false; upload_active = false;
+            $('#drop-area').LoadingOverlay('show');
             var proxy_url = 'https://cors-anywhere.herokuapp.com/';
             var xhr = new XMLHttpRequest();
             xhr.open('GET', proxy_url + url, true);
@@ -123,7 +129,8 @@ function url_upload(url) {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var reader = new FileReader();
                     reader.onload = function() {
-                        update_images(reader.result, true);
+                        $('#drop-area').LoadingOverlay('hide');
+                        update_images(reader.result);
                         filter_button_active = true; upload_active = true;
                     };
                     reader.readAsDataURL(xhr.response);
@@ -147,7 +154,7 @@ function upload(input) {
             else {
                 var reader = new FileReader();
                 reader.onload = function() {
-                    update_images(reader.result, true);
+                    update_images(reader.result);
                 };
                 /* readAsDataURL represents the image as a base64 encoded string
                    that starts with the regexp 'data:image/*;base64,' */
@@ -169,12 +176,8 @@ function upload(input) {
                 }
             }
 
-            if (is_valid_b64img(text_string)) {
-                var add_to_slider = true;
-                if (document.getElementById('new-img').src == text_string)
-                    add_to_slider = false;
-                update_images(text_string, add_to_slider);
-            }
+            if (is_valid_b64img(text_string))
+                update_images(text_string);
             else if (!text_string || !is_valid_url(text_string))
                 alert('Dropped item is not a valid image! Try again.');
             else
@@ -241,6 +244,39 @@ $(document).ready(function() {
         }
     });
 
+    /* Configure default loading overlay functionality
+       Documentation at https://gasparesganga.com/labs/jquery-loading-overlay */
+    $.LoadingOverlaySetup({
+        background: 'rgba(255, 255, 255, 0.75)',
+        // direction can be 'row' or 'column'
+        direction: 'column',
+        // fade: [x, y] means x ms for "show"/fade in, y ms for "hide"/fade out
+        fade: [200, 100],
+        image: '',
+        // maxSize and minSize are in pixels, size is a % of the container
+        maxSize: 130,
+        minSize: 50,
+        size: 25,
+
+        fontawesome: 'fa fa-cog',
+        // Possible animations are: rotate_right, rotate_left, fadein, pulse
+        fontawesomeAnimation: 'rotate_right 2500ms',
+        fontawesomeAutoResize: true,
+        fontawesomeColor: '#191970',
+        fontawesomeOrder: 2,
+        // Proportion between the fontawesome element and the size parameter:
+        fontawesomeResizeFactor: 1.0,
+
+        text: 'Loading...',
+        textAnimation: '',
+        textAutoResize: true,
+        textColor: '#191970',
+        textOrder: 1,
+        // Proportion between the text element and the size parameter:
+        textResizeFactor: 0.4
+    });
+    //$('#drop-area').LoadingOverlay('show');
+
     /* Configure image slider functionality
        Documentation at http://kenwheeler.github.io/slick */
     $('.img-slider').slick({
@@ -249,6 +285,7 @@ $(document).ready(function() {
         speed: 750,
         slidesToShow: 4,
         slidesToScroll: 4,
+
         responsive: [
             {
                 breakpoint: 1024,
@@ -278,7 +315,7 @@ $(document).ready(function() {
 
     $('.img-slider').on('dblclick', 'img', function() {
         var b64_string = $(this)[0].src;
-        update_images(b64_string, false);
+        update_images(b64_string);
     });
 
 });
