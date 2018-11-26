@@ -60,4 +60,4 @@
 	Required website for a Hunter College elective course, CSCI 39549.
 
 ### Contact Us
-	If you have any questions for concerns, please contact us at: **_filterx.website@gmail.com_**
+	If you have any questions for concerns, please contact us at: filterx.website@gmail.com
