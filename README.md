@@ -5,10 +5,10 @@
 
 ## Features
 	- Multiple upload methods
-	* File upload
-	* URL
-	* Drag and drop from website
-	* Try to find it!
+	1. File upload
+	2. URL
+	3. Drag and drop from website
+	4. Try to find it!
 	- Share to social media (Facebook, Twitter, LinkedIn, Pintrest)
 	- Download the filtered image
 	- Light and Dark theme
@@ -28,11 +28,9 @@
 	Trello
 
 ### Design and Approaches
-	Our team had designed this application based of the Agile Methodology.
-	We held weekly meeting discussing the different features we wish to implement by the end of next week.
+	Our team had designed this application based of the Agile Methodology. We held weekly meeting discussing the different features we wish to implement by the end of next week.
 	To keep track of ideas, we heavily rely on Trello.
-	At the end of the week, our team used IdeaBoards to re-evaluate how our sprint went.
-	For example, the sprint's good aspects, the bad aspects, and how we can change the bad into good.
+	At the end of the week, our team used IdeaBoards to re-evaluate how our sprint went. For example, the sprint's good aspects, the bad aspects, and how we can change the bad into good.
 	Our application went through two versions and as of now, we have the V3 hosted on Heroku.
 
 ### Version History
@@ -52,10 +50,10 @@
 	- Contact us section
 
 ### Contributors
-	- @github/HasanAbdullah31 (Team Leader)
+	- Hasan Abdullah (Team Leader)
 	- Harneet Multani (Back-end)
-	- @github/MohamedRaffik (Back-end)
-	- @github/chuckolate (Front-end)
+	- Mohamed Raffik (Back-end)
+	- Chuk Ho Wu (Front-end)
 
 ### Motivation/Inspiration
 	Required website for a Hunter College elective course, CSCI 39549.
