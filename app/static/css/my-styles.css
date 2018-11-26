@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css?family=Lobster');
+
+html, body {
+    min-width: 700px;
+}
+
+img {
+    pointer-events: none;
+       -moz-user-select: none;
+    -webkit-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+section .inner-alt {
+    padding: 1em;
+}
+
+#logo {
+    font-family: "Lobster";
+}
+
+/* Section for uploading image */
+#upload-section {
+    background: #F5F5F5;
+    text-align: center;
+}
+
+/* Make the default input[type="file"] element "invisible" */
+.inputfile {
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    height: 0.1px;
+    width: 0.1px;
+}
+
+/* Styling for file upload "button" */
+#upload-text {
+    font-family: "Arial";
+    margin-left: 10px;
+}
+
+.inputfile + label {
+       -moz-appearance: none;
+    -webkit-appearance: none;
+        -ms-appearance: none;
+            appearance: none;
+       -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+        -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    background: #3CB371;
+    border-radius: 4px;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 13pt;
+    font-weight: 700;
+    line-height: 2.95em;
+    padding: 0 1.5em;
+    text-align: center;
+}
+
+.inputfile + label:hover {
+    background: #2E8B57;
+}
+
+/* Section for displaying original and filtered image, as well as the filter drop-down menu and button */
+#filter-section {
+    background: #4682B4;
+    padding: 2.5% 2.5% 0 2.5%;
+    text-align: center;
+    height: auto;
+    width: 100%;
+}
+
+.display-box {
+    background: #FFFFFF;
+    float: left;
+    height: 100%;
+    width: 45%;
+}
+
+.display-box p {
+    color: #191970;
+    font-family: "Impact";
+    font-size: 1.5em;
+    margin: 1% auto;
+    text-align: center;
+}
+
+.display-img {
+    margin: 2.5% auto;
+    height: 90%;
+    width: 95%;
+}
+
+.display-img img {
+    margin: 2.5% none;
+    height: 100%;
+    width: 100%;
+}
+
+#old-img.not-default, #new-img.not-default {
+    border: 1px solid #000000;
+    pointer-events: auto;
+}
+
+/* Styling for drag-and-drop area */
+#drop-area.highlight {
+    background: #000000;
+}
+
+#drop-area.highlight img {
+    opacity: 0;
+}
+
+#drop-area img, #align-area img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Styling for filter drop-down menu and button */
+#filter-box {
+    display: inline-block;
+    margin-top: 20px;
+}
+
+#filter-select {
+    background: #B0C4DE;
+    color: #000000;
+}
+
+#filter-btn {
+    background: #FFFF00;
+    color: #000000;
+}
+
+#filter-btn:active, #filter-btn:hover {
+    background: #FFD700;
+}
+
+/* Section for recent images */
+#images-section {
+    background: #FFF8DC;
+    text-align: center;
+}
+
+.img-slider {
+    margin: 0 auto;
+    width: 600px;
+}
+
+.img-slider img.not-default {
+    pointer-events: auto;
+}
+
+/* The dot representing the section of the slider that is currently displayed */
+.slick-active {
+    opacity: 1;
+}
+
+/* The first div box in the section of the slider that is currently displayed */
+.slick-current {
+    opacity: 1;
+}
+
+/* The previous and next arrows */
+.slick-prev:before, .slick-next:before {
+    color: #000000;
+}
+
+/* The div wrapper around each of the images */
+.slick-slide {
+    margin: 0 20px;
+    opacity: 1;
+       -moz-transition: all ease-in-out .3s;
+    -webkit-transition: all ease-in-out .3s;
+        -ms-transition: all ease-in-out .3s;
+            transition: all ease-in-out .3s;
+}
+
+.slick-slide:hover {
+    opacity: .6;
+}
+
+.slick-slide img {
+    width: 100%;
+}
+
+/* Section for downloading and sharing filtered image */
+#social-section {
+    background: #D3D3D3;
+    text-align: center;
+}
+
+#social-btns button {
+    background: #3CB371;
+    margin-bottom: 10px;
+    height: auto;
+}
+
+#social-btns button:active, #social-btns button:hover {
+    background: #2E8B57;
+}

@@ -1,15 +1,6 @@
 var filter_button_active = true;
 var upload_active = true;
 
-function change_theme() {
-    if (document.body.className == 'dark') {
-        document.body.className = 'light';
-    }
-    else {
-        document.body.className = 'dark';
-    }
-}
-
 function filter(filter_type) {
     if (!filter_button_active)
         alert('Wait for current upload or filter to finish processing!');
@@ -17,14 +8,10 @@ function filter(filter_type) {
         alert('Upload an image before clicking the filter button!');
     else if (filter_type == 'none')
         alert('Select a filter before clicking the filter button!');
-    else if (document.getElementById('old-img').src.indexOf('.') != -1)
-        alert('Cannot filter image! Try another upload method.');
     else {
         // Prevent upload and filter() calls while processing a filter
         filter_button_active = false; upload_active = false;
-        document.getElementById('socials').className = 'hide';
-        document.getElementById('filter-loading').className = 'show';
-
+        $('#align-area').LoadingOverlay('show');
         var img_string = document.getElementById('old-img').src;
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/', true);
@@ -32,9 +19,12 @@ function filter(filter_type) {
                              'application/x-www-form-urlencoded;charset=UTF-8');
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                document.getElementById('new-img').src = xhr.responseText;
-                document.getElementById('filter-loading').className = 'hide';
-                document.getElementById('socials').className = 'show';
+                var b64_string = xhr.responseText;
+                $('#align-area').LoadingOverlay('hide');
+                if (document.getElementById('new-img').src != b64_string) {
+                    document.getElementById('new-img').src = b64_string;
+                    add_img_to_slider(b64_string);
+                }
                 filter_button_active = true; upload_active = true;
             }
         };
@@ -53,17 +43,44 @@ function is_valid_url(url) {
     return a.host && a.host != window.location.host;
 }
 
+function get_img_type(b64_string) {
+    // b64_string starts with 'data:image/img_type;base64,'
+    var start_pos = b64_string.indexOf('data:image/') + 11;
+    var end_pos = b64_string.indexOf(';', start_pos);
+    return b64_string.substring(start_pos, end_pos);
+}
+
+function add_img_to_slider(b64_string) {
+    /* slickRemove(index, removeBefore)
+       Remove slide by index. If removeBefore is set true, remove slide
+       preceding index, or the first slide if no index is specified. If
+       removeBefore is set to false, remove the slide following index,
+       or the last slide if no index is set. */
+    // Remove the last slide:
+    $('.img-slider').slick('slickRemove', false);
+    /* slickAdd(HTML String/DOM object, index, addBefore)
+       Add a slide. If an index is provided, will add at that index, or
+       before if addBefore is set. If no index is provided, add to the
+       end or to the beginning if addBefore is set. */
+    var new_slide = '<div><img class="not-default" src="' +
+        b64_string + '" alt="Recent image"></div>';
+    // Add new_slide at the front:
+    $('.img-slider').slick('slickAdd', new_slide, 0, true);
+}
+
 function update_images(b64_string) {
     if (!is_valid_b64img(b64_string))
         alert('Unable to upload item! Try another upload method.');
     else {
+        var add_to_slide = document.getElementById('new-img').src != b64_string;
         var click_sound = new Audio('../static/sounds/camera_sound.mp3');
-        click_sound.volume = 0.5; click_sound.play();
-        document.getElementById('drop-area').className = 'hide';
+        click_sound.volume = 0.25; click_sound.play();
         document.getElementById('old-img').src = b64_string;
         document.getElementById('old-img').className = 'not-default';
         document.getElementById('new-img').src = b64_string;
         document.getElementById('new-img').className = 'not-default';
+        if (add_to_slide)
+            add_img_to_slider(b64_string);
     }
 }
 
@@ -71,8 +88,16 @@ function download_image() {
     if (document.getElementById('new-img').className == 'default')
         alert('Upload an image before clicking the download button!');
     else {
-        download(document.getElementById('new-img').src,
-                 'filterx_download.jpg', 'image/jpeg');
+        var b64_string = document.getElementById('new-img').src;
+        var img_type = get_img_type(b64_string);
+        var ext;
+        if (img_type == 'x-icon')
+            ext = '.ico';
+        else if (img_type == 'svg+xml')
+            ext = '.svg';
+        else
+            ext = '.'+img_type;
+        download(b64_string, 'filterx-download'+ext, 'image/'+img_type);
     }
 }
 
@@ -95,8 +120,7 @@ function url_upload(url) {
         else {
             // Prevent upload and filter() calls while processing an upload
             filter_button_active = false; upload_active = false;
-            document.getElementById('upload-options').className = 'hide';
-            document.getElementById('upload-loading').className = 'show';
+            $('#drop-area').LoadingOverlay('show');
             var proxy_url = 'https://cors-anywhere.herokuapp.com/';
             var xhr = new XMLHttpRequest();
             xhr.open('GET', proxy_url + url, true);
@@ -105,9 +129,8 @@ function url_upload(url) {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var reader = new FileReader();
                     reader.onload = function() {
+                        $('#drop-area').LoadingOverlay('hide');
                         update_images(reader.result);
-                        document.getElementById('upload-loading').className = 'hide';
-                        document.getElementById('upload-options').className = 'show';
                         filter_button_active = true; upload_active = true;
                     };
                     reader.readAsDataURL(xhr.response);
@@ -125,7 +148,7 @@ function upload(input) {
         if (!input)
             alert('Unable to upload item! Try another upload method.');
         else if (input.files && input.files[0]) {
-            // input is a FileList object obtained from file item (upload or drop)
+            // input is a FileList object obtained from file item
             if (input.files[0].type.indexOf('image') == -1)
                 alert('Only image files can be uploaded! Try again.');
             else {
@@ -133,13 +156,13 @@ function upload(input) {
                 reader.onload = function() {
                     update_images(reader.result);
                 };
-                // readAsDataURL represents the image as a base64 encoded string
-                // that starts with the regexp 'data:*/*;base64,'
+                /* readAsDataURL represents the image as a base64 encoded string
+                   that starts with the regexp 'data:image/*;base64,' */
                 reader.readAsDataURL(input.files[0]);
             }
         }
         else {
-            // input is a DataTransfer object obtained from remote item (drop)
+            // input is a DataTransfer object obtained from remote item
             var text_string = input.getData('text');
             var html_string = input.getData('text/html');
             var start_pos = html_string.indexOf('src="');
@@ -153,20 +176,17 @@ function upload(input) {
                 }
             }
 
-            if (is_valid_b64img(text_string)) {
+            if (is_valid_b64img(text_string))
                 update_images(text_string);
-            }
             else if (!text_string || !is_valid_url(text_string))
                 alert('Dropped item is not a valid image! Try again.');
-            else {
+            else
                 url_upload(text_string);
-            }
         }
     }
 }
 
 // Configure drag-and-drop functionality
-
 window.onload = function() {
     var drop_area = document.getElementById('drop-area');
 
@@ -195,3 +215,107 @@ window.onload = function() {
         drop_area.addEventListener(event, unhighlight, false);
     });
 };
+
+$(document).ready(function() {
+
+    // Configure nav button functionality
+    $('.nav-btn').click(function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+    });
+
+    // Documentation at https://github.com/ajlkn/jquery.scrollex
+    $('.page-section').scrollex({
+        /* Mode: where the viewport edge(s) must fall within the element's
+           contact area for it to be considered "active" */
+        mode: 'top',
+        // Padding (of contact area): + for inward, - for outward
+        top: -5,
+        bottom: 5,
+        // Enter event: when element becomes "active"
+        enter: function() {
+            var id = $(this)[0].id;
+            $('.nav-btn[href=#'+id+']').addClass('active');
+        },
+        // Leave event: when element becomes "inactive"
+        leave: function() {
+            var id = $(this)[0].id;
+            $('.nav-btn[href=#'+id+']').removeClass('active');
+        }
+    });
+
+    /* Configure default loading overlay functionality
+       Documentation at https://gasparesganga.com/labs/jquery-loading-overlay */
+    $.LoadingOverlaySetup({
+        background: 'rgba(255, 255, 255, 0.75)',
+        // direction can be 'row' or 'column'
+        direction: 'column',
+        // fade: [x, y] means x ms for "show"/fade in, y ms for "hide"/fade out
+        fade: [200, 100],
+        image: '',
+        // maxSize and minSize are in pixels, size is a % of the container
+        maxSize: 130,
+        minSize: 50,
+        size: 25,
+
+        fontawesome: 'fa fa-cog',
+        // Possible animations are: rotate_right, rotate_left, fadein, pulse
+        fontawesomeAnimation: 'rotate_right 2500ms',
+        fontawesomeAutoResize: true,
+        fontawesomeColor: '#191970',
+        fontawesomeOrder: 2,
+        // Proportion between the fontawesome element and the size parameter:
+        fontawesomeResizeFactor: 1.0,
+
+        text: 'Loading...',
+        textAnimation: '',
+        textAutoResize: true,
+        textColor: '#191970',
+        textOrder: 1,
+        // Proportion between the text element and the size parameter:
+        textResizeFactor: 0.4
+    });
+    //$('#drop-area').LoadingOverlay('show');
+
+    /* Configure image slider functionality
+       Documentation at http://kenwheeler.github.io/slick */
+    $('.img-slider').slick({
+        dots: true,
+        infinite: false,
+        speed: 750,
+        slidesToShow: 4,
+        slidesToScroll: 4,
+
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3
+                }
+            },
+            {
+                breakpoint: 752,
+                settings: {
+                    arrows: false,
+                    slidesToShow: 2,
+                    slidesToScroll: 2
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    arrows: false,
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
+    });
+
+    $('.img-slider').on('dblclick', 'img', function() {
+        var b64_string = $(this)[0].src;
+        update_images(b64_string);
+    });
+
+});

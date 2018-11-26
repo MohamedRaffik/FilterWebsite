@@ -1,5 +1,5 @@
-// Uploads b64_string as an image to Cloudinary, and then invokes callback
-// with the argument as the url of the uploaded image
+/* Uploads b64_string as an image to Cloudinary, and then invokes callback
+   with the argument as the url of the uploaded image */
 function upload_to_cloudinary(b64_string, callback) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'https://api.cloudinary.com/v1_1/filterx/upload', true);
@@ -19,27 +19,22 @@ function upload_to_cloudinary(b64_string, callback) {
 
 function share_to(website) {
     if (document.getElementById('new-img').className == 'default') {
-        alert('Upload an image before clicking the share button!');
+        alert('Upload an image before clicking a share button!');
         return false;
     }
-    var callback;
     if (website == 'facebook') {
-        callback = function(url) {
+        var callback = function(url) {
             var link = document.createElement('a');
             link.href = 'https://www.facebook.com/sharer/sharer.php?u=' +
                 encodeURIComponent(url);
             link.target = '_blank';
             link.click();
         };
+        upload_to_cloudinary(document.getElementById('new-img').src, callback);
     }
-    else if (website == 'twitter') {
-        callback = function(url) {
-            var url = document.getElementById('twitter-du');
-            url.data-url = "http://google.com";
-            console.log('Twitter Share url: ' + url);
-        };
+    else {
+        console.log(website + ' share');
     }
-    upload_to_cloudinary(document.getElementById('new-img').src, callback);
     // Allow anchor tag's href to follow through after function call
     return true;
 }

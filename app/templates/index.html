@@ -1,134 +1,215 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML>
+<!--
+     Snapshot by TEMPLATED
+     templated.co @templatedco
+     Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html lang="en">
   <head>
     <title>FilterX</title>
+    <link href="../static/images/favicon.ico" type="image/x-icon" rel="shortcut icon">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0">
     <meta http-equiv="pragma" content="no-cache">
-    <link href="../static/images/favicon.ico" type="image/x-icon" rel="shortcut icon">
+
     <!-- Open Graph Markup -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="FilterX">
     <meta property="og:url" content="https://filterx.herokuapp.com/">
-    <meta property="og:description" content="Apply a filter to an image of your choice.">
-    <meta property="og:image" content="https://res.cloudinary.com/filterx/image/upload/v1541878844/filterx_snapshot.png">
+    <meta property="og:description" content="Filter, download, and share your images!">
+    <meta property="og:image" content="https://res.cloudinary.com/filterx/image/upload/v1542575791/filterx_snapshot.png">
     <meta name="twitter:card" content="summary_large_image">
-    <!-- IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
-    <link href="../static/style.css?version=2.7" type="text/css" rel="stylesheet">
-    <script src="../static/logic.js?version=2.7" type="text/javascript"></script>
-    <script src="../static/socials.js?version=1.2" type="text/javascript"></script>
-    <script src="../static/download.js?version=1.0" type="text/javascript"></script>
+
+    <!-- Main CSS and jQuery -->
+    <link type="text/css" rel="stylesheet" href="../static/css/main.css">
+    <script type="text/javascript" src="../static/js/jquery.min.js"></script>
+    <!-- slick CSS and JS - http://kenwheeler.github.io/slick/ -->
+    <link type="text/css" rel="stylesheet" href="../static/css/slick.min.css">
+    <script type="text/javascript" src="../static/js/slick.min.js"></script>
+    <!-- My CSS and JS - IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
+    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.5">
+    <script type="text/javascript" src="../static/js/logic.js?version=3.6"></script>
+    <script type="text/javascript" src="../static/js/socials.js?version=3.5" ></script>
   </head>
 
-  <body class="dark">
-    <header>
-      <img id="logo" src="../static/images/logo.png" alt="FilterX Logo">
-    </header>
+  <body>
+    <div class="page-wrap">
+      <!-- Open .page-wrap -->
 
-    <!-- div allows for user to switch theme modes. there are two theme modes, light and Dark (default)  -->
-    <div id="theme-btn">
-      <span id="theme-name">Light Mode</span>
-      <label class="switch">
-        <input type="checkbox" onchange="change_theme();">
-        <span class="slider"></span>
-      </label>
-    </div>
-
-    <!-- a quick step by step that show users how to upload an image file and selecting a filter -->
-    <div id="intro">
-      This website allows you to apply a filter to an image of your choice.<a href="#footer-note" title="See note at bottom of page" style="color: red; text-decoration: none;">***</a> Using this website is simple:
-      <ol id="instructions">
-        <li>Upload an image (in one of the following ways):</li>
+      <nav id="nav">
         <ul>
-          <li>Click 'Choose File' and select an image file of your choice</li>
-          <li>Drag and drop an image into the image area of the 'Before' box</li>
-          <li>Enter the image URL into the text field (next to file upload) and click 'Submit'</li>
+          <li><a href="#banner" class="nav-btn scrolly active"><span class="icon fa-home"></span></a></li>
+          <li><a href="#upload-section" class="nav-btn scrolly"><span class="icon fa-upload"></span></a></li>
+          <li><a href="#filter-section" class="nav-btn scrolly"><span class="icon fa-camera-retro"></span></a></li>
+          <li><a href="#images-section" class="nav-btn scrolly"><span class="icon fa-image"></span></a></li>
+          <li><a href="#social-section" class="nav-btn scrolly"><span class="icon fa-download"></span></a></li>
+          <li><a href="#contact" class="nav-btn scrolly"><span class="icon fa-share-alt"></span></a></li>
         </ul>
-        <li>Choose one of the filters from the drop-down menu and click 'Filter' to apply that filter to your image.</li>
-        <li>That's it! Now you can share the image with others, download the filtered image, or try another filter. You can also upload a new image to filter by following step 1.</li>
-      </ol>
-      <strong style="color: red;">Note:</strong> Due to EXIF flags (which vary from device to device), the uploaded image may <em>appear</em> to be rotated. However, downloading the filtered image will maintain the original orientation of your file.
+      </nav>
+
+      <section id="main">
+        <!-- Open #main -->
+
+        <section id="banner" class="page-section">
+          <div class="inner">
+            <h1 id="logo">FilterX</h1>
+            <p>Filter, download, and share your images!</p>
+            <ul class="actions">
+              <li><a href="#upload-section" class="button alt scrolly big">Continue</a></li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="upload-section" class="page-section">
+          <div class="inner-alt">
+            <h2>Upload Image</h2>
+            <input id="file-upload" class="inputfile" type="file" accept="image/*" onchange="upload(this);">
+            <label for="file-upload">
+              <span class="fa-upload icon"></span><span id="upload-text">Upload File</span>
+            </label>
+            <p>or upload by remote image URL:</p>
+            <ul class="actions">
+              <li><input id="url-input" type="text" size="40" maxlength="2000" placeholder="http://www.example.com"></li>
+              <li><button class="fa-arrow-right icon" type="button" onclick="url_upload(document.getElementById('url-input').value);">Submit</button></li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="filter-section" class="page-section">
+          <div class="display-box" style="margin-right: 5%;">
+            <p>Before</p>
+            <div class="display-img">
+              <div id="drop-area"><img id="old-img" class="default" src="../static/images/drag_and_drop.jpg" alt="Old image goes here." draggable="false"></div>
+            </div>
+          </div>
+
+          <div class="display-box" style="margin-left: 5%;">
+            <p>After</p>
+            <div class="display-img">
+              <div id="align-area"><img id="new-img" class="default" src="https://via.placeholder.com/600.jpg/000000/000000" alt="New image goes here."></div>
+            </div>
+          </div>
+
+          <ul id="filter-box" class="actions">
+            <li><select id="filter-select">
+              <option value="none" selected disabled hidden>Choose a filter</option>
+              <option value="black_and_white">Black and White</option>
+              <option value="sepia">Sepia</option>
+              <option value="censor">Censor</option>
+              <option value="mirror">Mirror</option>
+              <option value="upside_down">Upside Down</option>
+              <option value="flip">Flip It!</option>
+              <option value="hazy_remembrance">Hazy Remembrance</option>
+              <option value="feeling_green">Feeling Green?</option>
+              <option value="joker_logo">Joker Logo</option>
+              <option value="swap_blue_red">Fire or Ice</option>
+            </select></li>
+            <li><button id="filter-btn" class="fa-filter icon" type="button" onclick="filter(document.getElementById('filter-select').value);">Filter</button></li>
+          </ul>
+        </section>
+
+        <section id="images-section" class="page-section">
+          <div class="inner-alt">
+            <h2>Recent Images</h2>
+            <p>You can double click an image (that's not a default image), or drag and drop it into the 'Before' box, from the slider below to upload it!</p>
+            <div class="img-slider">
+              <div><img class="default" src="https://via.placeholder.com/300.jpg/000000/000000" alt="Placeholder"></div>
+              <div><img class="default" src="https://via.placeholder.com/300.jpg/2F4F4F/2F4F4F" alt="Placeholder"></div>
+              <div><img class="default" src="https://via.placeholder.com/300.jpg/696969/696969" alt="Placeholder"></div>
+              <div><img class="default" src="https://via.placeholder.com/300.jpg/708090/708090" alt="Placeholder"></div>
+              <div><img class="default" src="https://via.placeholder.com/300.jpg/778899/778899" alt="Placeholder"></div>
+              <div><img class="default" src="https://via.placeholder.com/300.jpg/808080/808080" alt="Placeholder"></div>
+              <div><img class="default" src="https://via.placeholder.com/300.jpg/A9A9A9/A9A9A9" alt="Placeholder"></div>
+              <div><img class="default" src="https://via.placeholder.com/300.jpg/C0C0C0/C0C0C0" alt="Placeholder"></div>
+              <div><img class="default" src="https://via.placeholder.com/300.jpg/D3D3D3/D3D3D3" alt="Placeholder"></div>
+              <div><img class="default" src="https://via.placeholder.com/300.jpg/DCDCDC/DCDCDC" alt="Placeholder"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="social-section" class="page-section">
+          <div class="inner-alt">
+            <h2>Download and Share</h2>
+            <ul id="social-btns" class="actions">
+              <li><button class="fa-download icon" type="button" onclick="download_image();">Download</button></li>
+              <li><button class="fa-facebook-square icon" type="button" onclick="share_to('facebook');">Share</button></li>
+              <li><button class="fa-twitter-square icon" type="button" onclick="share_to('twitter');">Share</button></li>
+              <li><button class="fa-linkedin-square icon" type="button" onclick="share_to('linkedin');">Share</button></li>
+              <li><button class="fa-pinterest-square icon" type="button" onclick="share_to('pinterest');">Share</button></li>
+              <!--
+                   <div class="social-btn">
+                   <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check this website! They have many filters for your images and you can even download them!!!" data-url="https://filterx.herokuapp.com/" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                   </div>
+
+                   <div class="social-btn">
+                   <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+                   <script type="IN/Share" data-url="https://filterx.herokuapp.com/"></script>
+                   </div>
+
+                   <div class="social-btn">
+                   <a href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Ffilterx.herokuapp.com%2F&media=https%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest" data-pin-do="buttonPin" data-pin-tall="true" data-pin-round="true"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_32.png" alt="Share on Pinterest"></a>
+                   </div>
+              -->
+            </ul>
+          </div>
+        </section>
+
+        <section id="contact" class="page-section">
+          <div class="social column">
+            <h3>About Us</h3>
+            <p>This website was developed by Captain Hasan and his fellow comrades: Chuck, Harneet, and Mohamed.</p>
+            <p>If you have any questions or concerns, contact us at <a href="mailto:filterx.website@gmail.com">filterx.website@gmail.com</a></p>
+            <h3>Share This Website</h3>
+            <ul class="icons">
+              <li><a href="#contact" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+              <li><a href="#contact" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+              <li><a href="#contact" class="icon fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+          </div>
+
+          <div class="column">
+            <h3>Get in Touch</h3>
+            <form>
+              <div class="field half first">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" placeholder="Name">
+              </div>
+              <div class="field half">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="Email">
+              </div>
+              <div class="field">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="6" placeholder="Message"></textarea>
+              </div>
+              <ul class="actions">
+                <li><input class="button" value="Send Message"></li>
+              </ul>
+            </form>
+          </div>
+        </section>
+
+        <footer id="footer">
+          <div class="copyright">
+            &copy; 2018 FilterX, Inc. Template by <a href="https://templated.co/" target="_blank">TEMPLATED</a>.
+          </div>
+        </footer>
+
+        <!-- Close #main -->
+      </section>
+
+      <!-- Close .page-wrap -->
     </div>
 
-    <!-- the full-box div is where the main content of our website focuses on. this div contains the divs for the uploaded image, filters and the filtered image. -->
-    <div id="full-box">
-      <!-- Open #full-box -->
+    <script src="../static/js/jquery.scrollex.min.js"></script>
+    <script src="../static/js/jquery.scrolly.min.js"></script>
+    <script src="../static/js/download.min.js"></script>
+    <script src="../static/js/loading.min.js"></script>
+    <script src="../static/js/skel.min.js"></script>
+    <script src="../static/js/util.min.js"></script>
+    <script src="../static/js/main.js?version=3.5"></script>
 
-      <!-- a div containing the uploaded image as well as different upload methods -->
-      <div class="display-box">
-        <p>Before</p>
-        <div id="upload-options" class="show">
-          <input id="file-upload" type="file" accept="image/*" onchange="upload(this);">
-          <div id="url-upload">
-            <input id="url-input" type="url" size="25" maxlength="2000" placeholder="http://www.example.com">
-            <button id="url-submit" type="button" onclick="url_upload(document.getElementById('url-input').value);">Submit</button>
-          </div>
-        </div>
-        <div id="upload-loading" class="hide">Loading...<img src="../static/images/load.gif" alt="Loading GIF"></div>
-        <div class="display-img">
-          <div id="drop-area" class="show"><img id="old-img" class="default" src="../static/images/drag_and_drop.png" alt="Old image goes here."></div>
-        </div>
-      </div>
-
-      <!-- contains the different filter options for the uploaded image to be filtered to -->
-      <div id="filter-box">
-        <select id="filter-select">
-          <option value="none" selected disabled hidden>Choose a filter</option>
-          <option value="black_and_white">Black and White</option>
-          <option value="sepia">Sepia</option>
-          <option value="censor">Censor</option>
-          <option value="mirror">Mirror</option>
-          <option value="upside_down">Upside Down</option>
-          <option value="flip">Flip It!</option>
-          <option value="hazy_remembrance">Hazy Remembrance</option>
-          <option value="feeling_green">Feeling Green?</option>
-          <option value="joker_logo">Joker Logo</option>
-          <option value="swap_blue_red">Fire or Ice</option>
-        </select>
-        <button type="button" onclick="filter(document.getElementById('filter-select').value);">Filter</button>
-      </div>
-
-      <!-- contains the div that is holding the filtered image as well options such as download and sharing to social media -->
-      <div class="display-box">
-        <p>After</p>
-        <div id="socials" class="show">
-          <!-- Open #socials -->
-          <div id="facebook-btn" class="social-btn" title="Share on Facebook" onclick="share_to('facebook');"><img src="../static/images/facebook_share.jpg" alt="Share on Facebook"></div>
-
-          <div class="social-btn" title="Share on Titter" onclick="share_to('twitter');" alt="Share on Twitter">
-
-            <a id="twitter-du" href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check out my filtered image!" data-url="http://filterx.herokuapp.com/" data-lang="en">Tweet</a>
-
-            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-          </div>
-
-          <div class="social-btn">
-            <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
-            <script type="IN/Share" data-url="https://filterx.herokuapp.com/"></script>
-          </div>
-
-          <div class="social-btn">
-            <a data-pin-do="buttonPin" data-pin-tall="true" data-pin-round="true" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Ffilterx.herokuapp.com%2F&media=https%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_32.png" alt="Share on Pinterest"></a>
-          </div>
-
-          <button id="download-btn" type="button" title="Download" onclick="download_image();"><img src="../static/images/download.png" alt="Download Button"></button>
-          <!-- Close #socials -->
-        </div>
-
-        <div id="filter-loading" class="hide">Loading...<img src="../static/images/load.gif" alt="Loading GIF"></div>
-        <div class="display-img">
-          <div id="align-area"><img id="new-img" class="default" src="../static/images/placeholder.jpg" alt="New image goes here."></div>
-        </div>
-      </div>
-      <!-- Close #full-box -->
-      
-    </div>
-    <script async src="//assets.pinterest.com/js/pinit.js"></script>
-    <footer>
-      <img id="footer-icon" src="../static/images/favicon.ico" alt="FilterX Icon">
-      <span>© 2018 FilterX, Inc. If you have any questions or concerns, contact us at <a href="mailto:filterx.website@gmail.com">filterx.website@gmail.com</a><br><strong id="footer-note" style="color: red;">***</strong>This website was designed specifically for desktop browsers, so it may not function properly on other devices.</span>
-    </footer>
   </body>
 </html>
