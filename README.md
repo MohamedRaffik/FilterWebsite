@@ -13,9 +13,7 @@ Have fun and be creative with our filters!
 - At least 10 different filters!
 
 ## Screenshots
-![demo](https://user-images.githubusercontent.com/37593075/49106279-c454d700-f250-11e8-9321-aad5978ced56.png
-https://user-images.githubusercontent.com/37593075/49106279-c454d700-f250-11e8-9321-aad5978ced56.png
-)
+![demo](https://user-images.githubusercontent.com/37593075/49106279-c454d700-f250-11e8-9321-aad5978ced56.png)
 
 ## Main Tech/frameworks used
 - Gunicorn
