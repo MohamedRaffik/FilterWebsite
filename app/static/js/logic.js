@@ -329,7 +329,7 @@ $(document).ready(function() {
         ]
     });
 
-    // Displays original image on a double click on the image in the 'new-img' element
+    // Allow reuse of images Recently filtered by double clicking on an image on the slider
     $('.img-slider').on('dblclick', 'img', function() {
         var b64_string = $(this)[0].src;
         update_images(b64_string);
