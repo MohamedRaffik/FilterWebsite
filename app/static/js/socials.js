@@ -17,6 +17,8 @@ function upload_to_cloudinary(b64_string, callback) {
     xhr.send(form_data);
 }
 
+/* Shares the base64 encoded image in #new-img to website, which can be one of:
+   'facebook', 'twitter', 'linkedin', or 'pinterest' */
 function share_to(website) {
     if (document.getElementById('new-img').className == 'default') {
         alert('Upload an image before clicking a share button!');

@@ -1,10 +1,11 @@
-// Boolean values to used to determine if a file or upload are still ongoing
+// Boolean values used to determine if a filter or upload is still being processed
 var filter_button_active = true;
 var upload_active = true;
 
-// Function that communicates with the Flask Backend sending the image as a base64 string
-// along with the filter that is to be applied on it. The flask backend returns a new modified
-// image as a base64 string that is displayed to the user
+/* Function that communicates with the Flask backend, sending the image as a base64 string
+   along with a string representing the filter that is to be applied on it (filter_type).
+   The Flask backend returns the filtered image as a base64 string, which is then used
+   to update #new-img (the image in the 'After' box) */
 function filter(filter_type) {
     if (!filter_button_active)
         alert('Wait for current upload or filter to finish processing!');
@@ -38,13 +39,16 @@ function filter(filter_type) {
     }
 }
 
-// Determines if the string is a valid base64 Image string using Regular Expressions
+// Determines if the string str is a valid base64 image string
 function is_valid_b64img(str) {
+    // Valid base64 image strings start with this regular expression
     return str.search('data:image/.*;base64,') != -1;
 }
 
-// Determines if the url is in fact a valid url using 
+// Determines if the string url is a valid URL
 function is_valid_url(url) {
+    /* Valid URLs in an anchor tag have valid hosts.
+       Also make sure the URL is not the URL of our website */
     var a = document.createElement('a'); a.href = url;
     return a.host && a.host != window.location.host;
 }
@@ -74,8 +78,9 @@ function add_img_to_slider(b64_string) {
     $('.img-slider').slick('slickAdd', new_slide, 0, true);
 }
 
-// Displays the base64 string image to the user if the base64 Image string is valid 
-// and alerts the user if the string is not able to be displayed
+/* Displays the image represented by the base64 string in #old-img and #new-img (the
+   'Before' and 'After' boxes); if b64_string is not a valid base64 image, alerts the
+   user that the string is not able to be displayed */
 function update_images(b64_string) {
     if (!is_valid_b64img(b64_string))
         alert('Unable to upload item! Try another upload method.');
@@ -92,8 +97,8 @@ function update_images(b64_string) {
     }
 }
 
-// Allows user to download the displayed image in the 'Filter' box
-// Alerts the user if they try to download when there is no image being displayed
+/* Allows the user to download the filtered image displayed in the 'After' box.
+   Alerts the user if they try to download when there is no image being displayed */
 function download_image() {
     if (document.getElementById('new-img').className == 'default')
         alert('Upload an image before clicking the download button!');
@@ -111,9 +116,9 @@ function download_image() {
     }
 }
 
-// Function for the url input on the webpage
-// Checks to make sure that an upload or filter are still being carried out
-// Retrieves the image as a base64 url and displays it to the user
+/* Function for the URL input on the webpage.
+   Checks to make sure that an upload or filter is not being processed, and then
+   retrieves the image from url as a base64 string and displays it to the user */
 function url_upload(url) {
     if (!upload_active)
         alert('Wait for current upload or filter to finish processing!');
@@ -154,7 +159,8 @@ function url_upload(url) {
     }
 }
 
-// Function for uploading images from the users local machine or retrieve a remote url for the image
+/* Function for uploading images from the user's local machine or from
+   drag and drop (from local machine or remote location, such as from a website) */
 function upload(input) {
     if (!upload_active)
         alert('Wait for current upload or filter to finish processing!');
@@ -189,9 +195,9 @@ function upload(input) {
                         src_string, 'text/html').body.textContent;
                 }
             }
-            // Determines if input was a file or a remote url
-            // Calls url_upload if it is a url 
-            // If it is a file it would at this point be a base64 string which would then be used to display the image
+            /* Determines if input was already a valid base64 image
+               (e.g. drag and drop from 'After' box) or an image from a
+               remote URL, in which case call the url_upload() function */
             if (is_valid_b64img(text_string))
                 update_images(text_string);
             else if (!text_string || !is_valid_url(text_string))
@@ -205,7 +211,8 @@ function upload(input) {
 // Configure drag-and-drop functionality
 window.onload = function() {
     var drop_area = document.getElementById('drop-area');
-    // Sends data [Image] to upload() function once a drop is done on the element
+    /* Calls upload() with the image data [base64 string] once a drop
+       is done on #drop-area (the area inside the 'Before' box) */
     function handle_drop(event) {
         upload(event.dataTransfer);
     }
@@ -329,7 +336,8 @@ $(document).ready(function() {
         ]
     });
 
-    // Allow reuse of images Recently filtered by double clicking on an image on the slider
+    /* Allow re-uploading of images that were recently uploaded or filtered
+       by double clicking on an image in the slider */
     $('.img-slider').on('dblclick', 'img', function() {
         var b64_string = $(this)[0].src;
         update_images(b64_string);
