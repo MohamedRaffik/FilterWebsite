@@ -12,22 +12,25 @@ def make_linear_ramp(white=(255,240,192)):
         ramp.extend((int(r*i/255), int(g*i/255), int(b*i/255)))
     return ramp
 
+# Convert a base64 string to an Image object and in addition returns information of the image
 def convert_from_b64(b64_img):
-    # Convert b64 string to an Image object
     img = Image.open(BytesIO(b64decode(b64_img[b64_img.index(',')+1:])))
     info = Image.open(BytesIO(b64decode(b64_img[b64_img.index(',')+1:]))).info
     return img, info
 
+# Converts the given image into a base64 string
 def convert_to_b64(img, meta_data):
     buffered = BytesIO()
     # meta_data looks something like 'data:image/jpeg;base64,'
     img.save(buffered, format=meta_data[meta_data.index('/')+1 : meta_data.index(';')])
     return meta_data + b64encode(buffered.getvalue()).decode('utf-8')
 
+# Filter function for multi frame image formats
 def motion_filter(b64_img, filter_type, type_of):
     meta_data = b64_img[:b64_img.index(',')+1]
     gif, info = convert_from_b64(b64_img)
     frames = []
+    # Loops throw the frames of the GIF or WEBP and apply the given filter to each frame
     try:
         while 1:
             buffer = BytesIO()
@@ -38,6 +41,7 @@ def motion_filter(b64_img, filter_type, type_of):
             gif.seek(gif.tell()+1)
     except EOFError:
         pass
+    # Converts the now editted GIF or WEBP into a base64 string
     buffered = BytesIO()
     if type_of == 'gif':
         frames[0].save(buffered, format='gif', save_all=True, append_images=frames[1:], background=info['background'], version=info['version'], 
@@ -46,7 +50,7 @@ def motion_filter(b64_img, filter_type, type_of):
         frames[0].save(buffered, format='webp', save_all=True, append_images=frames[1:]) 
     return meta_data + b64encode(buffered.getvalue()).decode('utf-8')
 
-
+# Filter function for single frame image formats
 def filter(b64_img, filter_type):
     censor_str = Censor.censor
     logo_str = Logo.logo

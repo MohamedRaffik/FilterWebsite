@@ -1,6 +1,10 @@
+// Boolean values to used to determine if a file or upload are still ongoing
 var filter_button_active = true;
 var upload_active = true;
 
+// Function that communicates with the Flask Backend sending the image as a base64 string
+// along with the filter that is to be applied on it. The flask backend returns a new modified
+// image as a base64 string that is displayed to the user
 function filter(filter_type) {
     if (!filter_button_active)
         alert('Wait for current upload or filter to finish processing!');
@@ -34,10 +38,12 @@ function filter(filter_type) {
     }
 }
 
+// Determines if the string is a valid base64 Image string using Regular Expressions
 function is_valid_b64img(str) {
     return str.search('data:image/.*;base64,') != -1;
 }
 
+// Determines if the url is in fact a valid url using 
 function is_valid_url(url) {
     var a = document.createElement('a'); a.href = url;
     return a.host && a.host != window.location.host;
@@ -68,6 +74,8 @@ function add_img_to_slider(b64_string) {
     $('.img-slider').slick('slickAdd', new_slide, 0, true);
 }
 
+// Displays the base64 string image to the user if the base64 Image string is valid 
+// and alerts the user if the string is not able to be displayed
 function update_images(b64_string) {
     if (!is_valid_b64img(b64_string))
         alert('Unable to upload item! Try another upload method.');
@@ -84,6 +92,8 @@ function update_images(b64_string) {
     }
 }
 
+// Allows user to download the displayed image in the 'Filter' box
+// Alerts the user if they try to download when there is no image being displayed
 function download_image() {
     if (document.getElementById('new-img').className == 'default')
         alert('Upload an image before clicking the download button!');
@@ -101,6 +111,9 @@ function download_image() {
     }
 }
 
+// Function for the url input on the webpage
+// Checks to make sure that an upload or filter are still being carried out
+// Retrieves the image as a base64 url and displays it to the user
 function url_upload(url) {
     if (!upload_active)
         alert('Wait for current upload or filter to finish processing!');
@@ -141,6 +154,7 @@ function url_upload(url) {
     }
 }
 
+// Function for uploading images from the users local machine or retrieve a remote url for the image
 function upload(input) {
     if (!upload_active)
         alert('Wait for current upload or filter to finish processing!');
@@ -175,7 +189,9 @@ function upload(input) {
                         src_string, 'text/html').body.textContent;
                 }
             }
-
+            // Determines if input was a file or a remote url
+            // Calls url_upload if it is a url 
+            // If it is a file it would at this point be a base64 string which would then be used to display the image
             if (is_valid_b64img(text_string))
                 update_images(text_string);
             else if (!text_string || !is_valid_url(text_string))
@@ -189,7 +205,7 @@ function upload(input) {
 // Configure drag-and-drop functionality
 window.onload = function() {
     var drop_area = document.getElementById('drop-area');
-
+    // Sends data [Image] to upload() function once a drop is done on the element
     function handle_drop(event) {
         upload(event.dataTransfer);
     }
@@ -313,6 +329,7 @@ $(document).ready(function() {
         ]
     });
 
+    // Displays original image on a double click on the image in the 'new-img' element
     $('.img-slider').on('dblclick', 'img', function() {
         var b64_string = $(this)[0].src;
         update_images(b64_string);
