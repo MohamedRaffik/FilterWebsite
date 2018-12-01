@@ -19,7 +19,7 @@ function filter(filter_type) {
         $('#align-area').LoadingOverlay('show');
         var img_string = document.getElementById('old-img').src;
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/', true);
+        xhr.open('POST', '/filter', true);
         xhr.setRequestHeader('content-type',
                              'application/x-www-form-urlencoded;charset=UTF-8');
         xhr.onreadystatechange = function() {
