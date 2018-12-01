@@ -16,7 +16,8 @@ CSS:
 
   * main.css - template CSS from TEMPLATED, makes the styling cohesive across different viewport widths
 
-  * my-styles.css - styles written by Hasan and Chuck, documentation is in the file itself
+  * my-styles.css - styles for index.html written by Hasan and Chuck, documentation is in the file itself
+  * my-styles-login.css - styles for login.html written by Hasan, documentation is in the file itself
 
   * slick.min.css - styling for the image slider in the Recent Images section, made by
                     combining and minimizing the two stylesheets on http://kenwheeler.github.io/slick
@@ -50,7 +51,8 @@ JS:
   * loading.min.js - documentation at https://gasparesganga.com/labs/jquery-loading-overlay/
     - used for the loading overlays in the display-boxes while an image is being loaded or filtered
 
-  * logic.js - code written by Hasan, documentation is in the file itself
+  * logic.js - code for index.html written by Hasan, documentation is in the file itself
+  * logic-login.js - code for login.html written by Hasan and Chuck, documentation is in the file itself
 
   * main.js - template JS from TEMPLATED
 
@@ -59,7 +61,5 @@ JS:
 
   * slick.min.js - documentation at http://kenwheeler.github.io/slick
     - logic for the image slider in the Recent Images section
-
-  * socials.js - code written by Hasan and Chuck, documentation is in the file itself
 
   * util.min.js - template JS from TEMPLATED

@@ -8,7 +8,7 @@ import psycopg2
 
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
-def index():       
+def index():
     #DATABASE_URL = os.environ['DATABASE_URL']
     #conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     return render_template('index.html')
@@ -23,6 +23,17 @@ def apply_filter():
     else:
         new_img = filter.filter(b64_string, filter_type)
     return new_img
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        # do stuff when the form is submitted
+
+        # redirect to end the POST handling
+        return redirect(url_for('index'))
+
+    # show the login page if it wasn't submitted yet
+    return render_template('login.html')
 
 '''
     Data format for albums:

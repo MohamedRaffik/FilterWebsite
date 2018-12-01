@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<!--
+     Snapshot by TEMPLATED
+     templated.co @templatedco
+     Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html lang="en">
+  <head>
+    <title>Sign Up | Log In</title>
+    <link href="../static/images/favicon.ico" type="image/x-icon" rel="shortcut icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="pragma" content="no-cache">
+
+    <link type="text/css" rel="stylesheet" href="../static/css/main.css">
+    <!-- My CSS and JS - IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
+    <link type="text/css" rel="stylesheet" href="../static/css/my-styles-login.css?version=3.7">
+    <!--<script type="text/javascript" src="../static/js/logic-login.js?version=3.7"></script>-->
+  </head>
+
+  <body>
+    <div class="page-wrap">
+      <!-- Open .page-wrap -->
+
+      <section id="main">
+        <!-- Open #main -->
+
+        <header id="header">
+          <a href="{{ url_for('index') }}" id="logo" title="Home">FilterX</a>
+        </header>
+
+        <section id="signup-signin">
+          <div id="signup" class="column">
+            <h2>Create Your Account</h2>
+            <form>
+              <div class="field half first">
+                <label for="signup-name">Name</label>
+                <input id="signup-name" name="signup-name" type="text" placeholder="Name">
+              </div>
+              <div class="field half">
+                <label for="signup-email">Email</label>
+                <input id="signup-email" name="signup-email" type="email" placeholder="Email">
+              </div>
+              <div class="field">
+                <label for="signup-password">Password</label>
+                <input id="signup-password" name="signup-password" type="password" placeholder="Password">
+              </div>
+              <div class="field">
+                <label for="confirm-password">Confirm Password</label>
+                <input id="confirm-password" name="confirm-password" type="password" placeholder="Confirm Password">
+              </div>
+              <ul class="actions">
+                <li><input class="button" value="Sign Up"></li>
+              </ul>
+            </form>
+          </div>
+
+          <div id="signin" class="column">
+            <h2>Log in to FilterX</h2>
+            <form>
+              <div class="field">
+                <label for="signin-email">Email</label>
+                <input id="signin-email" name="signin-email" type="email" placeholder="Email">
+              </div>
+              <div class="field">
+                <label for="signin-password">Password</label>
+                <input id="signin-password" name="signin-password" type="password" placeholder="Password">
+              </div>
+              <ul class="actions">
+                <li><input class="button" value="Log In"></li>
+              </ul>
+            </form>
+          </div>
+        </section>
+
+        <footer id="footer">
+          <div class="copyright">
+            &copy; 2018 FilterX, Inc. Template by <a href="https://templated.co/" target="_blank">TEMPLATED</a>.
+          </div>
+        </footer>
+
+        <!-- Close #main -->
+      </section>
+
+      <!-- Close .page-wrap -->
+    </div>
+
+  </body>
+</html>

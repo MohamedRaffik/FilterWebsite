@@ -26,9 +26,8 @@
     <link type="text/css" rel="stylesheet" href="../static/css/combined.min.css">
     <script type="text/javascript" src="../static/js/jquery.min.js"></script>
     <!-- My CSS and JS - IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
-    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.6">
-    <script type="text/javascript" src="../static/js/logic.js?version=3.6"></script>
-    <script type="text/javascript" src="../static/js/socials.js?version=3.6" ></script>
+    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.7">
+    <script type="text/javascript" src="../static/js/logic.js?version=3.7"></script>
   </head>
 
   <body>
@@ -51,6 +50,10 @@
         <!-- Open #main -->
 
         <section id="banner" class="page-section">
+          <div class="inner-alt">
+            <a href="{{ url_for('login') }}" id="signup-btn" class="button">Sign Up</a>
+            <a href="{{ url_for('login') }}" id="signin-btn" class="button">Log In</a>
+          </div>
           <div class="inner">
             <h1 id="logo">FilterX</h1>
             <p>Filter, download, and share your images!</p>

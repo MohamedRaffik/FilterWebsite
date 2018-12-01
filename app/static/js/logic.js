@@ -2,10 +2,11 @@
 var filter_button_active = true;
 var upload_active = true;
 
-/* Function that communicates with the Flask backend, sending the image as a base64 string
-   along with a string representing the filter that is to be applied on it (filter_type).
-   The Flask backend returns the filtered image as a base64 string, which is then used
-   to update #new-img (the image in the 'After' box) */
+/* Function that communicates with the Flask backend.
+   Sends to Flask: 1) #old-img (the image in the 'Before' box) as a base64 encoded string and
+   2) a string representing the filter that is to be applied on it (filter_type)
+   Receives from Flask: the filtered image as a base64 encoded string, which is then used to
+   update #new-img (the image in the 'After' box) */
 function filter(filter_type) {
     if (!filter_button_active)
         alert('Wait for current upload or filter to finish processing!');
@@ -53,13 +54,14 @@ function is_valid_url(url) {
     return a.host && a.host != window.location.host;
 }
 
+// e.g. if b64_string is 'data:image/png;base64,...', returns 'png'
 function get_img_type(b64_string) {
-    // b64_string starts with 'data:image/img_type;base64,'
     var start_pos = b64_string.indexOf('data:image/') + 11;
     var end_pos = b64_string.indexOf(';', start_pos);
     return b64_string.substring(start_pos, end_pos);
 }
 
+// Adds the image represented by the string b64_string to the image slider
 function add_img_to_slider(b64_string) {
     /* slickRemove(index, removeBefore)
        Remove slide by index. If removeBefore is set true, remove slide
@@ -78,9 +80,9 @@ function add_img_to_slider(b64_string) {
     $('.img-slider').slick('slickAdd', new_slide, 0, true);
 }
 
-/* Displays the image represented by the base64 string in #old-img and #new-img (the
-   'Before' and 'After' boxes); if b64_string is not a valid base64 image, alerts the
-   user that the string is not able to be displayed */
+/* Displays the image represented by the string b64_string in #old-img and #new-img (the
+   images in the 'Before' and 'After' boxes); if b64_string is not a valid base64 image,
+   alerts the user that the string is not able to be displayed */
 function update_images(b64_string) {
     if (!is_valid_b64img(b64_string))
         alert('Unable to upload item! Try another upload method.');
@@ -97,7 +99,7 @@ function update_images(b64_string) {
     }
 }
 
-/* Allows the user to download the filtered image displayed in the 'After' box.
+/* Allows the user to download #new-img (the image in the 'After' box).
    Alerts the user if they try to download when there is no image being displayed */
 function download_image() {
     if (document.getElementById('new-img').className == 'default')
@@ -116,9 +118,9 @@ function download_image() {
     }
 }
 
-/* Function for the URL input on the webpage.
-   Checks to make sure that an upload or filter is not being processed, and then
-   retrieves the image from url as a base64 string and displays it to the user */
+/* Function for the URL input on the webpage. Checks to make sure that an
+   upload or filter is not being processed, and then retrieves the image
+   from url as a base64 string and displays it to the user */
 function url_upload(url) {
     if (!upload_active)
         alert('Wait for current upload or filter to finish processing!');
@@ -159,8 +161,7 @@ function url_upload(url) {
     }
 }
 
-/* Function for uploading images from the user's local machine or from
-   drag and drop (from local machine or remote location, such as from a website) */
+/* Function for uploading images from the user's local machine or from drag and drop */
 function upload(input) {
     if (!upload_active)
         alert('Wait for current upload or filter to finish processing!');
@@ -195,9 +196,9 @@ function upload(input) {
                         src_string, 'text/html').body.textContent;
                 }
             }
-            /* Determines if input was already a valid base64 image
+            /* Determines if input is already a valid base64 image
                (e.g. drag and drop from 'After' box) or an image from a
-               remote URL, in which case call the url_upload() function */
+               remote URL, in which case calls url_upload() */
             if (is_valid_b64img(text_string))
                 update_images(text_string);
             else if (!text_string || !is_valid_url(text_string))
@@ -206,6 +207,49 @@ function upload(input) {
                 url_upload(text_string);
         }
     }
+}
+
+/* Uploads b64_string as an image to Cloudinary, and then invokes callback
+   with the argument as the url of the uploaded image */
+function upload_to_cloudinary(b64_string, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'https://api.cloudinary.com/v1_1/filterx/upload', true);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var response = JSON.parse(xhr.responseText);
+            callback(response.secure_url);
+        }
+    };
+    var form_data = new FormData();
+    form_data.append('upload_preset', 'unsigned-default');
+    form_data.append('tags', 'browser_upload');
+    form_data.append('file', b64_string);
+    xhr.send(form_data);
+}
+
+/* Shares the base64 encoded image in #new-img to website, which can be one of:
+   'facebook', 'twitter', 'linkedin', or 'pinterest' */
+function share_to(website) {
+    if (document.getElementById('new-img').className == 'default') {
+        alert('Upload an image before clicking a share button!');
+        return false;
+    }
+    if (website == 'facebook') {
+        var callback = function(url) {
+            var link = document.createElement('a');
+            link.href = 'https://www.facebook.com/sharer/sharer.php?u=' +
+                encodeURIComponent(url);
+            link.target = '_blank';
+            link.click();
+        };
+        upload_to_cloudinary(document.getElementById('new-img').src, callback);
+    }
+    else {
+        console.log(website + ' share');
+    }
+    // Allow anchor tag's href to follow through after function call
+    return true;
 }
 
 // Configure drag-and-drop functionality
