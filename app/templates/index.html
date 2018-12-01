@@ -51,8 +51,8 @@
 
         <section id="banner" class="page-section">
           <div class="inner-alt">
-            <a href="{{ url_for('login') }}" id="signup-btn" class="button">Sign Up</a>
-            <a href="{{ url_for('login') }}" id="signin-btn" class="button">Log In</a>
+            <a href="{{ url_for('login', _anchor='signup') }}" id="signup-btn" class="button">Sign Up</a>
+            <a href="{{ url_for('login', _anchor='signin') }}" id="signin-btn" class="button">Log In</a>
           </div>
           <div class="inner">
             <h1 id="logo">FilterX</h1>
