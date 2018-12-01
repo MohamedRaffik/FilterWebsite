@@ -2,3 +2,4 @@ Flask==1.0.2
 Flask-WTF==0.14.2
 gunicorn==19.9.0
 Pillow==5.3.0
+pyscopg2==2.7.6.1

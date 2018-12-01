@@ -3,6 +3,8 @@
 from flask import request, render_template
 from app import app
 from app import filter
+import os
+import psycopg2
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -16,4 +18,6 @@ def index():
         else:
             new_img = filter.filter(b64_string, filter_type)
         return new_img
+    DATABASE_URL = os.environ['DATABASE_URL']
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     return render_template('index.html')
