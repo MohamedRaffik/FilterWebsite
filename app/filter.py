@@ -41,7 +41,7 @@ def motion_filter(b64_img, filter_type, type_of):
             gif.seek(gif.tell()+1)
     except EOFError:
         pass
-    # Converts the now editted GIF or WEBP into a base64 string
+    # Converts the now edited GIF or WEBP into a base64 string
     buffered = BytesIO()
     if type_of == 'gif':
         frames[0].save(buffered, format='gif', save_all=True, append_images=frames[1:], background=info['background'], version=info['version'], 

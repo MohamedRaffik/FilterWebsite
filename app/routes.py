@@ -1,16 +1,12 @@
 # Page routes
 
-from flask import request, render_template
-from app import app
-from app import filter
-import os
-import psycopg2
+from flask import request, render_template, redirect, url_for, session
+from app import app, filter, conn, psycopg2
+from passlib.hash import bcrypt
 
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
 def index():
-    #DATABASE_URL = os.environ['DATABASE_URL']
-    #conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     return render_template('index.html')
 
 @app.route('/filter', methods=['POST'])
@@ -27,10 +23,33 @@ def apply_filter():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        # do stuff when the form is submitted
+        if request.form['type'] == 'signin':
+            # Query Database
+            cur = conn.cursor()
+            cur.execute("select username, password from accounts where email=(%s)", [request.form['email']])
+            data = cur.fetchone()
+            # Fail conditions [No user by that email or password does not match]
+            if data == None: return 'none'
+            print(request.form['pass'])
+            if not bcrypt.verify(request.form['pass'], data[1]): return 'pass'
+            # If good got to index
+            session['username'] = data[0]
+            return redirect(url_for('index'))
 
-        # redirect to end the POST handling
-        return redirect(url_for('index'))
+        elif request.form['type'] == 'signup':
+            try:
+                #Query Databse
+                cur = conn.cursor()
+                # Attempt to add new user and login
+                password = bcrypt.hash(request.form['pass'])
+                cur.execute("insert into accounts (email, username, password) values (%s, %s, %s)", 
+                    [request.form['email'], request.form['user'], password])
+                conn.commit()
+                session['username'] = request.form['user']
+                return redirect(url_for('index'))
+            except psycopg2.IntegrityError:
+                cur.execute('ROLLBACK')
+                return ''
 
     # show the login page if it wasn't submitted yet
     return render_template('login.html')

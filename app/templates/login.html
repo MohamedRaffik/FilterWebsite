@@ -36,15 +36,15 @@
             <h2>Create Your Account</h2>
             <form>
               <div class="field half first">
-                <label for="signup-name">Name</label>
-                <input id="signup-name" name="signup-name" type="text" placeholder="Name">
+                <label for="signup-name">Username</label>
+                <input id="signup-name" name="signup-name" type="text" placeholder="Username">
               </div>
               <div class="field half">
                 <label for="signup-email">Email</label>
                 <input id="signup-email" name="signup-email" type="email" placeholder="Email">
               </div>
               <div class="field">
-                <label for="signup-password">Password</label>
+                <label for="signup-password">Password (At least 8 characters)</label>
                 <input id="signup-password" name="signup-password" type="password" placeholder="Password">
               </div>
               <div class="field">
@@ -52,7 +52,7 @@
                 <input id="confirm-password" name="confirm-password" type="password" placeholder="Confirm Password">
               </div>
               <ul class="actions">
-                <li><input class="button" value="Sign Up"></li>
+                <li><input class="button" value="Sign Up" onclick="signup()"></li>
               </ul>
             </form>
           </div>
@@ -69,7 +69,7 @@
                 <input id="signin-password" name="signin-password" type="password" placeholder="Password">
               </div>
               <ul class="actions">
-                <li><input class="button" value="Log In"></li>
+                <li><input class="button" value="Log In" onclick="signin()"></li>
               </ul>
             </form>
           </div>
@@ -86,6 +86,8 @@
 
       <!-- Close .page-wrap -->
     </div>
+
+    <script src="../static/js/logic-login.js"></script>
 
   </body>
 </html>
