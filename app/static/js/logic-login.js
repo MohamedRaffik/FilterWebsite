@@ -11,13 +11,12 @@ function signin() {
                             'application/x-www-form-urlencoded;charset=UTF-8');
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
-           if (xhr.responseURL == window.location.href) {
+           if (xhr.responseText === 'none' || xhr.responseText === 'pass') {
                alert( (xhr.responseText === 'none') ? 'No Account with this Email' : 'Incorrect Password');
                //Fail
            }
            else { 
                window.location.href = xhr.responseURL;
-               console.log() 
                //Success
             }
         }
@@ -50,7 +49,7 @@ function signup() {
                                 'application/x-www-form-urlencoded;charset=UTF-8');
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                if (xhr.responseURL == window.location.href) {
+                if (xhr.responseURL === window.location.href) {
                     alert('This Email is Already Associated with an Account');
                     //Fail
                 }
