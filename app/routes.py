@@ -30,7 +30,6 @@ def login():
             data = cur.fetchone()
             # Fail conditions [No user by that email or password does not match]
             if data == None: return 'none'
-            print(request.form['pass'])
             if not bcrypt.verify(request.form['pass'], data[1]): return 'pass'
             # If good got to index
             session['username'] = data[0]
