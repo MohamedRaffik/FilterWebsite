@@ -245,6 +245,16 @@ function share_to(website) {
         };
         upload_to_cloudinary(document.getElementById('new-img').src, callback);
     }
+    else if (website == 'twitter') {
+        var callback = function(url) {
+            var link = document.createElement('a');
+            link.href = "https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw&text=Check%20out%20this%20website:%20https://filterx.herokuapp.com/%20They%20have%20over%20ten%20different%20filters%20for%20your%20images%20and%20you%20can%20even%20download%20them!!!%20This%20is%20the%20link%20to%20my%20filtered%20image:&tw_p=tweetbutton&url=" + encodeURIComponent(url);
+            link.class = "twitter-share-button";
+            link.target = "_blank";
+            link.click();
+        };
+        upload_to_cloudinary(document.getElementById('new-img').src, callback);
+    }
     else {
         console.log(website + ' share');
     }
