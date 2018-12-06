@@ -1,21 +1,13 @@
 <!DOCTYPE HTML>
 <html lang="en">
   <head>
-    <title>FilterX</title>
+    <title>Home</title>
     <link href="../static/images/favicon.ico" type="image/x-icon" rel="shortcut icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0">
     <meta http-equiv="pragma" content="no-cache">
-
-    <!-- Open Graph Markup -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="FilterX">
-    <meta property="og:url" content="https://filterx.herokuapp.com/">
-    <meta property="og:description" content="Filter, download, and share your images!">
-    <meta property="og:image" content="https://res.cloudinary.com/filterx/image/upload/v1542575791/filterx_snapshot.png">
-    <meta name="twitter:card" content="summary_large_image">
 
     <!-- Main CSS -->
     <link type="text/css" rel="stylesheet" href="../static/css/combined.min.css">
@@ -30,11 +22,12 @@
       <!-- nav allows users to quickly navigate to different sections of our website -->
       <nav id="nav">
         <ul>
-          <li><a href="#banner" class="nav-btn scrolly active"><span class="icon fa-home"></span></a></li>
+          <li><a href="#header" class="nav-btn scrolly active"><span class="icon fa-home"></span></a></li>
           <li><a href="#upload-section" class="nav-btn scrolly"><span class="icon fa-upload"></span></a></li>
           <li><a href="#filter-section" class="nav-btn scrolly"><span class="icon fa-camera-retro"></span></a></li>
           <li><a href="#images-section" class="nav-btn scrolly"><span class="icon fa-image"></span></a></li>
           <li><a href="#social-section" class="nav-btn scrolly"><span class="icon fa-download"></span></a></li>
+          <li><a href="#gallery-section" class="nav-btn scrolly"><span class="icon fa-th-list"></span></a></li>
           <li><a href="#contact" class="nav-btn scrolly"><span class="icon fa-share-alt"></span></a></li>
         </ul>
       </nav>
@@ -42,19 +35,32 @@
       <section id="main">
         <!-- Open #main -->
 
-        <section id="banner" class="page-section">
-          <div class="inner-alt">
-            <a href="{{ url_for('login', _anchor='signup') }}" id="signup-btn" class="button">Sign Up</a>
-            <a href="{{ url_for('login', _anchor='signin') }}" id="signin-btn" class="button">Log In</a>
+        <header id="header" class="page-section">
+          <h1 id="logo">FilterX</h1>
+          <div id="user-info">
+            <span>Welcome, &lt;Username&gt;</span>
+            <a href="{{ url_for('index') }}" id="signout-btn" class="button">Log Out</a>
+            <p>To change account information, type the new email and/or password, your current password, and then click the change button.</p>
+
+            <div class="change-info">
+              <label for="change-email">Change Email:</label>
+              <input id="change-email" type="text" size="40" placeholder="New Email">
+            </div>
+            <div class="change-info">
+              <label for="change-password">Change Password:</label>
+              <input id="change-password" type="password" size="40" placeholder="New Password">
+            </div>
+            <div class="password-checkbox">
+              <input id="password-checkbox" type="checkbox" onclick="toggle_password(document.getElementById('change-password'));">
+              <label for="password-checkbox">Show Password</label>
+            </div>
+            <div class="change-info">
+              <label for="current-password">Current Password:</label>
+              <input id="current-password" type="password" size="40" placeholder="Current Password">
+            </div>
+            <button id="change-info-btn" type="button">Change</button>
           </div>
-          <div class="inner">
-            <h1 id="logo">FilterX</h1>
-            <p>Filter, download, and share your images!</p>
-            <ul class="actions">
-              <li><a href="#upload-section" class="button alt scrolly big">Continue</a></li>
-            </ul>
-          </div>
-        </section>
+        </header>
 
         <!-- upload-section accepts multiple different upload methods -->
         <section id="upload-section" class="page-section">
@@ -136,10 +142,14 @@
             <ul id="social-btns" class="actions">
               <li><button class="fa-download icon" type="button" onclick="download_image();">Download</button></li>
               <li><button class="fa-facebook-square icon" type="button" onclick="share_to('facebook');">Share</button></li>
-              <li><button class="fa-twitter-square icon" type="button" onclick="share_to('twitter');"><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>Share</button></li>
+              <li><button class="fa-twitter-square icon" type="button" onclick="share_to('twitter');">Share</button></li>
               <li><button class="fa-linkedin-square icon" type="button" onclick="share_to('linkedin');">Share</button></li>
               <li><button class="fa-pinterest-square icon" type="button" onclick="share_to('pinterest');">Share</button></li>
               <!--
+                   <div class="social-btn">
+                   <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check this website! They have many filters for your images and you can even download them!!!" data-url="https://filterx.herokuapp.com/" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                   </div>
+
                    <div class="social-btn">
                    <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
                    <script type="IN/Share" data-url="https://filterx.herokuapp.com/"></script>
@@ -150,6 +160,42 @@
                    </div>
               -->
             </ul>
+          </div>
+        </section>
+
+        <!-- gallery-section contains the user's image galleries -->
+        <section id="gallery-section" class="page-section">
+          <div class="gallery">
+            <header>
+              <h1>Gallery</h1>
+              <ul class="tabs">
+                <li><a href="#" data-tag="all" class="button active">All</a></li>
+                <li><a href="#" data-tag="people" class="button">People</a></li>
+                <li><a href="#" data-tag="place" class="button">Places</a></li>
+                <li><a href="#" data-tag="thing" class="button">Things</a></li>
+              </ul>
+            </header>
+
+            <div class="content">
+              <div class="media all people">
+                <a href="https://placehold.it/300/000000"><img src="https://placehold.it/300/000000" alt="" title="This right here is a caption." /></a>
+              </div>
+              <div class="media all place">
+                <a href="https://placehold.it/300/000000"><img src="https://placehold.it/300/000000" alt="" title="This right here is a caption." /></a>
+              </div>
+              <div class="media all thing">
+                <a href="https://placehold.it/300/000000"><img src="https://placehold.it/300/000000" alt="" title="This right here is a caption." /></a>
+              </div>
+              <div class="media all people">
+                <a href="https://placehold.it/300/000000"><img src="https://placehold.it/300/000000" alt="" title="This right here is a caption." /></a>
+              </div>
+              <div class="media all place">
+                <a href="https://placehold.it/300/000000"><img src="https://placehold.it/300/000000" alt="" title="This right here is a caption." /></a>
+              </div>
+              <div class="media all thing">
+                <a href="https://placehold.it/300/000000"><img src="https://placehold.it/300/000000" alt="" title="This right here is a caption." /></a>
+              </div>
+            </div>
           </div>
         </section>
 

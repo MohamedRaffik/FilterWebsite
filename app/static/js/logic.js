@@ -4,7 +4,7 @@ var upload_active = true;
 
 /* Function that communicates with the Flask backend.
    Sends to Flask: 1) #old-img (the image in the 'Before' box) as a base64 encoded string and
-   2) a string representing the filter that is to be applied on it (filter_type)
+   2) a string representing the filter that is to be applied on it (@filter_type)
    Receives from Flask: the filtered image as a base64 encoded string, which is then used to
    update #new-img (the image in the 'After' box) */
 function filter(filter_type) {
@@ -40,28 +40,28 @@ function filter(filter_type) {
     }
 }
 
-// Determines if the string str is a valid base64 image string
+// Determines if the string @str is a valid base64 image string
 function is_valid_b64img(str) {
     // Valid base64 image strings start with this regular expression
     return str.search('data:image/.*;base64,') != -1;
 }
 
-// Determines if the string url is a valid URL
+// Determines if the string @url is a valid URL
 function is_valid_url(url) {
     /* Valid URLs in an anchor tag have valid hosts.
-       Also make sure the URL is not the URL of our website */
+       Also make sure @url is not the URL of our website */
     var a = document.createElement('a'); a.href = url;
     return a.host && a.host != window.location.host;
 }
 
-// e.g. if b64_string is 'data:image/png;base64,...', returns 'png'
+// e.g. if @b64_string is 'data:image/png;base64,...', returns 'png'
 function get_img_type(b64_string) {
     var start_pos = b64_string.indexOf('data:image/') + 11;
     var end_pos = b64_string.indexOf(';', start_pos);
     return b64_string.substring(start_pos, end_pos);
 }
 
-// Adds the image represented by the string b64_string to the image slider
+// Adds the image represented by the string @b64_string to the image slider
 function add_img_to_slider(b64_string) {
     /* slickRemove(index, removeBefore)
        Remove slide by index. If removeBefore is set true, remove slide
@@ -80,8 +80,8 @@ function add_img_to_slider(b64_string) {
     $('.img-slider').slick('slickAdd', new_slide, 0, true);
 }
 
-/* Displays the image represented by the string b64_string in #old-img and #new-img (the
-   images in the 'Before' and 'After' boxes); if b64_string is not a valid base64 image,
+/* Displays the image represented by the string @b64_string in #old-img and #new-img (the
+   images in the 'Before' and 'After' boxes); if @b64_string is not a valid base64 image,
    alerts the user that the string is not able to be displayed */
 function update_images(b64_string) {
     if (!is_valid_b64img(b64_string))
@@ -120,7 +120,7 @@ function download_image() {
 
 /* Function for the URL input on the webpage. Checks to make sure that an
    upload or filter is not being processed, and then retrieves the image
-   from url as a base64 string and displays it to the user */
+   from string @url as a base64 string and displays it to the user */
 function url_upload(url) {
     if (!upload_active)
         alert('Wait for current upload or filter to finish processing!');
@@ -161,7 +161,7 @@ function url_upload(url) {
     }
 }
 
-/* Function for uploading images from the user's local machine or from drag and drop */
+// Function for uploading images from the user's local machine or from drag and drop
 function upload(input) {
     if (!upload_active)
         alert('Wait for current upload or filter to finish processing!');
@@ -169,7 +169,7 @@ function upload(input) {
         if (!input)
             alert('Unable to upload item! Try another upload method.');
         else if (input.files && input.files[0]) {
-            // input is a FileList object obtained from file item
+            // @input is a FileList object obtained from file item
             if (input.files[0].type.indexOf('image') == -1)
                 alert('Only image files can be uploaded! Try again.');
             else {
@@ -183,7 +183,7 @@ function upload(input) {
             }
         }
         else {
-            // input is a DataTransfer object obtained from remote item
+            // @input is a DataTransfer object obtained from remote item
             var text_string = input.getData('text');
             var html_string = input.getData('text/html');
             var start_pos = html_string.indexOf('src="');
@@ -196,7 +196,7 @@ function upload(input) {
                         src_string, 'text/html').body.textContent;
                 }
             }
-            /* Determines if input is already a valid base64 image
+            /* Determines if @input is already a valid base64 image
                (e.g. drag and drop from 'After' box) or an image from a
                remote URL, in which case calls url_upload() */
             if (is_valid_b64img(text_string))
@@ -209,8 +209,8 @@ function upload(input) {
     }
 }
 
-/* Uploads b64_string as an image to Cloudinary, and then invokes callback
-   with the argument as the url of the uploaded image */
+/* Uploads string @b64_string as an image to Cloudinary, and then invokes function
+   @callback with the argument as the url of the uploaded image */
 function upload_to_cloudinary(b64_string, callback) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'https://api.cloudinary.com/v1_1/filterx/upload', true);
@@ -228,7 +228,7 @@ function upload_to_cloudinary(b64_string, callback) {
     xhr.send(form_data);
 }
 
-/* Shares the base64 encoded image in #new-img to website, which can be one of:
+/* Shares the base64 encoded image in #new-img to @website, which can be one of:
    'facebook', 'twitter', 'linkedin', or 'pinterest' */
 function share_to(website) {
     if (document.getElementById('new-img').className == 'default') {
@@ -260,6 +260,14 @@ function share_to(website) {
     }
     // Allow anchor tag's href to follow through after function call
     return true;
+}
+
+// Toggles between showing and hiding the typed value in the DOM input object @password
+function toggle_password(password) {
+    if (password.type == 'password')
+        password.type = 'text';
+    else
+        password.type = 'password';
 }
 
 // Configure drag-and-drop functionality
@@ -323,6 +331,14 @@ $(document).ready(function() {
 
     /* Configure default loading overlay functionality
        Documentation at https://gasparesganga.com/labs/jquery-loading-overlay */
+    var loading_text = $('<div>', {
+        'css' : {
+            'color' : '#191970',
+            'font-family' : 'Impact',
+            'font-size' : '40px',
+        },
+        'text' : 'Loading...'
+    });
     $.LoadingOverlaySetup({
         background: 'rgba(255, 255, 255, 0.75)',
         // direction can be 'row' or 'column'
@@ -344,13 +360,12 @@ $(document).ready(function() {
         // Proportion between the fontawesome element and the size parameter:
         fontawesomeResizeFactor: 1.0,
 
-        text: 'Loading...',
-        textAnimation: '',
-        textAutoResize: true,
-        textColor: '#191970',
-        textOrder: 1,
+        custom: loading_text,
+        customAnimation: '',
+        customAutoResize: true,
+        customOrder: 1,
         // Proportion between the text element and the size parameter:
-        textResizeFactor: 0.4
+        customResizeFactor: 0.4
     });
     //$('#drop-area').LoadingOverlay('show');
 
@@ -365,14 +380,14 @@ $(document).ready(function() {
 
         responsive: [
             {
-                breakpoint: 1024,
+                breakpoint: 980,
                 settings: {
                     slidesToShow: 3,
                     slidesToScroll: 3
                 }
             },
             {
-                breakpoint: 752,
+                breakpoint: 736,
                 settings: {
                     arrows: false,
                     slidesToShow: 2,

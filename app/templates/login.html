@@ -1,9 +1,4 @@
 <!DOCTYPE HTML>
-<!--
-     Snapshot by TEMPLATED
-     templated.co @templatedco
-     Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
--->
 <html lang="en">
   <head>
     <title>Sign Up | Log In</title>
@@ -14,10 +9,10 @@
     <meta http-equiv="expires" content="0">
     <meta http-equiv="pragma" content="no-cache">
 
-    <link type="text/css" rel="stylesheet" href="../static/css/main.css">
-    <!-- My CSS and JS - IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
-    <link type="text/css" rel="stylesheet" href="../static/css/my-styles-login.css?version=3.7">
-    <!--<script type="text/javascript" src="../static/js/logic-login.js?version=3.7"></script>-->
+    <!-- Main CSS -->
+    <link type="text/css" rel="stylesheet" href="../static/css/main.min.css">
+    <!-- My CSS and JS (at bottom of this page) - IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
+    <link type="text/css" rel="stylesheet" href="../static/css/my-styles-login.css?version=3.8">
   </head>
 
   <body>
@@ -44,7 +39,7 @@
                 <input id="signup-email" name="signup-email" type="email" placeholder="Email">
               </div>
               <div class="field">
-                <label for="signup-password">Password (At least 8 characters)</label>
+                <label for="signup-password">Password (at least 8 characters)</label>
                 <input id="signup-password" name="signup-password" type="password" placeholder="Password">
               </div>
               <div class="field">
@@ -52,7 +47,7 @@
                 <input id="confirm-password" name="confirm-password" type="password" placeholder="Confirm Password">
               </div>
               <ul class="actions">
-                <li><input class="button" value="Sign Up" onclick="signup()"></li>
+                <li><input class="button" type="button" value="Sign Up" onclick="signup();"></li>
               </ul>
             </form>
           </div>
@@ -69,7 +64,7 @@
                 <input id="signin-password" name="signin-password" type="password" placeholder="Password">
               </div>
               <ul class="actions">
-                <li><input class="button" value="Log In" onclick="signin()"></li>
+                <li><input class="button" type="button" value="Log In" onclick="signin();"></li>
               </ul>
             </form>
           </div>
@@ -87,7 +82,7 @@
       <!-- Close .page-wrap -->
     </div>
 
-    <script src="../static/js/logic-login.js"></script>
+    <script src="../static/js/logic-login.js?version=3.8"></script>
 
   </body>
 </html>

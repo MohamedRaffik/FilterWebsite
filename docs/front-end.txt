@@ -15,8 +15,9 @@ CSS:
            <button class="fa-print icon">Print</button> creates a button with a print icon followed by the word "Print"
 
   * main.css - template CSS from TEMPLATED, makes the styling cohesive across different viewport widths
+  * main.min.css - minified version of main.css
 
-  * my-styles.css - styles for index.html written by Hasan and Chuck, documentation is in the file itself
+  * my-styles.css - styles for index.html and home.html written by Hasan and Chuck, documentation is in the file itself
   * my-styles-login.css - styles for login.html written by Hasan, documentation is in the file itself
 
   * slick.min.css - styling for the image slider in the Recent Images section, made by
@@ -26,6 +27,7 @@ JS:
   * combined.min.js - combines JS files to reduce HTTP requests
     - contains the minified text from the following files (in this exact order):
       + slick.min.js
+      + jquery.poptrox.min.js
       + jquery.scrollex.min.js
       + jquery.scrolly.min.js
       + download.min.js
@@ -41,6 +43,8 @@ JS:
 
   * jquery.min.js - jQuery v1.11.3 | (c) 2005, 2015 jQuery Foundation, Inc.
 
+  * jquery.poptrox.min.js - image gallery plugin, documentation at https://github.com/ajlkn/jquery.poptrox
+
   * jquery.scrollex.min.js - documentation at https://github.com/ajlkn/jquery.scrollex
     - used for the nav bar's functionality; while scrolling the page, the active icon changes based on the section you're on
 
@@ -51,7 +55,7 @@ JS:
   * loading.min.js - documentation at https://gasparesganga.com/labs/jquery-loading-overlay/
     - used for the loading overlays in the display-boxes while an image is being loaded or filtered
 
-  * logic.js - code for index.html written by Hasan, documentation is in the file itself
+  * logic.js - code for index.html and home.html written by Hasan, documentation is in the file itself
   * logic-login.js - code for login.html written by Hasan and Chuck, documentation is in the file itself
 
   * main.js - template JS from TEMPLATED

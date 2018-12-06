@@ -16,7 +16,102 @@ section .inner-alt {
     padding: 1em;
 }
 
-/* Banner section */
+/* Header (for home.html) */
+#main #header {
+    background: #25292E;
+    background-image: url('../images/home.jpg');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#header #logo {
+    color: #FFFFFF;
+    float: left;
+    font-family: "Lobster";
+    font-size: 4em !important;
+    padding: 30px;
+}
+@media screen and (max-width: 980px) {
+    #header #logo {
+        padding: 20px 40px 20px 20px;
+    }
+}
+@media screen and (max-width: 736px) {
+    #header #logo {
+        float: none;
+    }
+}
+
+/* The div wrapper around welcome, sign out button, and everything else (other
+   than the FilterX logo) in the header of home.html */
+#user-info {
+    display: inline-block;
+    width: 500px;
+}
+
+#user-info span, #user-info p, #user-info label {
+    color: #FFFFFF;
+    font-size: 1em;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+#signout-btn {
+    background: #4682B4;
+    border-radius: 20px;
+    font-size: 0.85em;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    padding: 0 1em;
+}
+
+#signout-btn:active, #signout-btn:hover {
+    background: #386890;
+}
+
+#user-info p {
+    text-align: left;
+}
+
+/* The div wrapper around each of the label + text field
+   in the header of home.html */
+.change-info {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.change-info label, .change-info input {
+    margin: 5px 0;
+    width: 100%;
+}
+
+.change-info input {
+    margin-left: 10px;
+}
+
+/* The div wrapper around the password checkbox and the
+   text "Show password" in the header of home.html */
+div.password-checkbox {
+    font-size: 0.85em;
+    text-align: right;
+}
+
+#change-info-btn {
+    background: #FFFF00;
+    color: #000000;
+    float: right;
+    margin-top: 5px;
+    padding: 0 1em;
+}
+
+#change-info-btn:active, #change-info-btn:hover {
+    background: #FFE200;
+}
+
+/* Banner section (for index.html) */
 #banner .inner-alt {
     opacity: 1;
     position: absolute;
@@ -47,7 +142,7 @@ section .inner-alt {
     background: #7390A8;
 }
 
-#logo {
+#banner #logo {
     font-family: "Lobster";
     font-size: 4em !important;
 }
@@ -100,7 +195,8 @@ section .inner-alt {
     background: #2E8B57;
 }
 
-/* Section for displaying original and filtered image, as well as the filter drop-down menu and button */
+/* Section for displaying original and filtered image, as well as
+   the filter drop-down menu and button */
 #filter-section {
     background: #4682B4;
     padding: 2.5% 2.5% 0 2.5%;
@@ -163,7 +259,7 @@ section .inner-alt {
 }
 
 #filter-select {
-    background: #90B4D2;
+    background: #B0C4DE;
     color: #000000;
 }
 
@@ -217,7 +313,7 @@ section .inner-alt {
 }
 
 .slick-slide:hover {
-    opacity: .6;
+    opacity: 0.6;
 }
 
 .slick-slide img {

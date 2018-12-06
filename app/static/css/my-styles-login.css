@@ -16,7 +16,7 @@ body, #footer {
 #logo {
     color: #FFFFFF;
     font-family: "Lobster";
-    font-size: 2em;
+    font-size: 3.75em !important;
     text-decoration: none;
 }
 
