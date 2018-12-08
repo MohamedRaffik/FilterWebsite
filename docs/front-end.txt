@@ -27,7 +27,6 @@ JS:
   * combined.min.js - combines JS files to reduce HTTP requests
     - contains the minified text from the following files (in this exact order):
       + slick.min.js
-      + jquery.poptrox.min.js
       + jquery.scrollex.min.js
       + jquery.scrolly.min.js
       + download.min.js
@@ -42,8 +41,6 @@ JS:
     - used for the download button's functionality, so that the downloaded file is of the same type as the uploaded file
 
   * jquery.min.js - jQuery v1.11.3 | (c) 2005, 2015 jQuery Foundation, Inc.
-
-  * jquery.poptrox.min.js - image gallery plugin, documentation at https://github.com/ajlkn/jquery.poptrox
 
   * jquery.scrollex.min.js - documentation at https://github.com/ajlkn/jquery.scrollex
     - used for the nav bar's functionality; while scrolling the page, the active icon changes based on the section you're on

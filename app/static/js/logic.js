@@ -422,10 +422,19 @@ $(document).ready(function() {
     });
 
     /* Allow re-uploading of images that were recently uploaded or filtered
-       by double clicking on an image in the slider */
-    $('.img-slider').on('dblclick', 'img', function() {
-        var b64_string = $(this)[0].src;
-        update_images(b64_string);
+       by double clicking/tapping on an image in the slider */
+    var timer = 0;
+    $('.img-slider').on('click', 'img', function() {
+        if (timer == 0) {
+            timer = 1;
+            // Second click/tap occurs within 600ms of first click/tap
+            timer = setTimeout(function(){ timer = 0; }, 600);
+        }
+        else {   // Double click/tap code:
+            var b64_string = $(this)[0].src;
+            update_images(b64_string);
+            timer = 0;
+        }
     });
 
 });
