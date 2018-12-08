@@ -12,7 +12,7 @@
     <!-- Main CSS -->
     <link type="text/css" rel="stylesheet" href="../static/css/combined.min.css">
     <!-- My CSS and JS (at bottom of this page) - IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
-    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.8">
+    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.9">
   </head>
 
   <body>
@@ -38,27 +38,30 @@
         <header id="header" class="page-section">
           <h1 id="logo">FilterX</h1>
           <div id="user-info">
-            <span>Welcome, &lt;Username&gt;</span>
+            <span id="welcome-msg">Welcome, &lt;Username&gt;</span>
             <a href="{{ url_for('index') }}" id="signout-btn" class="button">Log Out</a>
-            <p>To change account information, type the new email and/or password, your current password, and then click the change button.</p>
 
-            <div class="change-info">
-              <label for="change-email">Change Email:</label>
-              <input id="change-email" type="text" size="40" placeholder="New Email">
+            <div><button id="settings-btn" class="fa-cog icon" type="button" onclick="toggle_settings();">Settings</button></div>
+            <div id="change-info" class="hide">
+              <p>To change account information, type the new email and/or password, your current password, and then click the change button.</p>
+              <div class="change-info">
+                <label for="change-email">Change Email:</label>
+                <input id="change-email" type="text" size="40" placeholder="New Email">
+              </div>
+              <div class="change-info">
+                <label for="change-password">Change Password:</label>
+                <input id="change-password" type="password" size="40" placeholder="New Password">
+              </div>
+              <div class="password-checkbox">
+                <input id="password-checkbox" type="checkbox" onclick="toggle_password(document.getElementById('change-password'));">
+                <label for="password-checkbox">Show Password</label>
+              </div>
+              <div class="change-info">
+                <label for="current-password">Current Password:</label>
+                <input id="current-password" type="password" size="40" placeholder="Current Password">
+              </div>
+              <button id="change-info-btn" type="button">Change</button>
             </div>
-            <div class="change-info">
-              <label for="change-password">Change Password:</label>
-              <input id="change-password" type="password" size="40" placeholder="New Password">
-            </div>
-            <div class="password-checkbox">
-              <input id="password-checkbox" type="checkbox" onclick="toggle_password(document.getElementById('change-password'));">
-              <label for="password-checkbox">Show Password</label>
-            </div>
-            <div class="change-info">
-              <label for="current-password">Current Password:</label>
-              <input id="current-password" type="password" size="40" placeholder="Current Password">
-            </div>
-            <button id="change-info-btn" type="button">Change</button>
           </div>
         </header>
 
@@ -142,14 +145,10 @@
             <ul id="social-btns" class="actions">
               <li><button class="fa-download icon" type="button" onclick="download_image();">Download</button></li>
               <li><button class="fa-facebook-square icon" type="button" onclick="share_to('facebook');">Share</button></li>
-              <li><button class="fa-twitter-square icon" type="button" onclick="share_to('twitter');">Share</button></li>
+              <li><button class="fa-twitter-square icon" type="button" onclick="share_to('twitter');"><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>Share</button></li>
               <li><button class="fa-linkedin-square icon" type="button" onclick="share_to('linkedin');">Share</button></li>
               <li><button class="fa-pinterest-square icon" type="button" onclick="share_to('pinterest');">Share</button></li>
               <!--
-                   <div class="social-btn">
-                   <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check this website! They have many filters for your images and you can even download them!!!" data-url="https://filterx.herokuapp.com/" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                   </div>
-
                    <div class="social-btn">
                    <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
                    <script type="IN/Share" data-url="https://filterx.herokuapp.com/"></script>
@@ -250,7 +249,7 @@
 
     <script src="../static/js/jquery.min.js"></script>
     <script src="../static/js/combined.min.js?version=3.8"></script>
-    <script src="../static/js/logic.js?version=3.8"></script>
+    <script src="../static/js/logic.js?version=3.9"></script>
 
   </body>
 </html>

@@ -16,9 +16,15 @@ section .inner-alt {
     padding: 1em;
 }
 
+/* .exclusive-content is the div wrapper around the exclusive content
+   (must be logged in to view) in index.html */
+.exclusive-content p {
+    font-size: 1.15em;
+}
+
 /* Header (for home.html) */
 #main #header {
-    background: #25292E;
+    background: #252C32;
     background-image: url('../images/home.jpg');
     background-attachment: fixed;
     background-position: center;
@@ -29,7 +35,7 @@ section .inner-alt {
 #header #logo {
     color: #FFFFFF;
     float: left;
-    font-family: "Lobster";
+    font-family: "Lobster", "Copperplate Gothic", "Rockwell", "Franklin Gothic", "Tahoma", "Arial";
     font-size: 4em !important;
     padding: 30px;
 }
@@ -57,21 +63,48 @@ section .inner-alt {
     text-shadow: 2px 2px 4px #000000;
 }
 
+#user-info #welcome-msg {
+    font-size: 1.5em;
+}
+
 #signout-btn {
     background: #4682B4;
     border-radius: 20px;
-    font-size: 0.85em;
-    margin-bottom: 20px;
+    font-size: 1em;
+    margin-bottom: 10px;
     margin-left: 10px;
     padding: 0 1em;
 }
-
 #signout-btn:active, #signout-btn:hover {
-    background: #386890;
+    background: #2E6899;
+}
+
+#settings-btn {
+    background: #252C32;
+    font-size: 1em;
+    margin-bottom: 10px;
+    padding: 0 1em;
+}
+#settings-btn:active, #settings-btn:hover {
+    background: #252C32;
 }
 
 #user-info p {
     text-align: left;
+}
+@media screen and (max-width: 736px) {
+    #user-info p {
+        text-align: center;
+    }
+}
+
+/* The div wrapper around the .change-info's, the .password-checkbox,
+   and the #change-info-btn in the header of home.html */
+#change-info.show {
+    visibility: visible;
+}
+#change-info.hide {
+    visibility: hidden;
 }
 
 /* The div wrapper around each of the label + text field
@@ -81,6 +114,11 @@ section .inner-alt {
     align-items: center;
     flex-direction: row;
     justify-content: center;
+}
+@media screen and (max-width: 736px) {
+    .change-info {
+        display: block;
+    }
 }
 
 .change-info label, .change-info input {
@@ -94,21 +132,19 @@ section .inner-alt {
 
 /* The div wrapper around the password checkbox and the
    text "Show password" in the header of home.html */
-div.password-checkbox {
+.password-checkbox {
     font-size: 0.85em;
     text-align: right;
 }
 
 #change-info-btn {
-    background: #FFFF00;
+    background: #FFFF32;
     color: #000000;
-    float: right;
-    margin-top: 5px;
+    margin-top: 10px;
     padding: 0 1em;
 }
-
 #change-info-btn:active, #change-info-btn:hover {
-    background: #FFE200;
+    background: #E7E517;
 }
 
 /* Banner section (for index.html) */
@@ -129,21 +165,19 @@ div.password-checkbox {
     background: #4682B4;
     margin-right: 10px;
 }
-
 #signup-btn:active, #signup-btn:hover {
-    background: #386890;
+    background: #2E6899;
 }
 
 #signin-btn {
     background: #90B4D2;
 }
-
 #signin-btn:active, #signin-btn:hover {
-    background: #7390A8;
+    background: #789AB7;
 }
 
 #banner #logo {
-    font-family: "Lobster";
+    font-family: "Lobster", "Copperplate Gothic", "Rockwell", "Franklin Gothic", "Tahoma", "Arial";
     font-size: 4em !important;
 }
 
@@ -165,7 +199,7 @@ div.password-checkbox {
 
 /* Styling for file upload "button" */
 #upload-text {
-    font-family: "Arial";
+    font-family: "Tahoma", "Arial";
     margin-left: 10px;
 }
 
@@ -190,9 +224,8 @@ div.password-checkbox {
     padding: 0 1.5em;
     text-align: center;
 }
-
 .inputfile + label:hover {
-    background: #2E8B57;
+    background: #249956;
 }
 
 /* Section for displaying original and filtered image, as well as
@@ -264,12 +297,11 @@ div.password-checkbox {
 }
 
 #filter-btn {
-    background: #FFFF00;
+    background: #FFFF32;
     color: #000000;
 }
-
 #filter-btn:active, #filter-btn:hover {
-    background: #FFE200;
+    background: #E7E517;
 }
 
 /* Section for recent images */
@@ -311,7 +343,6 @@ div.password-checkbox {
     -ms-transition: all ease-in-out .3s;
     transition: all ease-in-out .3s;
 }
-
 .slick-slide:hover {
     opacity: 0.6;
 }
@@ -331,7 +362,12 @@ div.password-checkbox {
     margin-bottom: 10px;
     height: auto;
 }
-
 #social-btns button:active, #social-btns button:hover {
-    background: #2E8B57;
+    background: #249956;
+}
+
+/* Section for image galleries */
+#gallery-section {
+    background: #F2F2F2;
+    text-align: center;
 }

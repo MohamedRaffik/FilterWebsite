@@ -262,6 +262,22 @@ function share_to(website) {
     return true;
 }
 
+// Toggles between #change-info's classes 'show' and 'hide', and how the #settings-btn looks
+function toggle_settings() {
+    var button = document.getElementById('settings-btn');
+    var info = document.getElementById('change-info');
+    if (info.className == 'show') {
+        button.className = 'fa-cog icon';
+        button.textContent = 'Settings';
+        info.className = 'hide';
+    }
+    else {
+        button.className = 'fa-close icon';
+        button.textContent = 'Close';
+        info.className = 'show';
+    }
+}
+
 // Toggles between showing and hiding the typed value in the DOM input object @password
 function toggle_password(password) {
     if (password.type == 'password')
