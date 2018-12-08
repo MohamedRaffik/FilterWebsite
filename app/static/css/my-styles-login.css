@@ -15,11 +15,10 @@ body, #footer {
 
 #logo {
     color: #FFFFFF;
-    font-family: "Lobster";
+    font-family: "Lobster", "Copperplate Gothic", "Rockwell", "Franklin Gothic", "Tahoma", "Arial";
     font-size: 3.75em !important;
     text-decoration: none;
 }
-
 #logo:active, #logo:hover {
     color: #19B5FE;
 }
@@ -57,7 +56,6 @@ body, #footer {
     padding-right: 3.5em;
     width: 50%;
 }
-
 @media screen and (max-width: 980px) {
     #signup-signin .column {
         padding: 2em 0 0.1em 0;
@@ -65,13 +63,11 @@ body, #footer {
         padding-right: 2em;
     }
 }
-
 @media screen and (max-width: 736px) {
     #signup-signin .column {
         width: 100%;
     }
 }
-
 @media screen and (max-width: 480px) {
     #signup-signin .column {
         padding: 1em 0 0.1em 0;
@@ -82,7 +78,7 @@ body, #footer {
 
 /* Div column for signing up */
 #signup {
-    background: #25292E;
+    background: #252C32;
 }
 
 #signup h2, #signup label {
