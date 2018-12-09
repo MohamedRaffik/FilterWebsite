@@ -255,6 +255,15 @@ function share_to(website) {
         };
         upload_to_cloudinary(document.getElementById('new-img').src, callback);
     }
+    else if (website == 'linkedin') {
+        var callback = function(url) {
+            var link = document.createElement('a');
+            link.href = "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(url);
+            link.target = "_blank";
+            link.click();
+        }
+        upload_to_cloudinary(document.getElementById('new-img').src, callback);
+    }
     else {
         console.log(website + ' share');
     }
