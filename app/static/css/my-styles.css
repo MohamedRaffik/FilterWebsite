@@ -16,13 +16,65 @@ section .inner-alt {
     padding: 1em;
 }
 
-/* .exclusive-content is the div wrapper around the exclusive content
+@media screen and (max-width: 736px) {
+    #nav, #nav ul {
+        position: fixed;
+        top: 0;
+    }
+
+    #nav ul {
+        background: #0D1217;
+        font-size: 0.85em;
+        height: 2.75em;
+        width: auto;
+    }
+
+    #nav ul li {
+        display: inline-block;
+    }
+}
+
+/* The div wrapper around the exclusive content
    (must be logged in to view) in index.html */
 .exclusive-content p {
     font-size: 1.15em;
 }
 
-/* Header (for home.html) */
+/* Banner section (for index.html) */
+#banner .inner-alt {
+    opacity: 1;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 3;
+}
+
+#signup-btn, #signin-btn {
+    border-radius: 20px;
+    padding: 0 1em;
+}
+
+#signup-btn {
+    background: #4682B4;
+}
+#signup-btn:active, #signup-btn:hover {
+    background: #2E6899;
+}
+
+#signin-btn {
+    background: #90B4D2;
+    margin-left: 10px;
+}
+#signin-btn:active, #signin-btn:hover {
+    background: #789AB7;
+}
+
+#banner #logo {
+    font-family: "Lobster", "Copperplate Gothic", "Rockwell", "Franklin Gothic", "Tahoma", "Arial";
+    font-size: 4em !important;
+}
+
+/* Header section (for home.html) */
 #main #header {
     background: #252C32;
     background-image: url('../images/home.jpg');
@@ -86,7 +138,7 @@ section .inner-alt {
     padding: 0 1em;
 }
 #settings-btn:active, #settings-btn:hover {
-    background: #252C32;
+    background: #0D1217;
 }
 
 #user-info p {
@@ -107,7 +159,7 @@ section .inner-alt {
     visibility: hidden;
 }
 
-/* The div wrapper around each of the label + text field
+/* The div wrapper around each of the label + input field
    in the header of home.html */
 .change-info {
     display: flex;
@@ -147,40 +199,6 @@ section .inner-alt {
     background: #E7E517;
 }
 
-/* Banner section (for index.html) */
-#banner .inner-alt {
-    opacity: 1;
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 3;
-}
-
-#signup-btn, #signin-btn {
-    border-radius: 20px;
-    padding: 0 1em;
-}
-
-#signup-btn {
-    background: #4682B4;
-    margin-right: 10px;
-}
-#signup-btn:active, #signup-btn:hover {
-    background: #2E6899;
-}
-
-#signin-btn {
-    background: #90B4D2;
-}
-#signin-btn:active, #signin-btn:hover {
-    background: #789AB7;
-}
-
-#banner #logo {
-    font-family: "Lobster", "Copperplate Gothic", "Rockwell", "Franklin Gothic", "Tahoma", "Arial";
-    font-size: 4em !important;
-}
-
 /* Section for uploading image */
 #upload-section {
     background: #F2F2F2;
@@ -214,7 +232,7 @@ section .inner-alt {
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
     background: #3CB371;
     border-radius: 4px;
-    border: none;
+    border: 0;
     color: #FFFFFF;
     cursor: pointer;
     display: inline-block;
@@ -226,6 +244,21 @@ section .inner-alt {
 }
 .inputfile + label:hover {
     background: #249956;
+}
+
+#url-input, #url-submit {
+    display: inline-block;
+    margin-bottom: 1em;
+}
+
+#url-input {
+    width: 350px;
+}
+
+#url-submit {
+    margin-left: 10px;
+    padding-left: 1.35em;
+    padding-right: 1.5em;
 }
 
 /* Section for displaying original and filtered image, as well as
@@ -270,6 +303,10 @@ section .inner-alt {
     pointer-events: auto;
 }
 
+#new-img.not-default {
+    cursor: move;
+}
+
 /* Styling for drag-and-drop area */
 #drop-area.highlight {
     background: #000000;
@@ -281,14 +318,25 @@ section .inner-alt {
 
 #drop-area img, #align-area img {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
 }
 
 /* Styling for filter drop-down menu and button */
 #filter-box {
+    cursor: default;
     display: inline-block;
+    list-style: none;
     margin-top: 20px;
+    padding-left: 0;
+}
+
+#filter-box li {
+    display: inline-block;
+    padding: 0 1em 0 0;
+    vertical-align: middle;
+}
+#filter-box li:last-child {
+    padding-right: 0;
 }
 
 #filter-select {
@@ -299,6 +347,8 @@ section .inner-alt {
 #filter-btn {
     background: #FFFF32;
     color: #000000;
+    padding-left: 1.35em;
+    padding-right: 1.5em;
 }
 #filter-btn:active, #filter-btn:hover {
     background: #E7E517;
@@ -312,7 +362,17 @@ section .inner-alt {
 
 .img-slider {
     margin: 0 auto;
-    width: 600px;
+    width: 700px;
+}
+@media screen and (max-width: 980px) {
+    .img-slider {
+        width: 600px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .img-slider {
+        width: 500px;
+    }
 }
 
 .img-slider img.not-default {
@@ -344,7 +404,10 @@ section .inner-alt {
     transition: all ease-in-out .3s;
 }
 .slick-slide:hover {
-    opacity: 0.6;
+    -moz-transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
 }
 
 .slick-slide img {
@@ -357,10 +420,12 @@ section .inner-alt {
     text-align: center;
 }
 
+#social-btns {
+    margin-bottom: 1em;
+}
+
 #social-btns button {
     background: #3CB371;
-    margin-bottom: 10px;
-    height: auto;
 }
 #social-btns button:active, #social-btns button:hover {
     background: #249956;
@@ -370,4 +435,151 @@ section .inner-alt {
 #gallery-section {
     background: #F2F2F2;
     text-align: center;
+}
+
+/* The div wrapper around the gallery info and the gallery box */
+#gallery-section .gallery {
+    display: -ms-flexbox;
+    -ms-flex-pack: justify;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -moz-justify-content: space-between;
+    -webkit-justify-content: space-between;
+    -ms-justify-content: space-between;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+#gallery-section .gallery .column {
+    padding: 2em 1em 1em 1em;
+    width: 50%;
+}
+@media screen and (max-width: 980px) {
+    #gallery-section .gallery .column {
+        padding: 1.625em 0.625em 0.625em 0.625em;
+    }
+}
+@media screen and (max-width: 736px) {
+    #gallery-section .gallery .column {
+        padding: 1.25em 0.25em 0.25em 0.25em;
+        width: 100%;
+    }
+}
+@media screen and (max-width: 480px) {
+    #gallery-section .gallery .column {
+        padding: 1em 1em 0.1em 1em;
+    }
+}
+
+.gallery-info, .gallery-box {
+    height: 230px;
+}
+
+/* The div wrapper around the gallery info */
+.gallery-info {
+    background: #0D1217;
+    color: #FFFFFF;
+    font-size: 1.5em;
+}
+
+.gallery-name, .gallery-name-input {
+    margin-bottom: 15px;
+}
+
+.gallery-name.show {
+    display: inline-block;
+    text-shadow: 3px 3px 2px #19B5FE;
+}
+.gallery-name.hide {
+    display: none;
+}
+
+/* The input element where the new gallery name is typed in */
+#gallery-section .gallery-name-input.show {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid #FFFFFF;
+    border-radius: 0;
+    color: #FFFFFF;
+    display: inline-block;
+    font-size: 14pt;
+    outline: 0;
+    width: 175px;
+}
+.gallery-name-input.hide {
+    display: none;
+}
+.gallery-name-input.hide + .gallery-name-btn:hover {
+    color: #19B5FE;
+    cursor: pointer;
+}
+
+.gallery-name-btn {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.gallery-info div.text {
+    font-size: 0.85em;
+    margin: 0 0 15px 0;
+}
+
+.gallery-number-images {
+    color: #19B5FE;
+}
+
+/* The div wrapper around the gallery box */
+.gallery-box {
+    background: #252C32;
+    -moz-overflow-y: scroll;
+    -webkit-overflow-y: scroll;
+    -ms-overflow-y: scroll;
+    overflow-y: scroll;
+}
+
+/* Scrollbar inside each gallery-box */
+.gallery-box::-webkit-scrollbar {
+    background: #000000;
+    border-radius: 0;
+    width: 8px;
+}
+
+.gallery-box::-webkit-scrollbar-thumb {
+    background: #19B5FE;
+    border-radius: 0;
+}
+.gallery-box::-webkit-scrollbar-thumb:hover {
+    background: #019BE3;
+}
+
+.gallery-box a {
+    display: inline-block;
+    height: auto;
+    width: 30%;
+}
+.gallery-box a:hover img {
+    -moz-transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    transform: scale(0.95);
+}
+
+.gallery-box a img {
+    max-height: 100%;
+    max-width: 100%;
+    pointer-events: auto;
+}
+
+/* The image thumbs in the opened lightgallery */
+.lg-outer .lg-thumb-item.active {
+    border-color: #19B5FE;
+}
+.lg-outer .lg-thumb-item:hover {
+    border-color: #019BE3;
 }

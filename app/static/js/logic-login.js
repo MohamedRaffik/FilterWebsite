@@ -8,7 +8,7 @@ function signin() {
     xhr.setRequestHeader('content-type',
                          'application/x-www-form-urlencoded;charset=UTF-8');
     xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
+        if (xhr.readyState === 4 && xhr.status === 200) {
             if (xhr.responseText === 'none' || xhr.responseText === 'pass') {
                 alert( (xhr.responseText === 'none') ?
                        'No account with this email.' : 'Incorrect password.');
@@ -48,7 +48,7 @@ function signup() {
         xhr.setRequestHeader('content-type',
                              'application/x-www-form-urlencoded;charset=UTF-8');
         xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
+            if (xhr.readyState === 4 && xhr.status === 200) {
                 if (xhr.responseURL === window.location.href) {
                     alert('This email is already associated with an account.');
                     // Fail

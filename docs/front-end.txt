@@ -1,6 +1,3 @@
-Minified CSS using https://cssminifier.com/
-Minified JS using https://javascript-minifier.com/
-
 CSS:
   * combined.min.css - combines CSS files to reduce HTTP requests
     - contains the minified text from the following files (in this exact order):
@@ -8,11 +5,15 @@ CSS:
       + font-awesome.min.css
       + main.css
       + slick.min.css
+      + lightgallery.min.css
 
   * font-awesome.min.css - awesome icons used throughout the site
     - Font Awesome v4.6.3 by @davegandy (http://fontawesome.io), usable icons can be found at https://lab.artlung.com/font-awesome-sample/
     - e.g. <span class="fa-cog icon"></span> creates an inline cog icon and
            <button class="fa-print icon">Print</button> creates a button with a print icon followed by the word "Print"
+
+  * lightgallery.min.css - styling for the image galleries in the Gallery section,
+                           documentation at http://sachinchoolur.github.io/lightGallery/docs/api.html
 
   * main.css - template CSS from TEMPLATED, makes the styling cohesive across different viewport widths
   * main.min.css - minified version of main.css
@@ -27,6 +28,8 @@ JS:
   * combined.min.js - combines JS files to reduce HTTP requests
     - contains the minified text from the following files (in this exact order):
       + slick.min.js
+      + lightgallery.min.js
+      + lg-thumbnail.min.js
       + jquery.scrollex.min.js
       + jquery.scrolly.min.js
       + download.min.js
@@ -48,6 +51,10 @@ JS:
   * jquery.scrolly.min.js - smooth scrolling plug-in
     - in main.js, there is the statement $('.scrolly').scrolly();
     - use: <a href="#some-id" class="scrolly"></a> makes the transition to #some-id smooth rather than instant
+
+  * lightgallery.min.js - documentation at http://sachinchoolur.github.io/lightGallery/docs/api.html
+    - logic for the image galleries in the Gallery section
+  * lg-thumbnail.min.js - lightgallery plugin for thumbnail logic
 
   * loading.min.js - documentation at https://gasparesganga.com/labs/jquery-loading-overlay/
     - used for the loading overlays in the display-boxes while an image is being loaded or filtered
