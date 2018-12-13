@@ -63,10 +63,6 @@ def login():
                     {
                         'album_name': "test",
                         'images': []
-                    },
-                    {
-                        'album_name': "test2",
-                        'images': []
                     }
                 ])
                 #Query Databse
