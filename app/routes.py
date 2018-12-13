@@ -6,7 +6,7 @@ from passlib.hash import bcrypt
 
 
 @app.route('/', methods=['GET'])
-@app.route('/index', methods=['GET'])
+@app.route('/index', methods=['GET', 'POST'])
 def index():
     return render_template('index.html')
 
@@ -26,7 +26,7 @@ def galleries():
     cur = conn.cursor()
     cur.execute("select albums from accounts where email=(%s)", [session['email']])
     data = cur.fetchone()[0]
-    return data
+    return json.dumps(data)
 
 @app.route('/logout', methods=['GET'])
 def logout():
@@ -45,38 +45,38 @@ def home():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        if request.form['type'] == 'signin':
+        if request.json['type'] == 'signin':
             # Query Database
             cur = conn.cursor()
-            cur.execute("select email, password from accounts where email=(%s)", [request.form['email']])
+            cur.execute("select email, password from accounts where email=(%s)", [request.json['email']])
             data = cur.fetchone()
             # Fail conditions [No user by that email or password does not match]
-            if data == None: return 'none'
-            if not bcrypt.verify(request.form['pass'], data[1]): return 'pass'
+            if data == None: return '', 298
+            if not bcrypt.verify(request.json['pass'], data[1]): return '', 299
             # If good got to index
             session['email'] = data[0]
             return redirect(url_for('home'))
 
-        elif request.form['type'] == 'signup':
+        elif request.json['type'] == 'signup':
             try:
                 albums = json.dumps([
                     {
-                        'album_name': "test",
+                        'album_name': "My Gallery",
                         'images': []
                     }
                 ])
                 #Query Databse
                 cur = conn.cursor()
                 # Attempt to add new user and login
-                password = bcrypt.hash(request.form['pass'])
-                cur.execute("insert into accounts (email, username, password, albums) values (%s, %s, %s, %s)",
-                            [request.form['email'], request.form['user'], password, json.dumps(albums)])
+                password = bcrypt.hash(request.json['pass'])
+                cur.execute("insert into accounts (email, username, password, albums) values (%s, %s, %s, %s)", 
+                    [request.json['email'], request.json['user'], password, albums])
                 conn.commit()
-                session['email'] = request.form['email']
+                session['email'] = request.json['email']
                 return redirect(url_for('home'))
             except psycopg2.IntegrityError:
                 cur.execute('ROLLBACK')
-                return ''
+                return '', 299
 
     # show the login page if it wasn't submitted yet
     return render_template('login.html')
