@@ -120,11 +120,24 @@ def filter(b64_img, filter_type):
     #apply a border to the image
     elif filter_type == 'border_black':
         img = ImageOps.expand(img, border = 50, fill = 'black')
+        img = img.resize((int(width-50), int(height-50)))
 
     elif filter_type == 'border_gold':  
         img = ImageOps.expand(img, border = 50, fill = '#FFD700')
+        img = img.resize((int(width-50), int(height-50)))
 
     elif filter_type == 'border_blur':
-        img = ImageOps.expand(img, border = 100, fill = img.filter(ImageFilter.GaussianBlur(10)))
+        RADIUS = 50
+        perim = 2*RADIUS
+        back = Image.new('RGB', (img.size[0] + perim, img.size[1] + perim), (255,255,255))
+        back.paste(img, (RADIUS, RADIUS))
+
+        mask = Image.new('L', (img.size[0] + perim, img.size[1] + perim), 255)
+        blck = Image.new('L', (img.size[0] - perim, img.size[1] - perim), 0)    
+        mask.paste(blck, (perim, perim)) 
+
+        blur = back.filter(ImageFilter.GaussianBlur(RADIUS/2))
+        back.paste(blur, mask=mask)
+        img = back
 
     return convert_to_b64(img, meta_data)
