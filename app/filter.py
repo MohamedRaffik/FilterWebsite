@@ -117,4 +117,14 @@ def filter(b64_img, filter_type):
         r, g, b = img.split()
         img = Image.merge('RGB', (b, g, r))
 
+    #apply a border to the image
+    elif filter_type == 'border_black':
+        img = ImageOps.expand(img, border = 50, fill = 'black')
+
+    elif filter_type == 'border_gold':  
+        img = ImageOps.expand(img, border = 50, fill = '#FFD700')
+
+    elif filter_type == 'border_blur':
+        img = ImageOps.expand(img, border = 100, fill = img.filter(ImageFilter.GaussianBlur(10)))
+
     return convert_to_b64(img, meta_data)
