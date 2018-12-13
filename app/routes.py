@@ -69,8 +69,8 @@ def login():
                 cur = conn.cursor()
                 # Attempt to add new user and login
                 password = bcrypt.hash(request.form['pass'])
-                cur.execute("insert into accounts (email, username, password, albums) values (%s, %s, %s, %s)", 
-                    [request.form['email'], request.form['user'], password, json.dumps(albums)])
+                cur.execute("insert into accounts (email, username, password, albums) values (%s, %s, %s, %s)",
+                            [request.form['email'], request.form['user'], password, json.dumps(albums)])
                 conn.commit()
                 session['email'] = request.form['email']
                 return redirect(url_for('home'))
@@ -83,7 +83,6 @@ def login():
 
 '''
     Data format for albums:
-
     [
         {
                 "album_name": "---",

@@ -109,7 +109,7 @@ section .inner-alt {
     width: 500px;
 }
 
-#user-info span, #user-info p, #user-info label {
+#user-info span, #user-info label {
     color: #FFFFFF;
     font-size: 1em;
     text-shadow: 2px 2px 4px #000000;
@@ -139,15 +139,6 @@ section .inner-alt {
 }
 #settings-btn:active, #settings-btn:hover {
     background: #0D1217;
-}
-
-#user-info p {
-    text-align: left;
-}
-@media screen and (max-width: 736px) {
-    #user-info p {
-        text-align: center;
-    }
 }
 
 /* The div wrapper around the .change-info's, the .password-checkbox,

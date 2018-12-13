@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <title>FilterX</title>
-    <link href="../static/images/favicon.ico" type="image/x-icon" rel="shortcut icon">
+    <link href="../static/images/favicon.ico?version=2" type="image/x-icon" rel="shortcut icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="cache-control" content="no-cache">
@@ -15,13 +15,13 @@
     <meta property="og:title" content="FilterX">
     <meta property="og:url" content="https://filterx.herokuapp.com/">
     <meta property="og:description" content="Filter, download, and share your images!">
-    <meta property="og:image" content="https://res.cloudinary.com/filterx/image/upload/v1542575791/filterx_snapshot.png">
+    <meta property="og:image" content="https://res.cloudinary.com/filterx/image/upload/v1544722783/filterx_snapshot.png">
     <meta name="twitter:card" content="summary_large_image">
 
     <!-- Main CSS -->
-    <link type="text/css" rel="stylesheet" href="../static/css/combined.min.css?version=3.12">
+    <link type="text/css" rel="stylesheet" href="../static/css/combined.min.css?version=3.13">
     <!-- My CSS and JS (at bottom of this page) - IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
-    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.12">
+    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.13">
   </head>
 
   <body>
@@ -127,10 +127,7 @@
             <ul id="social-btns" class="actions">
               <li><button class="fa-download icon" type="button" onclick="download_image();">Download</button></li>
               <li><button class="fa-facebook-square icon" type="button" onclick="share_to('facebook');">Share</button></li>
-
-
               <li><button class="fa-twitter-square icon" type="button" onclick="share_to('twitter');"><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>Share</button></li>
-
               <li><button class="fa-linkedin-square icon" type="button" onclick="share_to('linkedin');"><script src="https://platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>Share</button></li>
             </ul>
           </div>
@@ -152,9 +149,15 @@
             <p>If you have any questions or concerns, contact us at <a href="mailto:filterx.website@gmail.com">filterx.website@gmail.com</a></p>
             <h3>Share This Website</h3>
             <ul class="icons">
-              <li><a href="https://www.facebook.com/sharer/sharer.php?u=https://filterx.herokuapp.com/" target="_blank" class="icon fa-facebook"></a></li>
-              <li><a href="https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw&text=This%20website%20filters%20your%20images!%20Check%20out:&tw_p=tweetbutton&url=https://filterx.herokuapp.com/" class="icon fa-twitter"></a></li>
-              <li><a href="https://www.linkedin.com/sharing/share-offsite/?url=https://filterx.herokuapp.com/" target="_blank" class="icon fa-linkedin"></a></li>
+              <li><a href="https://www.facebook.com/sharer/sharer.php?u=https://filterx.herokuapp.com/" target="_blank" class="icon fa-facebook-square"></a></li>
+              <li><a href="https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw&text=This%20website%20filters%20your%20images!%20Check%20out:&tw_p=tweetbutton&url=https://filterx.herokuapp.com/" target="_blank" class="icon fa-twitter-square"></a></li>
+              <li><a href="https://www.linkedin.com/sharing/share-offsite/?url=https://filterx.herokuapp.com/" target="_blank" class="icon fa-linkedin-square"></a></li>
+            </ul>
+            <h3>Connect With Us</h3>
+            <ul class="icons">
+              <li><a href="https://www.facebook.com/filterx.webs.5" target="_blank" class="icon fa-facebook"></a></li>
+              <li><a href="https://twitter.com/FilterxW" target="_blank" class="icon fa-twitter"></a></li>
+              <li><a href="https://www.linkedin.com/in/filterx-webs-88b2b7177/" target="_blank" class="icon fa-linkedin"></a></li>
             </ul>
           </div>
 
@@ -194,8 +197,8 @@
     </div>
 
     <script src="../static/js/jquery.min.js"></script>
-    <script src="../static/js/combined.min.js?version=3.12"></script>
-    <script src="../static/js/logic.js?version=3.12"></script>
+    <script src="../static/js/combined.min.js?version=3.13"></script>
+    <script src="../static/js/logic.js?version=3.13"></script>
 
   </body>
 </html>

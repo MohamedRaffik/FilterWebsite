@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <title>Home</title>
-    <link href="../static/images/favicon.ico" type="image/x-icon" rel="shortcut icon">
+    <link href="../static/images/favicon.ico?version=2" type="image/x-icon" rel="shortcut icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="cache-control" content="no-cache">
@@ -11,9 +11,9 @@
     <meta http-equiv="pragma" content="no-cache">
 
     <!-- Main CSS -->
-    <link type="text/css" rel="stylesheet" href="../static/css/combined.min.css?version=3.12">
+    <link type="text/css" rel="stylesheet" href="../static/css/combined.min.css?version=3.13">
     <!-- My CSS and JS (at bottom of this page) - IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
-    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.12">
+    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.13">
   </head>
 
   <body data-page="home">
@@ -44,11 +44,6 @@
             <div><button id="settings-btn" class="fa-cog icon" type="button" onclick="toggle_settings();">My Account</button></div>
 
             <div id="change-info" class="hide">
-              <p>To change account information, type the new email and/or password, your current password, and then click the change button.</p>
-              <div class="change-info">
-                <label for="change-email">Change Email:</label>
-                <input id="change-email" type="text" placeholder="New Email">
-              </div>
               <div class="change-info">
                 <label for="change-password">Change Password:</label>
                 <input id="change-password" type="password" placeholder="New Password">
@@ -187,9 +182,15 @@
             <p>If you have any questions or concerns, contact us at <a href="mailto:filterx.website@gmail.com">filterx.website@gmail.com</a></p>
             <h3>Share This Website</h3>
             <ul class="icons">
-              <li><a href="#contact" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-              <li><a href="#contact" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-              <li><a href="#contact" class="icon fa-envelope"><span class="label">Email</span></a></li>
+              <li><a href="https://www.facebook.com/sharer/sharer.php?u=https://filterx.herokuapp.com/" target="_blank" class="icon fa-facebook-square"></a></li>
+              <li><a href="https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw&text=This%20website%20filters%20your%20images!%20Check%20out:&tw_p=tweetbutton&url=https://filterx.herokuapp.com/" target="_blank" class="icon fa-twitter-square"></a></li>
+              <li><a href="https://www.linkedin.com/sharing/share-offsite/?url=https://filterx.herokuapp.com/" target="_blank" class="icon fa-linkedin-square"></a></li>
+            </ul>
+            <h3>Connect With Us</h3>
+            <ul class="icons">
+              <li><a href="https://www.facebook.com/filterx.webs.5" target="_blank" class="icon fa-facebook"></a></li>
+              <li><a href="https://twitter.com/FilterxW" target="_blank" class="icon fa-twitter"></a></li>
+              <li><a href="https://www.linkedin.com/in/filterx-webs-88b2b7177/" target="_blank" class="icon fa-linkedin"></a></li>
             </ul>
           </div>
 
@@ -229,8 +230,8 @@
     </div>
 
     <script src="../static/js/jquery.min.js"></script>
-    <script src="../static/js/combined.min.js?version=3.12"></script>
-    <script src="../static/js/logic.js?version=3.12"></script>
+    <script src="../static/js/combined.min.js?version=3.13"></script>
+    <script src="../static/js/logic.js?version=3.13"></script>
 
   </body>
 </html>

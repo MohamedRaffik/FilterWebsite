@@ -44,10 +44,10 @@ def motion_filter(b64_img, filter_type, type_of):
     # Converts the now edited GIF or WEBP into a base64 string
     buffered = BytesIO()
     if type_of == 'gif':
-        frames[0].save(buffered, format='gif', save_all=True, append_images=frames[1:], background=info['background'], version=info['version'], 
-    duration=info['duration'], loop=info['loop'], extension=info['extension'])
+        frames[0].save(buffered, format='gif', save_all=True, append_images=frames[1:], background=info['background'], version=info['version'],
+                       duration=info['duration'], loop=info['loop'], extension=info['extension'])
     elif type_of =='webp':
-        frames[0].save(buffered, format='webp', save_all=True, append_images=frames[1:]) 
+        frames[0].save(buffered, format='webp', save_all=True, append_images=frames[1:])
     return meta_data + b64encode(buffered.getvalue()).decode('utf-8')
 
 # Filter function for single frame image formats
@@ -86,7 +86,7 @@ def filter(b64_img, filter_type):
     elif filter_type == 'upside_down':
         img = img.rotate(180)
 
-    #flips the image to show the 'opposite' verision 
+    #flips the image to show the 'opposite' verision
     elif filter_type == 'flip':
         img = img.transpose(Image.FLIP_LEFT_RIGHT)
 
@@ -108,11 +108,11 @@ def filter(b64_img, filter_type):
 
     #applies a jester hat logo on the bottom right corner of the image
     elif filter_type == 'joker_logo':
-            logo_img = Image.open(BytesIO(b64decode(logo_str[logo_str.index(',')+1:])))
-            position = ((img.width - logo_img.width), (img.height - logo_img.height))
-            img.paste(logo_img, position, logo_img)
+        logo_img = Image.open(BytesIO(b64decode(logo_str[logo_str.index(',')+1:])))
+        position = ((img.width - logo_img.width), (img.height - logo_img.height))
+        img.paste(logo_img, position, logo_img)
 
-    #swaps color channels blue and red  
+    #swaps color channels blue and red
     elif filter_type == 'swap_blue_red':
         r, g, b = img.split()
         img = Image.merge('RGB', (b, g, r))
@@ -122,7 +122,7 @@ def filter(b64_img, filter_type):
         img = ImageOps.expand(img, border = 50, fill = 'black')
         img = img.resize((int(width-50), int(height-50)))
 
-    elif filter_type == 'border_gold':  
+    elif filter_type == 'border_gold':
         img = ImageOps.expand(img, border = 50, fill = '#FFD700')
         img = img.resize((int(width-50), int(height-50)))
 
@@ -133,8 +133,8 @@ def filter(b64_img, filter_type):
         back.paste(img, (RADIUS, RADIUS))
 
         mask = Image.new('L', (img.size[0] + perim, img.size[1] + perim), 255)
-        blck = Image.new('L', (img.size[0] - perim, img.size[1] - perim), 0)    
-        mask.paste(blck, (perim, perim)) 
+        blck = Image.new('L', (img.size[0] - perim, img.size[1] - perim), 0)
+        mask.paste(blck, (perim, perim))
 
         blur = back.filter(ImageFilter.GaussianBlur(RADIUS/2))
         back.paste(blur, mask=mask)
