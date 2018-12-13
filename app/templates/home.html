@@ -39,8 +39,8 @@
         <header id="header" class="page-section">
           <h1 id="logo">FilterX</h1>
           <div id="user-info">
-            <span id="welcome-msg">Welcome, &lt;Username&gt;</span>
-            <a href="{{ url_for('index') }}" id="signout-btn" class="button">Log Out</a>
+            <span id="welcome-msg">Welcome, {{ username }}</span>
+            <a id="signout-btn" class="button" onclick="logout();">Log Out</a>
             <div><button id="settings-btn" class="fa-cog icon" type="button" onclick="toggle_settings();">My Account</button></div>
 
             <div id="change-info" class="hide">

@@ -1,8 +1,9 @@
 # Page routes
 
-from flask import request, render_template, redirect, url_for, session
+from flask import request, render_template, redirect, url_for, session, json
 from app import app, filter, conn, psycopg2
 from passlib.hash import bcrypt
+
 
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
@@ -20,32 +21,63 @@ def apply_filter():
         new_img = filter.filter(b64_string, filter_type)
     return new_img
 
+@app.route('/galleries', methods=['GET'])
+def galleries():
+    cur = conn.cursor()
+    cur.execute("select albums from accounts where email=(%s)", [session['email']])
+    data = cur.fetchone()[0]
+    return data
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    session['email'] = None
+    return redirect(url_for('index'))
+
+@app.route('/home', methods=['GET'])
+def home():
+    if not session.get('email'):
+        return redirect(url_for('index'))
+    cur = conn.cursor()
+    cur.execute("select username from accounts where email=(%s)", [session['email']])
+    username = cur.fetchone()[0]
+    return render_template('home.html', username=username)
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         if request.form['type'] == 'signin':
             # Query Database
             cur = conn.cursor()
-            cur.execute("select username, password from accounts where email=(%s)", [request.form['email']])
+            cur.execute("select email, password from accounts where email=(%s)", [request.form['email']])
             data = cur.fetchone()
             # Fail conditions [No user by that email or password does not match]
             if data == None: return 'none'
             if not bcrypt.verify(request.form['pass'], data[1]): return 'pass'
             # If good got to index
-            session['username'] = data[0]
-            return redirect(url_for('index'))
+            session['email'] = data[0]
+            return redirect(url_for('home'))
 
         elif request.form['type'] == 'signup':
             try:
+                albums = json.dumps([
+                    {
+                        'album_name': "test",
+                        'images': []
+                    },
+                    {
+                        'album_name': "test2",
+                        'images': []
+                    }
+                ])
                 #Query Databse
                 cur = conn.cursor()
                 # Attempt to add new user and login
                 password = bcrypt.hash(request.form['pass'])
-                cur.execute("insert into accounts (email, username, password) values (%s, %s, %s)", 
-                    [request.form['email'], request.form['user'], password])
+                cur.execute("insert into accounts (email, username, password, albums) values (%s, %s, %s, %s)", 
+                    [request.form['email'], request.form['user'], password, json.dumps(albums)])
                 conn.commit()
-                session['username'] = request.form['user']
-                return redirect(url_for('index'))
+                session['email'] = request.form['email']
+                return redirect(url_for('home'))
             except psycopg2.IntegrityError:
                 cur.execute('ROLLBACK')
                 return ''
@@ -56,12 +88,10 @@ def login():
 '''
     Data format for albums:
 
-    {
-        "albums": [
-            {
+    [
+        {
                 "album_name": "---",
                 "images": ["---", "---", "---", ...]
-            }, ...
-        ]
-    }
+        }, ...
+    ]
 '''
