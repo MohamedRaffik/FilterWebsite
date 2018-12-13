@@ -21,7 +21,6 @@ def apply_filter():
         new_img = filter.filter(b64_string, filter_type)
     return new_img
 
-<<<<<<< Updated upstream
 @app.route('/galleries', methods=['GET'])
 def galleries():
     cur = conn.cursor()
@@ -42,13 +41,6 @@ def home():
     cur.execute("select username from accounts where email=(%s)", [session['email']])
     username = cur.fetchone()[0]
     return render_template('home.html', username=username)
-=======
-@app.route('/home', methods=['GET'])
-def home():
-    if session['username'] is None:
-        return redirect(url_for('index'))
-    return render_template('home.html', username=session['username'])
->>>>>>> Stashed changes
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -62,11 +54,7 @@ def login():
             if data == None: return 'none'
             if not bcrypt.verify(request.form['pass'], data[1]): return 'pass'
             # If good got to index
-<<<<<<< Updated upstream
             session['email'] = data[0]
-=======
-            session['username'] = data[0]
->>>>>>> Stashed changes
             return redirect(url_for('home'))
 
         elif request.form['type'] == 'signup':
@@ -88,11 +76,7 @@ def login():
                 cur.execute("insert into accounts (email, username, password, albums) values (%s, %s, %s, %s)", 
                     [request.form['email'], request.form['user'], password, json.dumps(albums)])
                 conn.commit()
-<<<<<<< Updated upstream
                 session['email'] = request.form['email']
-=======
-                session['username'] = request.form['user']
->>>>>>> Stashed changes
                 return redirect(url_for('home'))
             except psycopg2.IntegrityError:
                 cur.execute('ROLLBACK')

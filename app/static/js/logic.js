@@ -573,28 +573,15 @@ $(document).ready(function() {
 
 });
 
-<<<<<<< Updated upstream
 function logout() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '/logout', true);
-=======
-function Logout() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/filter', true);
->>>>>>> Stashed changes
     xhr.setRequestHeader('content-type',
                             'application/x-www-form-urlencoded;charset=UTF-8');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-<<<<<<< Updated upstream
             window.location.href = xhr.responseURL;
         };
     }
-=======
-
-        }
-    };
-    // Add time to URL to keep AJAX call unique and not cached by browser
->>>>>>> Stashed changes
     xhr.send();
 }
