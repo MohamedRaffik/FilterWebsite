@@ -104,6 +104,9 @@
               <option value="feeling_green">Feeling Green?</option>
               <option value="joker_logo">Joker Logo</option>
               <option value="swap_blue_red">Fire or Ice</option>
+              <option value="border_black">Black Border</option>
+              <option value="border_gold">Gold Border</option>
+              <option value="border_blur">Blur Border</option>
             </select></li>
             <li><button id="filter-btn" class="fa-filter icon" type="button" onclick="filter(document.getElementById('filter-select').value);">Filter</button></li>
           </ul>
@@ -124,7 +127,10 @@
             <ul id="social-btns" class="actions">
               <li><button class="fa-download icon" type="button" onclick="download_image();">Download</button></li>
               <li><button class="fa-facebook-square icon" type="button" onclick="share_to('facebook');">Share</button></li>
+
+
               <li><button class="fa-twitter-square icon" type="button" onclick="share_to('twitter');"><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>Share</button></li>
+
               <li><button class="fa-linkedin-square icon" type="button" onclick="share_to('linkedin');"><script src="https://platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>Share</button></li>
             </ul>
           </div>
@@ -146,9 +152,9 @@
             <p>If you have any questions or concerns, contact us at <a href="mailto:filterx.website@gmail.com">filterx.website@gmail.com</a></p>
             <h3>Share This Website</h3>
             <ul class="icons">
-              <li><a href="#contact" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-              <li><a href="#contact" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-              <li><a href="#contact" class="icon fa-envelope"><span class="label">Email</span></a></li>
+              <li><a href="https://www.facebook.com/sharer/sharer.php?u=https://filterx.herokuapp.com/" target="_blank" class="icon fa-facebook"></a></li>
+              <li><a href="https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw&text=This%20website%20filters%20your%20images!%20Check%20out:&tw_p=tweetbutton&url=https://filterx.herokuapp.com/" class="icon fa-twitter"></a></li>
+              <li><a href="https://www.linkedin.com/sharing/share-offsite/?url=https://filterx.herokuapp.com/" target="_blank" class="icon fa-linkedin"></a></li>
             </ul>
           </div>
 

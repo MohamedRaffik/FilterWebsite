@@ -264,7 +264,7 @@ function share_to(website) {
     else if (website === 'twitter') {
         var callback = function(url) {
             var link = document.createElement('a');
-            link.href = "https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw&text=Check%20out%20https://filterx.herokuapp.com/%20They%20filtered%20my%20cool%20image%20here:&tw_p=tweetbutton&url=" + encodeURIComponent(url);
+            link.href = "https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw&text=Come%20see%20my%20filtered%20image!&tw_p=tweetbutton&url=" + encodeURIComponent(url) + '&t=' + new Date().getTime();
             link.class = 'twitter-share-button';
             link.target = '_blank';
             link.click();
