@@ -2,13 +2,18 @@
 var $filter_button_active = true;
 var $upload_active = true;
 
+// Boolean values used to prevent re-uploading of the same image to Cloudinary
+var $uploaded_to_cloudinary = false; // Was the current image uploaded to Cloudinary?
+var $prev_cloudinary_url = ''; // The URL of the image recently uploaded to Cloudinary
+
 const $GALLERY_NAME_LIMIT = 30; // How long a gallery name can be
 
 /* Function that communicates with the Flask backend.
-   Sends to Flask: 1) #old-img (the image in the 'Before' box) as a base64 encoded string and
-   2) a string representing the filter that is to be applied on it (@filter_type)
-   Receives from Flask: the filtered image as a base64 encoded string, which is then used to
-   update #new-img (the image in the 'After' box) */
+   Sends to Flask: 1) #old-img (the image in the 'Before' box) as a base64 encoded string
+   and 2) a string representing the filter that is to be applied on it (@filter_type).
+   Receives from Flask: the filtered image as a base64 encoded string, which is then
+   used to update #new-img (the image in the 'After' box).
+   Side effect: $uploaded_to_cloudinary = false */
 function filter(filter_type) {
     if (!$filter_button_active)
         alert('Wait for current upload or filter to finish processing!');
@@ -32,6 +37,7 @@ function filter(filter_type) {
                 if (document.getElementById('new-img').src !== b64_string) {
                     document.getElementById('new-img').src = b64_string;
                     add_img_to_slider(b64_string);
+                    $uploaded_to_cloudinary = false;
                 }
                 $filter_button_active = true; $upload_active = true;
             }
@@ -89,9 +95,10 @@ function add_img_to_slider(b64_string) {
     }
 }
 
-/* Displays the image represented by the string @b64_string in #old-img and #new-img (the images
-   in the 'Before' and 'After' boxes) and adds it to the image slider; if @b64_string is not a
-   valid base64 image, alerts the user that the string is not able to be displayed */
+/* Displays the image represented by the string @b64_string in #old-img and #new-img (the
+   images in the 'Before' and 'After' boxes) and adds it to the image slider; if @b64_string
+   is not a valid base64 image, alerts the user that the string is not able to be displayed.
+   Side effect: $uploaded_to_cloudinary = false */
 function update_images(b64_string) {
     var img_type = get_img_type(b64_string);
     if (!is_valid_b64img(b64_string))
@@ -106,6 +113,7 @@ function update_images(b64_string) {
         document.getElementById('old-img').className = 'not-default';
         document.getElementById('new-img').src = b64_string;
         document.getElementById('new-img').className = 'not-default';
+        $uploaded_to_cloudinary = false;
         if (add_to_slide)
             add_img_to_slider(b64_string);
     }
@@ -225,33 +233,38 @@ function upload(input) {
     }
 }
 
-/* Uploads string @b64_string as an image to Cloudinary, and then invokes function
-   @callback with the argument as the url of the uploaded image */
+/* Uploads string @b64_string as an image to Cloudinary and then invokes function
+   @callback with the argument as the URL of the uploaded image. Side effects:
+   $uploaded_to_cloudinary = true, $prev_cloudinary_url = '<URL of uploaded image>' */
 function upload_to_cloudinary(b64_string, callback) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://api.cloudinary.com/v1_1/filterx/upload', true);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            var response = JSON.parse(xhr.responseText);
-            callback(response.secure_url);
-        }
-    };
-    var form_data = new FormData();
-    form_data.append('upload_preset', 'unsigned-default');
-    form_data.append('tags', 'browser_upload');
-    form_data.append('file', b64_string);
-    xhr.send(form_data);
+    if (!$uploaded_to_cloudinary) {   // Prevent re-upload of same image
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://api.cloudinary.com/v1_1/filterx/upload', true);
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                $uploaded_to_cloudinary = true;
+                var response = JSON.parse(xhr.responseText);
+                $prev_cloudinary_url = response.secure_url;
+                callback($prev_cloudinary_url);
+            }
+        };
+        var form_data = new FormData();
+        form_data.append('upload_preset', 'unsigned-default');
+        form_data.append('tags', 'browser_upload');
+        form_data.append('file', b64_string);
+        xhr.send(form_data);
+    }
+    else
+        callback($prev_cloudinary_url);
 }
 
 /* Shares the base64 encoded image in #new-img to @website, which can be one of:
    'facebook', 'twitter', or 'linkedin' */
 function share_to(website) {
-    if (document.getElementById('new-img').className === 'default') {
+    if (document.getElementById('new-img').className === 'default')
         alert('Upload an image before clicking a share button!');
-        return false;
-    }
-    if (website === 'facebook') {
+    else if (website === 'facebook') {
         var callback = function(url) {
             var link = document.createElement('a');
             link.href = 'https://www.facebook.com/sharer/sharer.php?u=' +
@@ -280,11 +293,6 @@ function share_to(website) {
         };
         upload_to_cloudinary(document.getElementById('new-img').src, callback);
     }
-    else {
-        console.log(website + ' share');
-    }
-    // Allow anchor tag's href to follow through after function call
-    return true;
 }
 
 // Toggles between #change-info's classes 'show' and 'hide', and how the #settings-btn looks
@@ -325,7 +333,7 @@ function setup_galleries() {
             method: 'GET'
         }).then(function(res) { res.json(); })
             .then(function(data) {
-                for (let i in data) {
+                for (var i in data) {
                     var galleries = data;
                     var gallery_id = 'gallery'+i;
                     var gallery_html = '<div id="'+gallery_id+'" class="gallery"><div class="gallery-info column"><span class="gallery-name show">'+galleries[i]['album_name']+'</span><input class="gallery-name-input hide" type="text" maxlength="100" onfocusout="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'),\'hide\')"><span class="gallery-name-btn fa-pencil icon" onclick="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'),\'show\')"></span><div class="text">Number of images: <span class="gallery-number-images"></span></div></div><div class="gallery-box column">';
@@ -353,7 +361,8 @@ function gallery_name_exists(name) {
         return false;
 }
 
-// Changes the gallery with @id from @old_name to @new_name if it is valid and doesn't already exist
+/* Changes the gallery with @id from @old_name to @new_name
+   if it is valid and doesn't already exist */
 function change_gallery_name(id, old_name, new_name) {
     if (new_name === '' || old_name === new_name)
         ;   // Ignore empty name or same name
@@ -580,7 +589,8 @@ function logout() {
                          'application/x-www-form-urlencoded;charset=UTF-8');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-        };
+            ;
+        }
     };
     xhr.send();
 }
