@@ -270,7 +270,7 @@ function share_to(website) {
             link.href = 'https://www.facebook.com/sharer/sharer.php?u=' +
                 encodeURIComponent(url);
             link.target = '_blank';
-            link.click();
+            link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
         };
         upload_to_cloudinary(document.getElementById('new-img').src, callback);
     }
@@ -280,7 +280,7 @@ function share_to(website) {
             link.href = 'https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw&text=Come%20see%20my%20filtered%20image!&tw_p=tweetbutton&url=' + encodeURIComponent(url) + '&t=' + new Date().getTime();
             link.class = 'twitter-share-button';
             link.target = '_blank';
-            link.click();
+            link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
         };
         upload_to_cloudinary(document.getElementById('new-img').src, callback);
     }
@@ -289,7 +289,7 @@ function share_to(website) {
             var link = document.createElement('a');
             link.href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(url);
             link.target = '_blank';
-            link.click();
+            link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
         };
         upload_to_cloudinary(document.getElementById('new-img').src, callback);
     }
