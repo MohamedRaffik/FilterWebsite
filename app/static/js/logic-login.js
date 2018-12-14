@@ -1,28 +1,18 @@
 function signin() {
-    var cred = {
-        "email": document.getElementById("signin-email").value,
-        "password": document.getElementById("signin-password").value
-    };
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/login', true);
-    xhr.setRequestHeader('content-type',
-                         'application/x-www-form-urlencoded;charset=UTF-8');
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            if (xhr.responseText === 'none' || xhr.responseText === 'pass') {
-                alert( (xhr.responseText === 'none') ?
-                       'No account with this email.' : 'Incorrect password.');
-                // Fail
-            }
-            else {
-                window.location.href = xhr.responseURL;
-                // Success
-            }
-        }
-    };
-    // Add time to URL to keep AJAX call unique and not cached by browser
-    xhr.send('type=signin&email=' + cred['email'] + '&pass=' +
-             cred['password'] + '&t=' + new Date().getTime());
+    fetch('/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            "email": document.getElementById("signin-email").value,
+            "pass": document.getElementById("signin-password").value,
+            "type": "signin",
+        }),
+        redirect: 'follow'
+    }).then(res => {
+        if (res.status === 299) { alert('Incorrect password'); }
+        else if (res.status === 298) { alert('No account with this email'); }
+        else { window.location.href = res.url; }
+    }).catch(error => console.error(error));
 }
 
 function signup() {
@@ -43,26 +33,20 @@ function signup() {
         alert('Passwords do not match.');
     }
     else {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/login', true);
-        xhr.setRequestHeader('content-type',
-                             'application/x-www-form-urlencoded;charset=UTF-8');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                if (xhr.responseURL === window.location.href) {
-                    alert('This email is already associated with an account.');
-                    // Fail
-                }
-                else {
-                    window.location.href = xhr.responseURL;
-                    // Success
-                }
-            }
-        };
-        // Add time to URL to keep AJAX call unique and not cached by browser
-        xhr.send('type=signup&email=' + cred['email'] + '&user=' +
-                 cred['username'] + '&pass=' + cred['password'] +
-                 '&t=' + new Date().getTime());
+        fetch('/login', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                "pass": cred['password'],
+                "user": cred['username'],
+                "email": cred['email'],
+                "type": "signup"
+            }),
+            redirect: 'follow'
+        }).then(res => {
+            if (res.status === 299) { alert('This email is already associated with an account.'); }
+            else { window.location.href = res.url; }
+        }).catch(error => console.error(error));
     }
 }
 

@@ -9,8 +9,9 @@ Have fun and be creative with our filters!
   - URL upload
   - Drag and drop
 - Side by side before and after images
-- Recently uploaded/filtered images
-- Share to social media (Facebook, Twitter, LinkedIn, Pinterest)
+- Recently uploaded/filtered images (requires signing up)
+- Image galleries (requires signing up)
+- Share to social media (Facebook, Twitter, LinkedIn)
 - Download filtered image
 - At least 10 different filters!
 
@@ -20,7 +21,9 @@ Have fun and be creative with our filters!
 ## Main Tech/frameworks used
 - Flask
 - Gunicorn
+- Passlib, Bcrypt
 - Pillow
+- Psycopg2
 - Python
 
 ### Other technologies used
@@ -59,9 +62,11 @@ Our application went through two versions (see below) and as of now, we have V3 
 
 #### V3 (December 19, 2018)
 - Considerably re-worked UI
+- Sign Up / Log In functionality
 - Recent Images section
+- Image Galleries section
 - Contact Us section
-- More to come...
+- More than 10 filters
 
 ## Contributors
 - Hasan Abdullah (Team Leader, Front-end)
