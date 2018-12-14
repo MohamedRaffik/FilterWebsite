@@ -264,7 +264,7 @@ function share_to(website) {
     else if (website === 'twitter') {
         var callback = function(url) {
             var link = document.createElement('a');
-            link.href = "https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw&text=Come%20see%20my%20filtered%20image!&tw_p=tweetbutton&url=" + encodeURIComponent(url) + '&t=' + new Date().getTime());;
+            link.href = "https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw&text=Come%20see%20my%20filtered%20image!&tw_p=tweetbutton&url=" + encodeURIComponent(url) + '&t=' + new Date().getTime();
             link.class = 'twitter-share-button';
             link.target = '_blank';
             link.click();
@@ -285,6 +285,21 @@ function share_to(website) {
     }
     // Allow anchor tag's href to follow through after function call
     return true;
+}
+
+function send_message() {
+    var name = document.getElementById('name');
+    var email = document.getElementById('email');
+    var message = document.getElementById('message');
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/message', true);
+    xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            alert(xhr.responseText);
+        }
+    }
+    xhr.send('name=' + name + '&email=' + email + '&message=' + message + '&t=' + new Date().getTime());
 }
 
 // Toggles between #change-info's classes 'show' and 'hide', and how the #settings-btn looks

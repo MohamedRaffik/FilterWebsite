@@ -53,6 +53,14 @@ def login():
     # show the login page if it wasn't submitted yet
     return render_template('login.html')
 
+@app.route('/message', methods=['POST'])
+def message():
+    name = request.form['name']
+    email = request.form['email']
+    message = request.form['message']
+    # send email
+    return 'foo ' + name
+
 '''
     Data format for albums:
 
