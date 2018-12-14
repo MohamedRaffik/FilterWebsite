@@ -8,11 +8,11 @@ function signin() {
             "type": "signin",
         }),
         redirect: 'follow'
-    }).then(res => {
-        if (res.status === 299) { alert('Incorrect password'); }
-        else if (res.status === 298) { alert('No account with this email'); }
+    }).then(function(res) {
+        if (res.status === 299) { alert('Incorrect password.'); }
+        else if (res.status === 298) { alert('No account with this email.'); }
         else { window.location.href = res.url; }
-    }).catch(error => console.error(error));
+    }).catch(function(error) { console.error(error); });
 }
 
 function signup() {
@@ -43,10 +43,10 @@ function signup() {
                 "type": "signup"
             }),
             redirect: 'follow'
-        }).then(res => {
+        }).then(function(res) {
             if (res.status === 299) { alert('This email is already associated with an account.'); }
             else { window.location.href = res.url; }
-        }).catch(error => console.error(error));
+        }).catch(function(error) { console.error(error); });
     }
 }
 

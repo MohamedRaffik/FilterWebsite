@@ -69,8 +69,8 @@ def login():
                 cur = conn.cursor()
                 # Attempt to add new user and login
                 password = bcrypt.hash(request.json['pass'])
-                cur.execute("insert into accounts (email, username, password, albums) values (%s, %s, %s, %s)", 
-                    [request.json['email'], request.json['user'], password, albums])
+                cur.execute("insert into accounts (email, username, password, albums) values (%s, %s, %s, %s)",
+                            [request.json['email'], request.json['user'], password, albums])
                 conn.commit()
                 session['email'] = request.json['email']
                 return redirect(url_for('home'))
