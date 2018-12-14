@@ -59,12 +59,7 @@ def login():
 
         elif request.json['type'] == 'signup':
             try:
-                albums = json.dumps([
-                    {
-                        'album_name': "My Gallery",
-                        'images': []
-                    }
-                ])
+                albums = json.dumps([{ 'album_name': "My Gallery", 'images': [] }])
                 #Query Databse
                 cur = conn.cursor()
                 # Attempt to add new user and login
