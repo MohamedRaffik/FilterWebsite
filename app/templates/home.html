@@ -13,7 +13,7 @@
     <!-- Main CSS -->
     <link type="text/css" rel="stylesheet" href="../static/css/combined.min.css?version=3.14">
     <!-- My CSS and JS (at bottom of this page) - IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
-    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.15">
+    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.16">
   </head>
 
   <body data-page="home">
@@ -66,23 +66,24 @@
           <div class="inner-alt">
             <h2>My Galleries</h2>
             <!--
-                 <div id="gallery1" class="gallery">
-                 <div class="gallery-info column">
-                 <span class="gallery-name show">Album Name</span>
-                 <input class="gallery-name-input hide" type="text" maxlength="100" onfocusout="gallery_name_input($(this).closest('.gallery').attr('id'), 'hide');">
-                 <span class="gallery-name-btn fa-pencil icon" onclick="gallery_name_input($(this).closest('.gallery').attr('id'), 'show');"></span>
-                 <div class="text">Number of images: <span class="gallery-number-images"></span></div>
-                 </div>
-                 <div class="gallery-box column">
-                 <a href="../examples/bmp_file.bmp"><img src="../examples/bmp_file.bmp"></a>
-                 <a href="../examples/cow.jpg"><img src="../examples/cow.jpg"></a>
-                 <a href="../examples/dog.jpeg"><img src="../examples/dog.jpeg"></a>
-                 <a href="../examples/gif_file.gif"><img src="../examples/gif_file.gif"></a>
-                 <a href="../examples/ico_file.ico"><img src="../examples/ico_file.ico"></a>
-                 <a href="../examples/png_file.png"><img src="../examples/png_file.png"></a>
-                 <a href="../examples/webp_file.webp"><img src="../examples/webp_file.webp"></a>
-                 </div>
-                 </div>
+            <div id="gallery1" class="gallery">
+              <div class="gallery-info column">
+                <span class="gallery-name show">Foo</span>
+                <input class="gallery-name-input hide" type="text" maxlength="100" onfocusout="gallery_name_input($(this).closest('.gallery').attr('id'), 'hide');">
+                <span class="gallery-name-btn fa-pencil icon" onclick="gallery_name_input($(this).closest('.gallery').attr('id'), 'show');"></span>
+                <span class="gallery-delete-btn fa-trash icon" onclick="delete_gallery($(this).closest('.gallery').attr('id'));"></span>
+                <div class="text">Number of images: <span class="gallery-number-images"></span></div>
+              </div>
+              <div class="gallery-box column">
+                <a href="../examples/bmp_file.bmp"><img src="../examples/bmp_file.bmp"></a>
+                <a href="../examples/cow.jpg"><img src="../examples/cow.jpg"></a>
+                <a href="../examples/dog.jpeg"><img src="../examples/dog.jpeg"></a>
+                <a href="../examples/gif_file.gif"><img src="../examples/gif_file.gif"></a>
+                <a href="../examples/ico_file.ico"><img src="../examples/ico_file.ico"></a>
+                <a href="../examples/png_file.png"><img src="../examples/png_file.png"></a>
+                <a href="../examples/webp_file.webp"><img src="../examples/webp_file.webp"></a>
+              </div>
+            </div>
             -->
           </div>
         </section>
@@ -245,7 +246,7 @@
 
     <script src="../static/js/jquery.min.js"></script>
     <script src="../static/js/combined.min.js?version=3.16"></script>
-    <script src="../static/js/logic.js?version=3.16"></script>
+    <script src="../static/js/logic.js?version=3.17"></script>
 
   </body>
 </html>

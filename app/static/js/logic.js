@@ -303,6 +303,9 @@ function toggle_settings() {
         button.className = 'fa-cog icon';
         button.textContent = 'My Account';
         info.className = 'hide';
+        $('.change-info input').each(function(){ this.value = ''; });
+        document.getElementById('password-checkbox').checked = false;
+        document.getElementById('change-password').type = 'password';
     }
     else {
         button.className = 'fa-close icon';
@@ -329,6 +332,7 @@ function get_gallery_number_images(id) {
 // Appends the HTML of the galleries to the gallery section of home.html
 function setup_galleries() {
     if (is_homepage()) {   // Only home.html has the galleries
+        /*
         fetch('/galleries', {
             method: 'GET'
         }).then(function(res) { res.json(); })
@@ -336,7 +340,7 @@ function setup_galleries() {
                 for (var i in data) {
                     var galleries = data;
                     var gallery_id = 'gallery'+i;
-                    var gallery_html = '<div id="'+gallery_id+'" class="gallery"><div class="gallery-info column"><span class="gallery-name show">'+galleries[i]['album_name']+'</span><input class="gallery-name-input hide" type="text" maxlength="100" onfocusout="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'),\'hide\')"><span class="gallery-name-btn fa-pencil icon" onclick="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'),\'show\')"></span><div class="text">Number of images: <span class="gallery-number-images"></span></div></div><div class="gallery-box column">';
+                    var gallery_html = '<div id="'+gallery_id+'" class="gallery"><div class="gallery-info column"><span class="gallery-name show">'+galleries[i]['album_name']+'</span><input class="gallery-name-input hide" type="text" maxlength="100" onfocusout="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'),\'hide\')"><span class="gallery-name-btn fa-pencil icon" onclick="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'),\'show\')"></span><span class="gallery-delete-btn fa-trash icon" onclick="delete_gallery($(this).closest(\'.gallery\').attr(\'id\'))"></span><div class="text">Number of images: <span class="gallery-number-images"></span></div></div><div class="gallery-box column">';
                     // Add each of the images in the current gallery to the HTML (in the .gallery-box div):
                     galleries[i]['images'].forEach(function(b64_string) {
                         // Format: <a><img src="foo"></a><a><img src="bar"></a> ...
@@ -344,21 +348,26 @@ function setup_galleries() {
                     });
                     gallery_html += '</div></div>';
                     $('#gallery-section .inner-alt').append(gallery_html);
-                    // Add the number of images in each gallery to their respective HTML's:
-                    $('.gallery-box a').attr('href', '...');
                     // Update Format: <a href="foo"><img src="foo"></a><a href="bar"><img src="bar"></a> ...
+                    $('.gallery-box a').attr('href', this.children(':first').attr('src'));
+                    // Add the number of images in each gallery to their respective HTML's:
                     $('#'+gallery_id+' .gallery-number-images').text(get_gallery_number_images(gallery_id));
                 }
             }).catch(function(error) { console.error(error); });
+        */
     }
 }
 
 // Checks if the gallery @name already exists
 function gallery_name_exists(name) {
-    if (false)
-        return true;
-    else
-        return false;
+    var exists = false;
+    $('.gallery-name').each(function() {
+        if (this.textContent === name) {
+            exists = true;
+            return false;   // Break out of the each loop
+        }
+    });
+    return exists;
 }
 
 /* Changes the gallery with @id from @old_name to @new_name
@@ -405,6 +414,14 @@ function gallery_name_input(id, mode) {
         name.removeClass('show').addClass('hide');
         name_input.removeClass('hide').addClass('show');
         name_input.focus();
+    }
+}
+
+/* Prompts the user for confirmation, and then deletes the gallery with @id */
+function delete_gallery(id) {
+    if (confirm('Are you sure? The action cannot be undone.')) {
+        // Delete it from database ...
+        $('#'+id).remove();
     }
 }
 

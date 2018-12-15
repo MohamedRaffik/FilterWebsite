@@ -489,8 +489,8 @@ body[data-page="home"] #gallery-section {
 }
 
 .gallery-name.show {
+    color: #19B5FE;
     display: inline-block;
-    text-shadow: 3px 3px 2px #19B5FE;
 }
 .gallery-name.hide {
     display: none;
@@ -511,12 +511,13 @@ body[data-page="home"] #gallery-section {
 .gallery-name-input.hide {
     display: none;
 }
-.gallery-name-input.hide + .gallery-name-btn:hover {
+.gallery-name-input.hide ~ .gallery-name-btn:hover,
+.gallery-name-input.hide ~ .gallery-delete-btn:hover {
     color: #19B5FE;
     cursor: pointer;
 }
 
-.gallery-name-btn {
+.gallery-name-btn, .gallery-delete-btn {
     display: inline-block;
     margin-left: 10px;
 }
