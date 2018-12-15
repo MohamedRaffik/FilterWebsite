@@ -1,5 +1,8 @@
 from base64 import b64encode, b64decode
-from PIL import Image, ImageFilter, ImageOps, ImagePalette
+from PIL import Image, ImageFilter, ImageOps, ImagePalette, ImageDraw, ImageFont
+import textwrap
+import random
+from random import choice
 from io import BytesIO
 from app import Censor, Logo
 
@@ -49,6 +52,19 @@ def motion_filter(b64_img, filter_type, type_of):
     elif type_of =='webp':
         frames[0].save(buffered, format='webp', save_all=True, append_images=frames[1:])
     return meta_data + b64encode(buffered.getvalue()).decode('utf-8')
+
+def wrap_text(text, w=30):
+    new_text = ""
+    new_sentence = ""
+    for word in text.split(" "):
+        delim = " " if new_sentence != "" else ""
+        new_sentence = new_sentence + delim + word
+        if len(new_sentence) > w:
+            new_text += "\n" + new_sentence
+            new_sentence = ""
+    new_text += "\n" + new_sentence
+    return new_text
+
 
 # Filter function for single frame image formats
 def filter(b64_img, filter_type):
@@ -133,18 +149,37 @@ def filter(b64_img, filter_type):
 
     #blurs the perimeter of the image
     elif filter_type == 'border_blur':
-        RADIUS = 20
+        RADIUS = 20    
         perim = 2*RADIUS
-        back = Image.new('RGB', (img.size[0] + perim, img.size[1] + perim), (255,255,255))
+        back = Image.new('RGB', (width + perim, height + perim), (255,255,255))
         back.paste(img, (RADIUS, RADIUS))
 
-        mask = Image.new('L', (img.size[0] + perim, img.size[1] + perim), 255)
-        blck = Image.new('L', (img.size[0] - perim, img.size[1] - perim), 0)
+        mask = Image.new('L', (width + perim, height + perim), 255)
+        blck = Image.new('L', (width - perim, height - perim), 0)
         mask.paste(blck, (perim, perim))
 
         blur = back.filter(ImageFilter.GaussianBlur(RADIUS/2))
         back.paste(blur, mask=mask)
         img = back
         img = img.resize((width, height))
+
+    #add text to image
+    elif filter_type == 'quote_it':
+        draw = ImageDraw.Draw(img)
+        font = ImageFont.truetype('app/Roboto-BoldItalic.ttf', size = 40)
+        quotes = "Don't cry because it's over, smile because it happened.",\
+                 "Not my circus, not my monkeys.",\
+                 "Goals transform a random walk into a chase.",\
+                 "WE LOVE TRELLO.",\
+                 "Why are you dressed like someone died?",\
+                 "Sometime I wonder, why am I here?",\
+                 "YOU'RE*",\
+                 "Can you get in done by tonight?",\
+                 "I love deadlines. I love the whooshing noise they make as they go by."
+        quote = random.choice(quotes)
+        x, y = font.getsize(quote) 
+        color = 'rgb(255,255,255)'  
+        quote = textwrap.fill(quote, width=40)
+        draw.text(((width-x)/width,(height-y)/2), quote, fill=color, font=font)
 
     return convert_to_b64(img, meta_data)
