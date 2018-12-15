@@ -117,17 +117,19 @@ def filter(b64_img, filter_type):
         r, g, b = img.split()
         img = Image.merge('RGB', (b, g, r))
 
-    #apply a border to the image
+    #apply a black border around the image
     elif filter_type == 'border_black':
         img = ImageOps.expand(img, border = 50, fill = 'black')
-        img = img.resize((int(width-50), int(height-50)))
+        img = img.resize((width, height))
 
+    #apply a gold border around the image
     elif filter_type == 'border_gold':
         img = ImageOps.expand(img, border = 50, fill = '#FFD700')
-        img = img.resize((int(width-50), int(height-50)))
+        img = img.resize((width, height))
 
+    #blurs the perimeter of the image
     elif filter_type == 'border_blur':
-        RADIUS = 50
+        RADIUS = 20
         perim = 2*RADIUS
         back = Image.new('RGB', (img.size[0] + perim, img.size[1] + perim), (255,255,255))
         back.paste(img, (RADIUS, RADIUS))
@@ -139,5 +141,9 @@ def filter(b64_img, filter_type):
         blur = back.filter(ImageFilter.GaussianBlur(RADIUS/2))
         back.paste(blur, mask=mask)
         img = back
+        img = img.resize((width, height))
+
+
+
 
     return convert_to_b64(img, meta_data)
