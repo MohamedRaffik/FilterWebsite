@@ -13,7 +13,7 @@
     <!-- Main CSS -->
     <link type="text/css" rel="stylesheet" href="../static/css/combined.min.css?version=3.14">
     <!-- My CSS and JS (at bottom of this page) - IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
-    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.14">
+    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.15">
   </head>
 
   <body data-page="home">
@@ -24,10 +24,10 @@
       <nav id="nav">
         <ul>
           <li><a href="#header" class="nav-btn scrolly active"><span class="icon fa-home"></span></a></li>
-          <li><a href="#gallery-section" class="nav-btn scrolly"><span class="icon fa-book"></span></a></li>
+          <li><a href="#gallery-section" class="nav-btn scrolly"><span class="icon fa-image"></span></a></li>
           <li><a href="#upload-section" class="nav-btn scrolly"><span class="icon fa-upload"></span></a></li>
           <li><a href="#filter-section" class="nav-btn scrolly"><span class="icon fa-camera-retro"></span></a></li>
-          <li><a href="#images-section" class="nav-btn scrolly"><span class="icon fa-image"></span></a></li>
+          <li><a href="#images-section" class="nav-btn scrolly"><span class="icon fa-th-list"></span></a></li>
           <li><a href="#social-section" class="nav-btn scrolly"><span class="icon fa-download"></span></a></li>
           <li><a href="#contact" class="nav-btn scrolly"><span class="icon fa-share-alt"></span></a></li>
         </ul>
@@ -123,21 +123,33 @@
           <ul id="filter-box">
             <li><select id="filter-select">
               <option value="none" selected disabled hidden>Choose a filter</option>
-              <option value="black_and_white">Black and White</option>
-              <option value="sepia">Sepia</option>
-              <option value="censor">Censor</option>
-              <option value="mirror">Mirror</option>
-              <option value="rotate_cc">Rotate</option>
-              <option value="flip">Flip It!</option>
-              <option value="blocked_out">Blocked out</option>
-              <option value="feeling_green">Feeling Green?</option>
-              <option value="joker_logo">Joker Logo</option>
-              <option value="swap_blue_red">Fire or Ice</option>
-              <option value="forgotten_memory">Forgotten Memory</option>
-              <option value="border_black">Black Border</option>
-              <option value="border_gold">Gold Border</option>
-              <option value="border_blur">Blur Border</option>
-              <option value="quote_it">Quote It</option>
+              <!-- Tints -->
+              <optgroup label="Tints">
+                <option value="black_and_white">Black and White</option>
+                <option value="sepia">Sepia</option>
+                <option value="feeling_green">Feeling Green?</option>
+                <option value="swap_blue_red">Fire or Ice</option>
+                <option value="forgotten_memory">Forgotten Memory</option>
+                <option value="blocked_out">Blocked Out</option>
+              </optgroup>
+              <!-- Orientation -->
+              <optgroup label="Orientation">
+                <option value="rotate_cc">Rotate</option>
+                <option value="flip">Flip It!</option>
+                <option value="mirror">Mirror</option>
+              </optgroup>
+              <!-- Layers -->
+              <optgroup label="Layers">
+                <option value="joker_logo">Joker Logo</option>
+                <option value="censor">Censor</option>
+                <option value="quote_it">Quote It</option>
+              </optgroup>
+              <!-- Borders -->
+              <optgroup label="Borders">
+                <option value="border_black">Black Border</option>
+                <option value="border_gold">Gold Border</option>
+                <option value="border_blur">Blur Border</option>
+              </optgroup>
             </select></li>
             <li><button id="filter-btn" class="fa-filter icon" type="button" onclick="filter(document.getElementById('filter-select').value);">Filter</button></li>
           </ul>
@@ -198,7 +210,7 @@
 
           <!-- Form for filling in necessary fields if users want to contact the FilterX team -->
           <div class="column">
-            <h3>Get in Touch</h3>
+            <h3>Get In Touch</h3>
             <form>
               <div class="field half first">
                 <label for="name">Name</label>

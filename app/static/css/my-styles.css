@@ -333,6 +333,7 @@ section .inner-alt {
 #filter-select {
     background: #B0C4DE;
     color: #000000;
+    width: 175px;
 }
 
 #filter-btn {
@@ -428,6 +429,10 @@ section .inner-alt {
     text-align: center;
 }
 
+body[data-page="home"] #gallery-section {
+    background: #DAE6F0;
+}
+
 /* The div wrapper around the gallery info and the gallery box */
 #gallery-section .gallery {
     display: -ms-flexbox;
@@ -469,7 +474,7 @@ section .inner-alt {
 }
 
 .gallery-info, .gallery-box {
-    height: 230px;
+    height: 190px;
 }
 
 /* The div wrapper around the gallery info */
