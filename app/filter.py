@@ -82,16 +82,16 @@ def filter(b64_img, filter_type):
             for j in range (height):
                 img.putpixel((i,j), img.getpixel((width - i - 1, j)))
 
-    #rotates image by 180 degrees
-    elif filter_type == 'upside_down':
-        img = img.rotate(180)
+    #rotates image by 90 degrees counter clockwise
+    elif filter_type == 'rotate_cc':
+        img = img.rotate(90)
 
     #flips the image to show the 'opposite' verision
     elif filter_type == 'flip':
         img = img.transpose(Image.FLIP_LEFT_RIGHT)
 
     #applies several provided ImageFilter's to make the image seem a forgotten memory
-    elif filter_type == 'hazy_remembrance':
+    elif filter_type == 'blocked_out':
         img = img.filter(ImageFilter.CONTOUR)
         img = img.filter(ImageFilter.SHARPEN)
         img = img.filter(ImageFilter.DETAIL)
@@ -116,6 +116,10 @@ def filter(b64_img, filter_type):
     elif filter_type == 'swap_blue_red':
         r, g, b = img.split()
         img = Image.merge('RGB', (b, g, r))
+
+    #negate the image using ImageOps
+    elif filter_type == 'forgotten_memory':
+        img = ImageOps.invert(img)
 
     #apply a black border around the image
     elif filter_type == 'border_black':
@@ -142,8 +146,5 @@ def filter(b64_img, filter_type):
         back.paste(blur, mask=mask)
         img = back
         img = img.resize((width, height))
-
-
-
 
     return convert_to_b64(img, meta_data)
