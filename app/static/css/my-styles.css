@@ -433,6 +433,21 @@ body[data-page="home"] #gallery-section {
     background: #DAE6F0;
 }
 
+#new-gallery-btn {
+    background: #3CB371;
+    font-size: 1em;
+    margin-bottom: 20px;
+    padding: 0 1em;
+}
+#new-gallery-btn:active, #new-gallery-btn:hover {
+    background: #249956;
+}
+
+#no-galleries-msg {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
 /* The div wrapper around the gallery info and the gallery box */
 #gallery-section .gallery {
     display: -ms-flexbox;

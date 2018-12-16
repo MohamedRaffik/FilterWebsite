@@ -6,6 +6,9 @@ var $upload_active = true;
 var $uploaded_to_cloudinary = false; // Was the current image uploaded to Cloudinary?
 var $prev_cloudinary_url = ''; // The URL of the image recently uploaded to Cloudinary
 
+/* e.g. if last gallery's id is 'gallery11' then $next_gallery_num = 12
+   Note: if there are no galleries, then this remains 0 */
+var $next_gallery_num = 0;
 const $GALLERY_NAME_LIMIT = 30; // How long a gallery name can be
 
 /* Function that communicates with the Flask backend.
@@ -267,8 +270,7 @@ function share_to(website) {
     else if (website === 'facebook') {
         var callback = function(url) {
             var link = document.createElement('a');
-            link.href = 'https://www.facebook.com/sharer/sharer.php?u=' +
-                encodeURIComponent(url);
+            link.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url);
             link.target = '_blank';
             link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
         };
@@ -278,7 +280,6 @@ function share_to(website) {
         var callback = function(url) {
             var link = document.createElement('a');
             link.href = 'https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw&text=Come%20see%20my%20filtered%20image!&tw_p=tweetbutton&url=' + encodeURIComponent(url) + '&t=' + new Date().getTime();
-            link.class = 'twitter-share-button';
             link.target = '_blank';
             link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
         };
@@ -321,41 +322,35 @@ function toggle_password(password) {
     else
         password.type = 'password';
 }
-/*
-  var test = 'data:image/gif;base64,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';
-*/
-// Gets the number of images in the gallery with @id
-function get_gallery_number_images(id) {
-    return $('#'+id+' img').length;
+
+/* If @mode is 'hide', changes the gallery (with @id) name to what was typed into
+   the input field, and then hides the input field and shows the new gallery name.
+   Otherwise, hides the gallery name and shows the input field */
+function gallery_name_input(id, mode) {
+    var name = $('#'+id+' .gallery-name');
+    var name_input = $('#'+id+' .gallery-name-input');
+    if (mode === 'hide') {
+        change_gallery_name(id, name.text(), name_input.val());
+        name_input.removeClass('show').addClass('hide');
+        name_input.val('');   // Clear the input field
+        name_input.blur();
+        name.removeClass('hide').addClass('show');
+    }
+    else {
+        name.removeClass('show').addClass('hide');
+        name_input.removeClass('hide').addClass('show');
+        name_input.focus();
+    }
 }
 
-// Appends the HTML of the galleries to the gallery section of home.html
-function setup_galleries() {
-    if (is_homepage()) {   // Only home.html has the galleries
-        /*
-        fetch('/galleries', {
-            method: 'GET'
-        }).then(function(res) { res.json(); })
-            .then(function(data) {
-                for (var i in data) {
-                    var galleries = data;
-                    var gallery_id = 'gallery'+i;
-                    var gallery_html = '<div id="'+gallery_id+'" class="gallery"><div class="gallery-info column"><span class="gallery-name show">'+galleries[i]['album_name']+'</span><input class="gallery-name-input hide" type="text" maxlength="100" onfocusout="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'),\'hide\')"><span class="gallery-name-btn fa-pencil icon" onclick="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'),\'show\')"></span><span class="gallery-delete-btn fa-trash icon" onclick="delete_gallery($(this).closest(\'.gallery\').attr(\'id\'))"></span><div class="text">Number of images: <span class="gallery-number-images"></span></div></div><div class="gallery-box column">';
-                    // Add each of the images in the current gallery to the HTML (in the .gallery-box div):
-                    galleries[i]['images'].forEach(function(b64_string) {
-                        // Format: <a><img src="foo"></a><a><img src="bar"></a> ...
-                        gallery_html += '<a><img src="'+b64_string+'"></a>';
-                    });
-                    gallery_html += '</div></div>';
-                    $('#gallery-section .inner-alt').append(gallery_html);
-                    // Update Format: <a href="foo"><img src="foo"></a><a href="bar"><img src="bar"></a> ...
-                    $('.gallery-box a').attr('href', this.children(':first').attr('src'));
-                    // Add the number of images in each gallery to their respective HTML's:
-                    $('#'+gallery_id+' .gallery-number-images').text(get_gallery_number_images(gallery_id));
-                }
-            }).catch(function(error) { console.error(error); });
-        */
-    }
+/* Adds a gallery with @id and @name, as well as the HTML of
+   the images, to the gallery section of home.html */
+function add_gallery_to_document(id, name, images_html) {
+    if ($('.gallery').length === 0)
+        $('#no-galleries-msg').remove();
+    var gallery_html = '<div id="'+id+'" class="gallery"><div class="gallery-info column"><span class="gallery-name show">'+name+'</span><input class="gallery-name-input hide" type="text" maxlength="100" onfocusout="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'),\'hide\')"><span class="gallery-name-btn fa-pencil icon" onclick="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'),\'show\')"></span><span class="gallery-delete-btn fa-trash icon" onclick="delete_gallery($(this).closest(\'.gallery\').attr(\'id\'))"></span><div class="text">Number of images: <span class="gallery-number-images"></span></div></div><div class="gallery-box column">'+images_html+'</div></div>';
+    $('#gallery-section .inner-alt').append(gallery_html);
+    $('#'+id+' .gallery-number-images').text(get_gallery_number_images(id));
 }
 
 // Checks if the gallery @name already exists
@@ -370,8 +365,13 @@ function gallery_name_exists(name) {
     return exists;
 }
 
-/* Changes the gallery with @id from @old_name to @new_name
-   if it is valid and doesn't already exist */
+// Gets the number of images in the gallery with @id
+function get_gallery_number_images(id) {
+    return $('#'+id+' img').length;
+}
+
+/* Changes the gallery with @id from @old_name to @new_name in the database and
+   in the document, if it is valid and doesn't already exist */
 function change_gallery_name(id, old_name, new_name) {
     if (new_name === '' || old_name === new_name)
         ;   // Ignore empty name or same name
@@ -397,31 +397,66 @@ function change_gallery_name(id, old_name, new_name) {
     }
 }
 
-/* If @mode is 'hide', changes the gallery (with @id) name to what was typed into
-   the input field, and then hides the input field and shows the new gallery name.
-   Otherwise, hides the gallery name and shows the input field */
-function gallery_name_input(id, mode) {
-    var name = $('#'+id+' .gallery-name');
-    var name_input = $('#'+id+' .gallery-name-input');
-    if (mode === 'hide') {
-        change_gallery_name(id, name.text(), name_input.val());
-        name_input.removeClass('show').addClass('hide');
-        name_input.val('');   // Clear the input field
-        name_input.blur();
-        name.removeClass('hide').addClass('show');
-    }
-    else {
-        name.removeClass('show').addClass('hide');
-        name_input.removeClass('hide').addClass('show');
-        name_input.focus();
+/* Prompts the user for a new gallery name, and if it is valid and doesn't already exist,
+   creates a new empty gallery with that name in the database and in the document.
+   Side effect: ++$next_gallery_num */
+function create_gallery() {
+    var name = prompt('Enter the name of the gallery:');
+    if (name !== null) {   // When the user presses 'Cancel', name is null
+        if (name === '')
+            alert('Gallery name cannot be empty! Try again.');
+        else if (gallery_name_exists(name))
+            alert('That gallery name already exists! Try again.');
+        else {
+            // Create empty gallery in database ...
+            add_gallery_to_document('gallery'+$next_gallery_num, name, '');
+            ++$next_gallery_num;
+        }
     }
 }
 
-/* Prompts the user for confirmation, and then deletes the gallery with @id */
+/* Prompts the user for confirmation, and then deletes the gallery with @id
+   from the database and from the document */
 function delete_gallery(id) {
     if (confirm('Are you sure? The action cannot be undone.')) {
-        // Delete it from database ...
+        // Delete gallery from database ...
         $('#'+id).remove();
+        if ($('.gallery').length === 0)
+            $('#gallery-section .inner-alt').append('<p id="no-galleries-msg">You have no galleries!</p>');
+    }
+}
+
+/*
+var test = 'data:image/gif;base64,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';
+*/
+
+/* Appends the HTML of the user's galleries to the gallery section of home.html.
+   Side effect: $next_gallery_num = <number of next gallery> */
+function setup_galleries() {
+    if (is_homepage()) {   // Only home.html has the galleries
+        /*
+        fetch('/galleries', {
+            method: 'GET'
+        }).then(function(res) { res.json(); })
+            .then(function(data) {
+                if (data.length === 0)
+                    $('#gallery-section .inner-alt').append('<p id="no-galleries-msg">You have no galleries!</p>');
+                for (var i in data) {
+                    var gallery = data[i];
+                    var gallery_id = 'gallery'+i;
+                    $next_gallery_num = i + 1;
+                    var images_html = '';
+                    // Add each of the images in the current gallery to the HTML:
+                    gallery['images'].forEach(function(b64_string) {
+                        // Format: <a><img src="foo"></a><a><img src="bar"></a> ...
+                        images_html += '<a><img src="'+b64_string+'"></a>';
+                    });
+                    add_gallery_to_document(gallery_id, gallery['album_name'], images_html);
+                }
+                // Update Format: <a href="foo"><img src="foo"></a><a href="bar"><img src="bar"></a> ...
+                $('.gallery-box a').attr('href', this.children(':first').attr('src'));
+            }).catch(function(error) { console.error(error); });
+        */
     }
 }
 
