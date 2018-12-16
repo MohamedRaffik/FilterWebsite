@@ -419,7 +419,8 @@ function create_gallery() {
    from the database and from the document */
 function delete_gallery(id) {
     if (confirm('Are you sure? The action cannot be undone.')) {
-        // Delete gallery from database ...
+        var name = $('#'+id+' .gallery-name').text();
+        // Delete gallery with @name from database ...
         $('#'+id).remove();
         if ($('.gallery').length === 0)
             $('#gallery-section .inner-alt').append('<p id="no-galleries-msg">You have no galleries!</p>');
