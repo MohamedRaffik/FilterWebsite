@@ -301,17 +301,28 @@ function send_message() {
     var name = document.getElementById('name').value;
     var email = document.getElementById('email').value;
     var message = document.getElementById('message').value;
-    // sends a xhr post request to the backend at the '/message' route with three fields
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/message', true);
-    xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            alert("Message sent for " + name + "!");
-        }
+    if(name.length < 5) {
+        alert('Name must be at least 5 characters long.')
     }
-    // require new time and date to make our request unique
-    xhr.send('name=' + name + '&email=' + email + '&message=' + message + '&t=' + new Date().getTime());
+    else if (!valid_email(email)) {
+        alert('Please enter a valid email.');
+    }
+    else if (message.length < 25) {
+        alert('Message must be at least 25 characters long.');
+    }
+    else {
+        // sends a xhr post request to the backend at the '/message' route with three fields
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/message', true);
+        xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                alert("Message sent for " + name + "!");
+            }
+        }
+        // require new time and date to make our request unique
+        xhr.send('name=' + name + '&email=' + email + '&message=' + message + '&t=' + new Date().getTime());
+    }
 }
 
 // checks if email is valid
