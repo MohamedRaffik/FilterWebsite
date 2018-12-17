@@ -314,6 +314,12 @@ function send_message() {
     xhr.send('name=' + name + '&email=' + email + '&message=' + message + '&t=' + new Date().getTime());
 }
 
+// checks if email is valid
+function valid_email(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
+
 // Toggles between #change-info's classes 'show' and 'hide', and how the #settings-btn looks
 function toggle_settings() {
     var button = document.getElementById('settings-btn');
