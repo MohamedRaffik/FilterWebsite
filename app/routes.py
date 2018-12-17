@@ -1,9 +1,8 @@
 # Page routes
 
 from flask import request, render_template, redirect, url_for, session, json
-from app import app, filter, conn, psycopg2
-from passlib.hash import bcrypt
-
+from flask_mail import Mail, Message
+from app import app, filter, conn, psycopg2, GMAIL_PASSWORD
 
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -81,13 +80,23 @@ def login():
     # show the login page if it wasn't submitted yet
     return render_template('login.html')
 
-@app.route('/message', methods=['POST'])
+@app.route('/message', methods=['GET', 'POST'])
 def message():
-    name = request.form['name']
-    email = request.form['email']
-    message = request.form['message']
-    # send email
-    return 'foo ' + name
+    formName = request.form.get('name')
+    formEmail = request.form.get('email')
+    formMessage = request.form.get('message')
+
+    mail = Mail()
+    app.config["MAIL_SERVER"] = "smtp.gmail.com"
+    app.config["MAIL_PORT"] = 465
+    app.config["MAIL_USE_SSL"] = True
+    app.config["MAIL_USERNAME"] = 'filterx.website@gmail.com'
+    app.config["MAIL_PASSWORD"] = GMAIL_PASSWORD
+    mail.init_app(app)
+    msg = Message("Hello, this is " + formName + " from " + formEmail, sender=formEmail, recipients=["filterx.website@gmail.com"])
+    msg.body = formMessage
+    mail.send(msg)
+    return (formName + formEmail + formMessage)
 
 '''
     Data format for albums:
