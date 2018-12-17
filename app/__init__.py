@@ -7,6 +7,7 @@ import psycopg2
 app = Flask(__name__)
 app.secret_key = os.urandom(16)
 DATABASE_URL = os.environ['DATABASE_URL']
+GMAIL_PASSWORD = os.environ['GMAIL_PASSWORD']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 from app import routes
