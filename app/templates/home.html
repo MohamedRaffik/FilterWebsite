@@ -11,9 +11,9 @@
     <meta http-equiv="pragma" content="no-cache">
 
     <!-- Main CSS -->
-    <link type="text/css" rel="stylesheet" href="../static/css/combined.min.css?version=3.13">
+    <link type="text/css" rel="stylesheet" href="../static/css/combined.min.css?version=3.18">
     <!-- My CSS and JS (at bottom of this page) - IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
-    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.13">
+    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.18">
   </head>
 
   <body data-page="home">
@@ -24,10 +24,10 @@
       <nav id="nav">
         <ul>
           <li><a href="#header" class="nav-btn scrolly active"><span class="icon fa-home"></span></a></li>
-          <li><a href="#gallery-section" class="nav-btn scrolly"><span class="icon fa-th-list"></span></a></li>
+          <li><a href="#gallery-section" class="nav-btn scrolly"><span class="icon fa-image"></span></a></li>
           <li><a href="#upload-section" class="nav-btn scrolly"><span class="icon fa-upload"></span></a></li>
           <li><a href="#filter-section" class="nav-btn scrolly"><span class="icon fa-camera-retro"></span></a></li>
-          <li><a href="#images-section" class="nav-btn scrolly"><span class="icon fa-image"></span></a></li>
+          <li><a href="#images-section" class="nav-btn scrolly"><span class="icon fa-th-list"></span></a></li>
           <li><a href="#social-section" class="nav-btn scrolly"><span class="icon fa-download"></span></a></li>
           <li><a href="#contact" class="nav-btn scrolly"><span class="icon fa-share-alt"></span></a></li>
         </ul>
@@ -65,12 +65,14 @@
         <section id="gallery-section" class="page-section">
           <div class="inner-alt">
             <h2>My Galleries</h2>
+            <button id="new-gallery-btn" class="fa-plus icon" type="button" onclick="create_gallery();">New Gallery</button>
             <!--
-                 <div id="gallery1" class="gallery">
+                 <div id="gallery0" class="gallery">
                  <div class="gallery-info column">
-                 <span class="gallery-name show">Album Name</span>
+                 <span class="gallery-name show">Foo</span>
                  <input class="gallery-name-input hide" type="text" maxlength="100" onfocusout="gallery_name_input($(this).closest('.gallery').attr('id'), 'hide');">
                  <span class="gallery-name-btn fa-pencil icon" onclick="gallery_name_input($(this).closest('.gallery').attr('id'), 'show');"></span>
+                 <span class="gallery-delete-btn fa-trash icon" onclick="delete_gallery($(this).closest('.gallery').attr('id'));"></span>
                  <div class="text">Number of images: <span class="gallery-number-images"></span></div>
                  </div>
                  <div class="gallery-box column">
@@ -123,19 +125,33 @@
           <ul id="filter-box">
             <li><select id="filter-select">
               <option value="none" selected disabled hidden>Choose a filter</option>
-              <option value="black_and_white">Black and White</option>
-              <option value="sepia">Sepia</option>
-              <option value="censor">Censor</option>
-              <option value="mirror">Mirror</option>
-              <option value="upside_down">Upside Down</option>
-              <option value="flip">Flip It!</option>
-              <option value="hazy_remembrance">Hazy Remembrance</option>
-              <option value="feeling_green">Feeling Green?</option>
-              <option value="joker_logo">Joker Logo</option>
-              <option value="swap_blue_red">Fire or Ice</option>
-              <option value="border_black">Black Border</option>
-              <option value="border_gold">Gold Border</option>
-              <option value="border_blur">Blur Border</option>
+              <!-- Tints -->
+              <optgroup label="Tints">
+                <option value="black_and_white">Black and White</option>
+                <option value="sepia">Sepia</option>
+                <option value="feeling_green">Feeling Green?</option>
+                <option value="swap_blue_red">Fire or Ice</option>
+                <option value="forgotten_memory">Forgotten Memory</option>
+                <option value="blocked_out">Blocked Out</option>
+              </optgroup>
+              <!-- Orientation -->
+              <optgroup label="Orientation">
+                <option value="rotate_cc">Rotate</option>
+                <option value="flip">Flip It!</option>
+                <option value="mirror">Mirror</option>
+              </optgroup>
+              <!-- Layers -->
+              <optgroup label="Layers">
+                <option value="joker_logo">Joker Logo</option>
+                <option value="censor">Censor</option>
+                <option value="quote_it">Quote It</option>
+              </optgroup>
+              <!-- Borders -->
+              <optgroup label="Borders">
+                <option value="border_black">Black Border</option>
+                <option value="border_gold">Gold Border</option>
+                <option value="border_blur">Blur Border</option>
+              </optgroup>
             </select></li>
             <li><button id="filter-btn" class="fa-filter icon" type="button" onclick="filter(document.getElementById('filter-select').value);">Filter</button></li>
           </ul>
@@ -196,7 +212,7 @@
 
           <!-- Form for filling in necessary fields if users want to contact the FilterX team -->
           <div class="column">
-            <h3>Get in Touch</h3>
+            <h3>Get In Touch</h3>
             <form>
               <div class="field half first">
                 <label for="name">Name</label>
@@ -230,8 +246,8 @@
     </div>
 
     <script src="../static/js/jquery.min.js"></script>
-    <script src="../static/js/combined.min.js?version=3.13"></script>
-    <script src="../static/js/logic.js?version=3.13"></script>
+    <script src="../static/js/combined.min.js?version=3.18"></script>
+    <script src="../static/js/logic.js?version=3.18"></script>
 
   </body>
 </html>

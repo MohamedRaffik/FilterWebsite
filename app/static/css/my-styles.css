@@ -333,6 +333,7 @@ section .inner-alt {
 #filter-select {
     background: #B0C4DE;
     color: #000000;
+    width: 175px;
 }
 
 #filter-btn {
@@ -428,6 +429,25 @@ section .inner-alt {
     text-align: center;
 }
 
+body[data-page="home"] #gallery-section {
+    background: #DAE6F0;
+}
+
+#new-gallery-btn {
+    background: #3CB371;
+    font-size: 1em;
+    margin-bottom: 20px;
+    padding: 0 1em;
+}
+#new-gallery-btn:active, #new-gallery-btn:hover {
+    background: #249956;
+}
+
+#no-galleries-msg {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
 /* The div wrapper around the gallery info and the gallery box */
 #gallery-section .gallery {
     display: -ms-flexbox;
@@ -469,7 +489,7 @@ section .inner-alt {
 }
 
 .gallery-info, .gallery-box {
-    height: 230px;
+    height: 190px;
 }
 
 /* The div wrapper around the gallery info */
@@ -484,8 +504,8 @@ section .inner-alt {
 }
 
 .gallery-name.show {
+    color: #19B5FE;
     display: inline-block;
-    text-shadow: 3px 3px 2px #19B5FE;
 }
 .gallery-name.hide {
     display: none;
@@ -506,12 +526,13 @@ section .inner-alt {
 .gallery-name-input.hide {
     display: none;
 }
-.gallery-name-input.hide + .gallery-name-btn:hover {
+.gallery-name-input.hide ~ .gallery-name-btn:hover,
+.gallery-name-input.hide ~ .gallery-delete-btn:hover {
     color: #19B5FE;
     cursor: pointer;
 }
 
-.gallery-name-btn {
+.gallery-name-btn, .gallery-delete-btn {
     display: inline-block;
     margin-left: 10px;
 }

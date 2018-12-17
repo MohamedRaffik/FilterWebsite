@@ -1,18 +1,20 @@
 function signin() {
-    fetch('/login', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            "email": document.getElementById("signin-email").value,
-            "pass": document.getElementById("signin-password").value,
-            "type": "signin",
-        }),
-        redirect: 'follow'
-    }).then(res => {
-        if (res.status === 299) { alert('Incorrect password'); }
-        else if (res.status === 298) { alert('No account with this email'); }
-        else { window.location.href = res.url; }
-    }).catch(error => console.error(error));
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/login', true);
+    xhr.setRequestHeader('content-type',
+    'application/x-www-form-urlencoded;charset=UTF-8');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            window.location.href = xhr.responseURL;
+        }
+        else if (xhr.readyState === 4 && xhr.status === 299) {
+            alert('Incorrect password');
+        }
+        else if (xhr.readyState === 4 && xhr.status === 298) {
+            alert('No account with this email');
+        }
+    }
+    xhr.send('type=signin&email='+document.getElementById("signin-email").value+'&pass='+document.getElementById("signin-password").value);
 }
 
 function signup() {
@@ -33,20 +35,19 @@ function signup() {
         alert('Passwords do not match.');
     }
     else {
-        fetch('/login', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                "pass": cred['password'],
-                "user": cred['username'],
-                "email": cred['email'],
-                "type": "signup"
-            }),
-            redirect: 'follow'
-        }).then(res => {
-            if (res.status === 299) { alert('This email is already associated with an account.'); }
-            else { window.location.href = res.url; }
-        }).catch(error => console.error(error));
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/login', true);
+        xhr.setRequestHeader('content-type',
+        'application/x-www-form-urlencoded;charset=UTF-8');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                window.location.href = xhr.responseURL;
+            }
+            else if (xhr.readyState === 4 && xhr.status === 299) {
+                alert('Account with this email already exists');
+            }
+        }
+        xhr.send('type=signup&pass='+cred['password']+'&user='+cred['username']+'&email='+cred['email']);
     }
 }
 

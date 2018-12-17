@@ -22,6 +22,10 @@ def apply_filter():
 
 @app.route('/galleries', methods=['GET'])
 def galleries():
+    if request.method == 'POST':
+        cur = conn.cursor()
+        cur.execute("update accounts set albums=(%s) where email=(%s)", [request.form['albums'], session['email']])
+        return
     cur = conn.cursor()
     cur.execute("select albums from accounts where email=(%s)", [session['email']])
     data = cur.fetchone()[0]
@@ -29,7 +33,8 @@ def galleries():
 
 @app.route('/logout', methods=['GET'])
 def logout():
-    session['email'] = None
+    if session.get('email'): 
+        session.pop('email')
     return redirect(url_for('index'))
 
 @app.route('/home', methods=['GET'])
@@ -44,34 +49,29 @@ def home():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        if request.json['type'] == 'signin':
+        if request.form['type'] == 'signin':
             # Query Database
             cur = conn.cursor()
-            cur.execute("select email, password from accounts where email=(%s)", [request.json['email']])
+            cur.execute("select email, password from accounts where email=(%s)", [request.form['email']])
             data = cur.fetchone()
             # Fail conditions [No user by that email or password does not match]
             if data == None: return '', 298
-            if not bcrypt.verify(request.json['pass'], data[1]): return '', 299
+            if not bcrypt.verify(request.form['pass'], data[1]): return '', 299
             # If good got to index
             session['email'] = data[0]
             return redirect(url_for('home'))
 
-        elif request.json['type'] == 'signup':
+        elif request.form['type'] == 'signup':
             try:
-                albums = json.dumps([
-                    {
-                        'album_name': "My Gallery",
-                        'images': []
-                    }
-                ])
+                albums = json.dumps([{ 'album_name': "My Gallery", 'images': [] }])
                 #Query Databse
                 cur = conn.cursor()
                 # Attempt to add new user and login
-                password = bcrypt.hash(request.json['pass'])
-                cur.execute("insert into accounts (email, username, password, albums) values (%s, %s, %s, %s)", 
-                    [request.json['email'], request.json['user'], password, albums])
+                password = bcrypt.hash(request.form['pass'])
+                cur.execute("insert into accounts (email, username, password, albums) values (%s, %s, %s, %s)",
+                            [request.form['email'], request.form['user'], password, albums])
                 conn.commit()
-                session['email'] = request.json['email']
+                session['email'] = request.form['email']
                 return redirect(url_for('home'))
             except psycopg2.IntegrityError:
                 cur.execute('ROLLBACK')
