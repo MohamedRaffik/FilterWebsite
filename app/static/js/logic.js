@@ -435,11 +435,13 @@ var test = 'data:image/gif;base64,R0lGODlhPQBEAPeoAJosM//AwO/AwHVYZ/z595kzAP/s7P
    Side effect: $next_gallery_num = <number of next gallery> */
 function setup_galleries() {
     if (is_homepage()) {   // Only home.html has the galleries
-        /*
-        fetch('/galleries', {
-            method: 'GET'
-        }).then(function(res) { res.json(); })
-            .then(function(data) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/galleries', true);
+        xhr.setRequestHeader('content-type',
+          'application/x-www-form-urlencoded;charset=UTF-8');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var data = JSON.parse(xhr.responseText);
                 if (data.length === 0)
                     $('#gallery-section .inner-alt').append('<p id="no-galleries-msg">You have no galleries!</p>');
                 for (var i in data) {
@@ -456,8 +458,9 @@ function setup_galleries() {
                 }
                 // Update Format: <a href="foo"><img src="foo"></a><a href="bar"><img src="bar"></a> ...
                 $('.gallery-box a').attr('href', this.children(':first').attr('src'));
-            }).catch(function(error) { console.error(error); });
-        */
+            }
+        }
+        xhr.send();
     }
 }
 
@@ -641,8 +644,8 @@ function logout() {
     xhr.setRequestHeader('content-type',
                          'application/x-www-form-urlencoded;charset=UTF-8');
     xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            ;
+        if (xhr.readyState === 4 && xhr.status === 200) { 
+            window.location.href = xhr.responseURL;
         }
     };
     xhr.send();
