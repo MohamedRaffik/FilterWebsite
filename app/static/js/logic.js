@@ -296,10 +296,12 @@ function share_to(website) {
     }
 }
 
+// allow users to contact our gmail with the given three fields: name, email, and message
 function send_message() {
     var name = document.getElementById('name').value;
     var email = document.getElementById('email').value;
     var message = document.getElementById('message').value;
+    // sends a xhr post request to the backend at the '/message' route with three fields
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/message', true);
     xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
@@ -308,6 +310,7 @@ function send_message() {
             alert("Message sent for " + name + "!");
         }
     }
+    // require new time and date to make our request unique
     xhr.send('name=' + name + '&email=' + email + '&message=' + message + '&t=' + new Date().getTime());
 }
 
