@@ -288,15 +288,15 @@ function share_to(website) {
 }
 
 function send_message() {
-    var name = document.getElementById('name');
-    var email = document.getElementById('email');
-    var message = document.getElementById('message');
+    var name = document.getElementById('name').value;
+    var email = document.getElementById('email').value;
+    var message = document.getElementById('message').value;
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/message', true);
     xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            alert(xhr.responseText);
+            alert("Message sent for " + name + "!");
         }
     }
     xhr.send('name=' + name + '&email=' + email + '&message=' + message + '&t=' + new Date().getTime());
