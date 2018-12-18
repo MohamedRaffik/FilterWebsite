@@ -8,8 +8,9 @@ app = Flask(__name__)
 app.secret_key = os.urandom(16)
 app.config.update(
     MAIL_SERVER   = 'smtp.gmail.com',
-    MAIL_PORT     = 465,
-    MAIL_USE_SSL  = True,
+    MAIL_PORT     = 587,
+    MAIL_USE_TLS  = True,
+    MAIL_USE_SSL  = False,
     MAIL_USERNAME = 'filterx.website@gmail.com',
     MAIL_PASSWORD = 'captainhasan123'
 )
