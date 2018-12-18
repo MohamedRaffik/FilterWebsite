@@ -30,9 +30,9 @@ def galleries():
             dic = json.loads(data)
             print(dic)
             return
-    cur = conn.cursor()
-    cur.execute("select albums from accounts where email=(%s)", [session['email']])
-    data = cur.fetchone()[0]
+        cur = conn.cursor()
+        cur.execute("select albums from accounts where email=(%s)", [session['email']])
+        data = cur.fetchone()[0]
     return json.dumps(data)
 
 @app.route('/logout', methods=['GET'])

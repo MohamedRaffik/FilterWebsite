@@ -413,9 +413,8 @@ function change_gallery_name(id, old_name, new_name) {
         alert('That gallery name already exists! Try again.');
     else {
         // Change gallery @old_name in database to @new_name:
-<<<<<<< Updated upstream
         /*var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/...', true);
+        xhr.open('POST', '/gallery', true);
         xhr.setRequestHeader('content-type',
                              'application/x-www-form-urlencoded;charset=UTF-8');
         xhr.onreadystatechange = function() {
@@ -424,24 +423,9 @@ function change_gallery_name(id, old_name, new_name) {
             }
         };
         // Add time to URL to keep AJAX call unique and not cached by browser
-        xhr.send(... + '&t=' + new Date().getTime());
-        $('#'+id+' .gallery-name').text(new_name);*/
-=======
-        var xhr = new XMLHttpRequest();
-          xhr.open('POST', '/gallery', true);
-          xhr.setRequestHeader('content-type',
-          'application/x-www-form-urlencoded;charset=UTF-8');
-          xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log(xhr.responseText);
-            }
-          };
-          var galleries = document.getElementById("gallery-section");
-          console.log(galleries.childNodes[0]);
-          // Add time to URL to keep AJAX call unique and not cached by browser
-          xhr.send('type=name&old='+old_name+'&new='+new_name+'&t=' + new Date().getTime());
+        xhr.send('type=name&old=' + old_name + '&new=' +
+                 new_name + '&t=' + new Date().getTime());*/
         $('#'+id+' .gallery-name').text(new_name);
->>>>>>> Stashed changes
     }
 }
 
