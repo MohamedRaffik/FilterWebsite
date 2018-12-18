@@ -1,9 +1,8 @@
 # Page routes
 
 from flask import request, render_template, redirect, url_for, session, json
-from flask_mail import Mail, Message
 from passlib.hash import bcrypt
-from app import app, filter, conn, psycopg2
+from app import app, filter, conn, psycopg2, mail, Message
 
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -24,9 +23,13 @@ def apply_filter():
 @app.route('/galleries', methods=['GET'])
 def galleries():
     if request.method == 'POST':
-        cur = conn.cursor()
-        cur.execute("update accounts set albums=(%s) where email=(%s)", [request.form['albums'], session['email']])
-        return
+        if request.form['type'] == 'name':
+            cur = conn.cursor()
+            cur.execute("select albums from accounts where email=(%s)", [session['email']])
+            data = cur.fetchone()[0]
+            dic = json.loads(data)
+            print(dic)
+            return
     cur = conn.cursor()
     cur.execute("select albums from accounts where email=(%s)", [session['email']])
     data = cur.fetchone()[0]
@@ -86,9 +89,6 @@ def message():
     formName = request.form.get('name')
     formEmail = request.form.get('email')
     formMessage = request.form.get('message')
-
-    mail = Mail()
-    mail.init_app(app)
     msg = Message('Hello, this is ' + formName + ' from ' + formEmail, sender=formEmail, recipients=['filterx.website@gmail.com'])
     msg.body = formMessage
     mail.send(msg)
