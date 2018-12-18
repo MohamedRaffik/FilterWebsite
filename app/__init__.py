@@ -1,6 +1,7 @@
 # Flask application instance
 
 from flask import Flask
+import app_settings
 import os
 import psycopg2
 
@@ -12,7 +13,7 @@ app.config.update(
     MAIL_USE_TLS  = True,
     MAIL_USE_SSL  = False,
     MAIL_USERNAME = 'filterx.website@gmail.com',
-    MAIL_PASSWORD = 'captainhasan123'
+    MAIL_PASSWORD = app_settings.MAIL_PASSWORD
 )
 DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
