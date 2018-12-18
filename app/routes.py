@@ -3,7 +3,7 @@
 from flask import request, render_template, redirect, url_for, session, json
 from flask_mail import Mail, Message
 from passlib.hash import bcrypt
-from app import app, filter, conn, psycopg2, GMAIL_PASSWORD
+from app import app, filter, conn, psycopg2
 
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -88,13 +88,8 @@ def message():
     formMessage = request.form.get('message')
 
     mail = Mail()
-    app.config["MAIL_SERVER"] = "smtp.gmail.com"
-    app.config["MAIL_PORT"] = 465
-    app.config["MAIL_USE_SSL"] = True
-    app.config["MAIL_USERNAME"] = 'filterx.website@gmail.com'
-    app.config["MAIL_PASSWORD"] = GMAIL_PASSWORD
     mail.init_app(app)
-    msg = Message("Hello, this is " + formName + " from " + formEmail, sender=formEmail, recipients=["filterx.website@gmail.com"])
+    msg = Message('Hello, this is ' + formName + ' from ' + formEmail, sender=formEmail, recipients=['filterx.website@gmail.com'])
     msg.body = formMessage
     mail.send(msg)
     return 'Success'
