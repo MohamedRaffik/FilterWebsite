@@ -11,9 +11,9 @@
     <meta http-equiv="pragma" content="no-cache">
 
     <!-- Main CSS -->
-    <link type="text/css" rel="stylesheet" href="../static/css/combined.min.css?version=3.18">
+    <link type="text/css" rel="stylesheet" href="../static/css/combined.min.css?version=3.19">
     <!-- My CSS and JS (at bottom of this page) - IMPORTANT: CHANGE THE VERSION NUMBER AFTER MAKING CHANGES TO THE RESPECTIVE CSS OR JS -->
-    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.18">
+    <link type="text/css" rel="stylesheet" href="../static/css/my-styles.css?version=3.19">
   </head>
 
   <body data-page="home">
@@ -66,26 +66,33 @@
           <div class="inner-alt">
             <h2>My Galleries</h2>
             <button id="new-gallery-btn" class="fa-plus icon" type="button" onclick="create_gallery();">New Gallery</button>
-            <!--
-                 <div id="gallery0" class="gallery">
-                 <div class="gallery-info column">
-                 <span class="gallery-name show">Foo</span>
-                 <input class="gallery-name-input hide" type="text" maxlength="100" onfocusout="gallery_name_input($(this).closest('.gallery').attr('id'), 'hide');">
-                 <span class="gallery-name-btn fa-pencil icon" onclick="gallery_name_input($(this).closest('.gallery').attr('id'), 'show');"></span>
-                 <span class="gallery-delete-btn fa-trash icon" onclick="delete_gallery($(this).closest('.gallery').attr('id'));"></span>
-                 <div class="text">Number of images: <span class="gallery-number-images"></span></div>
-                 </div>
-                 <div class="gallery-box column">
-                 <a href="../examples/bmp_file.bmp"><img src="../examples/bmp_file.bmp"></a>
-                 <a href="../examples/cow.jpg"><img src="../examples/cow.jpg"></a>
-                 <a href="../examples/dog.jpeg"><img src="../examples/dog.jpeg"></a>
-                 <a href="../examples/gif_file.gif"><img src="../examples/gif_file.gif"></a>
-                 <a href="../examples/ico_file.ico"><img src="../examples/ico_file.ico"></a>
-                 <a href="../examples/png_file.png"><img src="../examples/png_file.png"></a>
-                 <a href="../examples/webp_file.webp"><img src="../examples/webp_file.webp"></a>
-                 </div>
-                 </div>
-            -->
+            <p id="no-galleries-msg" class="show">You have no galleries!</p>
+            <div id="prev-next-arrows" class="hide"></div>
+            <div id="galleries">
+              <!-- Note: The following gallery html is used in add_gallery_to_document() in logic.js, so make changes as needed -->
+              <!--
+              <div><div id="gallery0" class="gallery">
+                <div class="gallery-info">
+                  <span class="gallery-name show">Foo</span>
+                  <input class="gallery-name-input hide" type="text" maxlength="100" onfocusout="gallery_name_input($(this).closest('.gallery').attr('id'), 'hide');">
+                  <div class="gallery-info-btns">
+                    <span class="gallery-name-btn fa-pencil icon" onclick="gallery_name_input($(this).closest('.gallery').attr('id'), 'show');"></span>
+                    <span class="gallery-delete-btn fa-trash icon" onclick="delete_gallery($(this).closest('.gallery').attr('id'));"></span>
+                  </div>
+                  <div class="text">Number of images: <span class="gallery-number-images">7</span></div>
+                </div>
+                <div class="gallery-box">
+                  <a href="../examples/bmp_file.bmp"><img src="../examples/bmp_file.bmp"></a>
+                  <a href="../examples/cow.jpg"><img src="../examples/cow.jpg"></a>
+                  <a href="../examples/dog.jpeg"><img src="../examples/dog.jpeg"></a>
+                  <a href="../examples/gif_file.gif"><img src="../examples/gif_file.gif"></a>
+                  <a href="../examples/ico_file.ico"><img src="../examples/ico_file.ico"></a>
+                  <a href="../examples/png_file.png"><img src="../examples/png_file.png"></a>
+                  <a href="../examples/webp_file.webp"><img src="../examples/webp_file.webp"></a>
+                </div>
+              </div></div>
+              -->
+            </div>
           </div>
         </section>
 
@@ -227,7 +234,7 @@
                 <textarea id="message" name="message" rows="6" placeholder="Message"></textarea>
               </div>
               <ul class="actions">
-                <li><input class="button" type="button" value="Send Message"></li>
+                <li><input class="button" type="button" value="Send Message" onclick="send_message();"></li>
               </ul>
             </form>
           </div>
@@ -246,8 +253,8 @@
     </div>
 
     <script src="../static/js/jquery.min.js"></script>
-    <script src="../static/js/combined.min.js?version=3.18"></script>
-    <script src="../static/js/logic.js?version=3.18"></script>
+    <script src="../static/js/combined.min.js?version=3.19"></script>
+    <script src="../static/js/logic.js?version=3.19"></script>
 
   </body>
 </html>

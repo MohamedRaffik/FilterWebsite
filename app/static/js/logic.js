@@ -6,17 +6,18 @@ var $upload_active = true;
 var $uploaded_to_cloudinary = false; // Was the current image uploaded to Cloudinary?
 var $prev_cloudinary_url = ''; // The URL of the image recently uploaded to Cloudinary
 
-/* e.g. if last gallery's id is 'gallery11' then $next_gallery_num = 12
+/* e.g. if last gallery's id is 'gallery4' then $next_gallery_num = 5
    Note: if there are no galleries, then this remains 0 */
 var $next_gallery_num = 0;
 const $GALLERY_NAME_LIMIT = 30; // How long a gallery name can be
+const $GALLERY_NUM_LIMIT = 10; // How many galleries a user can have
 
 /* Function that communicates with the Flask backend.
    Sends to Flask: 1) #old-img (the image in the 'Before' box) as a base64 encoded string
    and 2) a string representing the filter that is to be applied on it (@filter_type).
    Receives from Flask: the filtered image as a base64 encoded string, which is then
    used to update #new-img (the image in the 'After' box).
-   Side effect: $uploaded_to_cloudinary = false */
+   Side effect: $uploaded_to_cloudinary = false if successful */
 function filter(filter_type) {
     if (!$filter_button_active)
         alert('Wait for current upload or filter to finish processing!');
@@ -66,8 +67,8 @@ function get_img_type(b64_string) {
 
 // Determines if the string @url is a valid URL
 function is_valid_url(url) {
-    /* Valid URLs in an anchor tag have valid hosts.
-       Also make sure @url is not a URL of our website */
+    /* Valid URLs in an anchor tag have valid hosts;
+       also make sure @url is not a URL of our website */
     var a = document.createElement('a'); a.href = url;
     return a.host && a.host !== window.location.host;
 }
@@ -99,9 +100,9 @@ function add_img_to_slider(b64_string) {
 }
 
 /* Displays the image represented by the string @b64_string in #old-img and #new-img (the
-   images in the 'Before' and 'After' boxes) and adds it to the image slider; if @b64_string
+   images in the 'Before' and 'After' boxes) and adds it to the image slider. If @b64_string
    is not a valid base64 image, alerts the user that the string is not able to be displayed.
-   Side effect: $uploaded_to_cloudinary = false */
+   Side effect: $uploaded_to_cloudinary = false if successful */
 function update_images(b64_string) {
     var img_type = get_img_type(b64_string);
     if (!is_valid_b64img(b64_string))
@@ -122,8 +123,8 @@ function update_images(b64_string) {
     }
 }
 
-/* Allows the user to download #new-img (the image in the 'After' box).
-   Alerts the user if they try to download when there is no image being displayed */
+/* Allows the user to download #new-img (the image in the 'After' box). Alerts
+   the user if they try to download when there is no image being displayed */
 function download_image() {
     if (document.getElementById('new-img').className === 'default')
         alert('Upload an image before clicking the download button!');
@@ -224,8 +225,8 @@ function upload(input) {
                 }
             }
             /* Determines if @input is already a valid base64 image
-               (e.g. drag and drop from 'After' box) or an image from a
-               remote URL, in which case calls url_upload() */
+               (e.g. drag and drop from 'After' box) or an image
+               from a remote URL, in which case calls url_upload() */
             if (is_valid_b64img(text_string))
                 update_images(text_string);
             else if (!text_string || !is_valid_url(text_string))
@@ -262,8 +263,8 @@ function upload_to_cloudinary(b64_string, callback) {
         callback($prev_cloudinary_url);
 }
 
-/* Shares the base64 encoded image in #new-img to @website, which can be one of:
-   'facebook', 'twitter', or 'linkedin' */
+/* Shares the base64 encoded image in #new-img to @website,
+   which can be one of: 'facebook', 'twitter', or 'linkedin' */
 function share_to(website) {
     if (document.getElementById('new-img').className === 'default')
         alert('Upload an image before clicking a share button!');
@@ -296,39 +297,39 @@ function share_to(website) {
     }
 }
 
-// allow users to contact our gmail with the given three fields: name, email, and message
+// Determines if the string @email is a valid email
+function valid_email(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
+
+/* Allows users to contact our gmail with the given three fields
+   in the contact section: name, email, and message */
 function send_message() {
     var name = document.getElementById('name').value;
     var email = document.getElementById('email').value;
     var message = document.getElementById('message').value;
-    if(name.length < 5) {
-        alert('Name must be at least 5 characters long.')
-    }
-    else if (!valid_email(email)) {
+    if (name.length < 5)
+        alert('Name must be at least 5 characters long.');
+    else if (!valid_email(email))
         alert('Please enter a valid email.');
-    }
-    else if (message.length < 25) {
+    else if (message.length < 25)
         alert('Message must be at least 25 characters long.');
-    }
     else {
-        // sends a xhr post request to the backend at the '/message' route with three fields
+        // Sends a xhr POST request to the '/message' route with three fields
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/message', true);
-        xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+        xhr.setRequestHeader('content-type',
+                             'application/x-www-form-urlencoded;charset=UTF-8');
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                alert("Message sent for " + name + "!");
+                alert('Message successfully sent to filterx.website@gmail.com.');
             }
-        }
-        // require new time and date to make our request unique
-        xhr.send('name=' + name + '&email=' + email + '&message=' + message + '&t=' + new Date().getTime());
+        };
+        // Add time to URL to keep AJAX call unique and not cached by browser
+        xhr.send('name=' + name + '&email=' + email + '&message=' +
+                 message + '&t=' + new Date().getTime());
     }
-}
-
-// checks if email is valid
-function valid_email(email) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
 }
 
 // Toggles between #change-info's classes 'show' and 'hide', and how the #settings-btn looks
@@ -378,20 +379,10 @@ function gallery_name_input(id, mode) {
     }
 }
 
-/* Adds a gallery with @id and @name, as well as the HTML of
-   the images, to the gallery section of home.html */
-function add_gallery_to_document(id, name, images_html) {
-    if ($('.gallery').length === 0)
-        $('#no-galleries-msg').remove();
-    var gallery_html = '<div id="'+id+'" class="gallery"><div class="gallery-info column"><span class="gallery-name show">'+name+'</span><input class="gallery-name-input hide" type="text" maxlength="100" onfocusout="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'),\'hide\')"><span class="gallery-name-btn fa-pencil icon" onclick="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'),\'show\')"></span><span class="gallery-delete-btn fa-trash icon" onclick="delete_gallery($(this).closest(\'.gallery\').attr(\'id\'))"></span><div class="text">Number of images: <span class="gallery-number-images"></span></div></div><div class="gallery-box column">'+images_html+'</div></div>';
-    $('#gallery-section .inner-alt').append(gallery_html);
-    $('#'+id+' .gallery-number-images').text(get_gallery_number_images(id));
-}
-
-// Checks if the gallery @name already exists
+// Determines if the gallery @name already exists
 function gallery_name_exists(name) {
     var exists = false;
-    $('.gallery-name').each(function() {
+    $('.gallery[id!=""] .gallery-name').each(function() {
         if (this.textContent === name) {
             exists = true;
             return false;   // Break out of the each loop
@@ -400,13 +391,18 @@ function gallery_name_exists(name) {
     return exists;
 }
 
-// Gets the number of images in the gallery with @id
-function get_gallery_number_images(id) {
+// Returns the number of galleries
+function get_num_galleries() {
+    return $('.gallery[id!=""]').length;
+}
+
+// Returns the number of images in the gallery with @id
+function get_gallery_num_images(id) {
     return $('#'+id+' img').length;
 }
 
-/* Changes the gallery with @id from @old_name to @new_name in the database and
-   in the document, if it is valid and doesn't already exist */
+/* Changes the gallery with @id from @old_name to @new_name in the database
+   and in the document, if it is valid and doesn't already exist */
 function change_gallery_name(id, old_name, new_name) {
     if (new_name === '' || old_name === new_name)
         ;   // Ignore empty name or same name
@@ -418,84 +414,123 @@ function change_gallery_name(id, old_name, new_name) {
     else {
         // Change gallery @old_name in database to @new_name:
         /*var xhr = new XMLHttpRequest();
-          xhr.open('POST', '/...', true);
-          xhr.setRequestHeader('content-type',
-          'application/x-www-form-urlencoded;charset=UTF-8');
-          xhr.onreadystatechange = function() {
-          if (xhr.readyState === 4 && xhr.status === 200) {
-          console.log(xhr.responseText);
-          }
-          };
-          // Add time to URL to keep AJAX call unique and not cached by browser
-          xhr.send(... + '&t=' + new Date().getTime());*/
-        $('#'+id+' .gallery-name').text(new_name);
+        xhr.open('POST', '/...', true);
+        xhr.setRequestHeader('content-type',
+                             'application/x-www-form-urlencoded;charset=UTF-8');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(xhr.responseText);
+            }
+        };
+        // Add time to URL to keep AJAX call unique and not cached by browser
+        xhr.send(... + '&t=' + new Date().getTime());
+        $('#'+id+' .gallery-name').text(new_name);*/
     }
 }
 
-/* Prompts the user for a new gallery name, and if it is valid and doesn't already exist,
-   creates a new empty gallery with that name in the database and in the document.
+/* Adds a gallery with @name and the HTML of the images (@images_html) to the
+   gallery section of home.html. If @go_to is true, then switch to that gallery.
    Side effect: ++$next_gallery_num */
+function add_gallery_to_document(name, images_html, go_to) {
+    var gallery_html = '<div><div id="gallery'+(++$next_gallery_num)+'" class="gallery"><div class="gallery-info"><span class="gallery-name show">'+name+'</span><input class="gallery-name-input hide" type="text" maxlength="100" onfocusout="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'), \'hide\');"><div class="gallery-info-btns"><span class="gallery-name-btn fa-pencil icon" onclick="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'), \'show\');"></span><span class="gallery-delete-btn fa-trash icon" onclick="delete_gallery($(this).closest(\'.gallery\').attr(\'id\'));"></span></div><div class="text">Number of images: <span class="gallery-number-images">7</span></div></div><div class="gallery-box">'+images_html+'</div></div></div>';
+    $('#galleries').slick('slickAdd', gallery_html);
+    if (go_to)
+        $('#galleries').slick('slickGoTo', -1, true);
+    $('#'+id+' .gallery-number-images').text(get_gallery_num_images(id));
+}
+
+/* If the $GALLERY_NUM_LIMIT is not reached, prompts the user for a new
+   gallery name, and if it is valid and doesn't already exist, creates a
+   new empty gallery with that name in the database and in the document.
+   Returns false if the $GALLERY_NUM_LIMIT is reached */
 function create_gallery() {
+    var num_galleries = get_num_galleries();
+    if (num_galleries === $GALLERY_NUM_LIMIT) {
+        alert('You can have at most ' + $GALLERY_NUM_LIMIT + ' galleries!');
+        return false;
+    }
+    else if (num_galleries === 0) {
+        // There will be 1 gallery only, so hide the slider arrows + dots and the "no galleries" message
+        $('#galleries').slick('slickSetOption', 'dots', false, true);
+        document.getElementById('prev-next-arrows').className = 'hide';
+        document.getElementById('no-galleries-msg').className = 'hide';
+    }
+    else if (num_galleries === 1) {
+        // There will be 2 galleries, so show the slider arrows + dots
+        $('#galleries').slick('slickSetOption', 'dots', true, true);
+        document.getElementById('prev-next-arrows').className = 'show';
+    }
+
     var name = prompt('Enter the name of the gallery:');
     if (name !== null) {   // When the user presses 'Cancel', name is null
         if (name === '')
             alert('Gallery name cannot be empty! Try again.');
+        else if (name.length > $GALLERY_NAME_LIMIT)
+            alert('Gallery name can be at most ' +
+                  $GALLERY_NAME_LIMIT + ' characters long! Try again.');
         else if (gallery_name_exists(name))
             alert('That gallery name already exists! Try again.');
         else {
             // Create empty gallery in database ...
-            add_gallery_to_document('gallery'+$next_gallery_num, name, '');
-            ++$next_gallery_num;
+            // Add new gallery at the end of the slider, and then go to it:
+            add_gallery_to_document(name, '', true);
         }
     }
 }
 
-/* Prompts the user for confirmation, and then deletes the gallery with @id
-   from the database and from the document */
+/* Prompts the user for confirmation, and then deletes the
+   gallery with @id from the database and from the document */
 function delete_gallery(id) {
     if (confirm('Are you sure? The action cannot be undone.')) {
         var name = $('#'+id+' .gallery-name').text();
         // Delete gallery with @name from database ...
-        $('#'+id).remove();
-        if ($('.gallery').length === 0)
-            $('#gallery-section .inner-alt').append('<p id="no-galleries-msg">You have no galleries!</p>');
+        var index = $('#galleries').slick('slickCurrentSlide');
+        $('#galleries').slick('slickRemove', index, false);
+        var num_galleries = get_num_galleries();
+        if (num_galleries === 1) {
+            // Hide the slider arrows + dots
+            $('#galleries').slick('slickSetOption', 'dots', false, true);
+            document.getElementById('prev-next-arrows').className = 'hide';
+        }
+        else if (num_galleries === 0)
+            document.getElementById('no-galleries-msg').className = 'show';
     }
 }
 
-/*
-var test = 'data:image/gif;base64,R0lGODlhPQBEAPeoAJosM//AwO/AwHVYZ/z595kzAP/s7P+goOXMv8+fhw/v739/f+8PD98fH/8mJl+fn/9ZWb8/PzWlwv///6wWGbImAPgTEMImIN9gUFCEm/gDALULDN8PAD6atYdCTX9gUNKlj8wZAKUsAOzZz+UMAOsJAP/Z2ccMDA8PD/95eX5NWvsJCOVNQPtfX/8zM8+QePLl38MGBr8JCP+zs9myn/8GBqwpAP/GxgwJCPny78lzYLgjAJ8vAP9fX/+MjMUcAN8zM/9wcM8ZGcATEL+QePdZWf/29uc/P9cmJu9MTDImIN+/r7+/vz8/P8VNQGNugV8AAF9fX8swMNgTAFlDOICAgPNSUnNWSMQ5MBAQEJE3QPIGAM9AQMqGcG9vb6MhJsEdGM8vLx8fH98AANIWAMuQeL8fABkTEPPQ0OM5OSYdGFl5jo+Pj/+pqcsTE78wMFNGQLYmID4dGPvd3UBAQJmTkP+8vH9QUK+vr8ZWSHpzcJMmILdwcLOGcHRQUHxwcK9PT9DQ0O/v70w5MLypoG8wKOuwsP/g4P/Q0IcwKEswKMl8aJ9fX2xjdOtGRs/Pz+Dg4GImIP8gIH0sKEAwKKmTiKZ8aB/f39Wsl+LFt8dgUE9PT5x5aHBwcP+AgP+WltdgYMyZfyywz78AAAAAAAD///8AAP9mZv///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAKgALAAAAAA9AEQAAAj/AFEJHEiwoMGDCBMqXMiwocAbBww4nEhxoYkUpzJGrMixogkfGUNqlNixJEIDB0SqHGmyJSojM1bKZOmyop0gM3Oe2liTISKMOoPy7GnwY9CjIYcSRYm0aVKSLmE6nfq05QycVLPuhDrxBlCtYJUqNAq2bNWEBj6ZXRuyxZyDRtqwnXvkhACDV+euTeJm1Ki7A73qNWtFiF+/gA95Gly2CJLDhwEHMOUAAuOpLYDEgBxZ4GRTlC1fDnpkM+fOqD6DDj1aZpITp0dtGCDhr+fVuCu3zlg49ijaokTZTo27uG7Gjn2P+hI8+PDPERoUB318bWbfAJ5sUNFcuGRTYUqV/3ogfXp1rWlMc6awJjiAAd2fm4ogXjz56aypOoIde4OE5u/F9x199dlXnnGiHZWEYbGpsAEA3QXYnHwEFliKAgswgJ8LPeiUXGwedCAKABACCN+EA1pYIIYaFlcDhytd51sGAJbo3onOpajiihlO92KHGaUXGwWjUBChjSPiWJuOO/LYIm4v1tXfE6J4gCSJEZ7YgRYUNrkji9P55sF/ogxw5ZkSqIDaZBV6aSGYq/lGZplndkckZ98xoICbTcIJGQAZcNmdmUc210hs35nCyJ58fgmIKX5RQGOZowxaZwYA+JaoKQwswGijBV4C6SiTUmpphMspJx9unX4KaimjDv9aaXOEBteBqmuuxgEHoLX6Kqx+yXqqBANsgCtit4FWQAEkrNbpq7HSOmtwag5w57GrmlJBASEU18ADjUYb3ADTinIttsgSB1oJFfA63bduimuqKB1keqwUhoCSK374wbujvOSu4QG6UvxBRydcpKsav++Ca6G8A6Pr1x2kVMyHwsVxUALDq/krnrhPSOzXG1lUTIoffqGR7Goi2MAxbv6O2kEG56I7CSlRsEFKFVyovDJoIRTg7sugNRDGqCJzJgcKE0ywc0ELm6KBCCJo8DIPFeCWNGcyqNFE06ToAfV0HBRgxsvLThHn1oddQMrXj5DyAQgjEHSAJMWZwS3HPxT/QMbabI/iBCliMLEJKX2EEkomBAUCxRi42VDADxyTYDVogV+wSChqmKxEKCDAYFDFj4OmwbY7bDGdBhtrnTQYOigeChUmc1K3QTnAUfEgGFgAWt88hKA6aCRIXhxnQ1yg3BCayK44EWdkUQcBByEQChFXfCB776aQsG0BIlQgQgE8qO26X1h8cEUep8ngRBnOy74E9QgRgEAC8SvOfQkh7FDBDmS43PmGoIiKUUEGkMEC/PJHgxw0xH74yx/3XnaYRJgMB8obxQW6kL9QYEJ0FIFgByfIL7/IQAlvQwEpnAC7DtLNJCKUoO/w45c44GwCXiAFB/OXAATQryUxdN4LfFiwgjCNYg+kYMIEFkCKDs6PKAIJouyGWMS1FSKJOMRB/BoIxYJIUXFUxNwoIkEKPAgCBZSQHQ1A2EWDfDEUVLyADj5AChSIQW6gu10bE/JG2VnCZGfo4R4d0sdQoBAHhPjhIB94v/wRoRKQWGRHgrhGSQJxCS+0pCZbEhAAOw==';
-*/
-
-/* Appends the HTML of the user's galleries to the gallery section of home.html.
-   Side effect: $next_gallery_num = <number of next gallery> */
+/* Appends the HTML of the user's galleries to the gallery section of home.html */
 function setup_galleries() {
     if (is_homepage()) {   // Only home.html has the galleries
-        var xhr = new XMLHttpRequest();
+        /*var xhr = new XMLHttpRequest();
         xhr.open('GET', '/galleries', true);
         xhr.setRequestHeader('content-type',
-          'application/x-www-form-urlencoded;charset=UTF-8');
+                             'application/x-www-form-urlencoded;charset=UTF-8');
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var data = JSON.parse(xhr.responseText);
-                if (data.length === 0)
-                    $('#gallery-section .inner-alt').append('<p id="no-galleries-msg">You have no galleries!</p>');
-                for (var i in data) {
-                    var gallery = data[i];
-                    var gallery_id = 'gallery'+i;
-                    $next_gallery_num = i + 1;
-                    var images_html = '';
-                    // Add each of the images in the current gallery to the HTML:
-                    gallery['images'].forEach(function(b64_string) {
-                        // Format: <a><img src="foo"></a><a><img src="bar"></a> ...
-                        images_html += '<a><img src="'+b64_string+'"></a>';
-                    });
-                    add_gallery_to_document(gallery_id, gallery['album_name'], images_html);
+                if (data.length > 0) {
+                    document.getElementById('no-galleries-msg').className = 'hide';
+                    if (data.length > 1) {
+                        // There are 2 or more galleries, so show the slider arrows + dots
+                        $('#galleries').slick('slickSetOption', 'dots', true, true);
+                        document.getElementById('prev-next-arrows').className = 'show';
+                    }
+                    for (var i in data) {
+                        var gallery = data[i];
+                        var images_html = '';
+                        // Add each of the images in the current gallery to the HTML:
+                        gallery['images'].forEach(function(b64_string) {
+                            // Format: <a><img src="foo"></a><a><img src="bar"></a> ...
+                            images_html += ('<a><img src="'+b64_string+'"></a>');
+                        });
+                        // Add gallery at the end of the slider, but don't go to it:
+                        add_gallery_to_document(gallery['album_name'], images_html, false);
+                    }
+                    // Update Format: <a href="foo"><img src="foo"></a><a href="bar"><img src="bar"></a> ...
+                    $('.gallery-box a').attr('href', this.children(':first').attr('src'));
                 }
-                // Update Format: <a href="foo"><img src="foo"></a><a href="bar"><img src="bar"></a> ...
-                $('.gallery-box a').attr('href', this.children(':first').attr('src'));
             }
-        }
-        xhr.send();
+        };
+        xhr.send();*/
     }
 }
 
@@ -615,9 +650,9 @@ $(document).ready(function() {
     $('.img-slider').slick({
         dots: true,
         infinite: false,
-        speed: 750,
         slidesToShow: 5,
         slidesToScroll: 5,
+        speed: 1000,
 
         responsive: [
             {
@@ -637,7 +672,7 @@ $(document).ready(function() {
         ]
     });
     /* Allow re-uploading of images that were recently uploaded or filtered
-       by double clicking/tapping on an image in the slider */
+       by double clicking/tapping on an image in the image slider */
     var timer = 0;
     $('.img-slider').on('click', 'img', function() {
         if (timer === 0) {
@@ -653,8 +688,22 @@ $(document).ready(function() {
     });
 
     /* Configure image gallery functionality
-       Documentation at http://sachinchoolur.github.io/lightGallery/docs/api.html */
+       Documentation at http://kenwheeler.github.io/slick and at
+       http://sachinchoolur.github.io/lightGallery/docs/api.html */
     setup_galleries();
+    $('#galleries').slick({
+        appendArrows: document.getElementById('prev-next-arrows'),
+        prevArrow: '<span class="fa-arrow-left icon"></span>',
+        nextArrow: '<span class="fa-arrow-right icon"></span>',
+        dots: false,
+        draggable: false,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        speed: 300,
+        vertical: true,
+        verticalSwiping: true
+    });
     var galleries = $('.gallery-box');
     galleries.lightGallery({
         cssEasing: 'ease-in-out', // Type of easing used for css animations
@@ -679,7 +728,7 @@ function logout() {
     xhr.setRequestHeader('content-type',
                          'application/x-www-form-urlencoded;charset=UTF-8');
     xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) { 
+        if (xhr.readyState === 4 && xhr.status === 200) {
             window.location.href = xhr.responseURL;
         }
     };

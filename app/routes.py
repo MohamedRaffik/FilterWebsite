@@ -2,6 +2,7 @@
 
 from flask import request, render_template, redirect, url_for, session, json
 from flask_mail import Mail, Message
+from passlib.hash import bcrypt
 from app import app, filter, conn, psycopg2, GMAIL_PASSWORD
 
 @app.route('/', methods=['GET'])
@@ -33,7 +34,7 @@ def galleries():
 
 @app.route('/logout', methods=['GET'])
 def logout():
-    if session.get('email'): 
+    if session.get('email'):
         session.pop('email')
     return redirect(url_for('index'))
 
@@ -96,7 +97,7 @@ def message():
     msg = Message("Hello, this is " + formName + " from " + formEmail, sender=formEmail, recipients=["filterx.website@gmail.com"])
     msg.body = formMessage
     mail.send(msg)
-    return (formName + formEmail + formMessage)
+    return 'Success'
 
 '''
     Data format for albums:

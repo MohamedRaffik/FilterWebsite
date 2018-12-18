@@ -102,8 +102,8 @@ section .inner-alt {
     }
 }
 
-/* The div wrapper around welcome, sign out button, and everything else (other
-   than the FilterX logo) in the header of home.html */
+/* The div wrapper around welcome, sign out button, and everything
+   else (other than the FilterX logo) in the header of home.html */
 #user-info {
     display: inline-block;
     width: 500px;
@@ -156,6 +156,9 @@ section .inner-alt {
     display: flex;
     align-items: center;
     flex-direction: row;
+    -moz-justify-content: center;
+    -webkit-justify-content: center;
+    -ms-justify-content: center;
     justify-content: center;
 }
 @media screen and (max-width: 736px) {
@@ -252,8 +255,8 @@ section .inner-alt {
     padding-right: 1.5em;
 }
 
-/* Section for displaying original and filtered image, as well as
-   the filter drop-down menu and button */
+/* Section for displaying original and filtered image,
+   as well as the filter drop-down menu and button */
 #filter-section {
     background: #4682B4;
     padding: 2.5% 2.5% 0 2.5%;
@@ -371,23 +374,13 @@ section .inner-alt {
     pointer-events: auto;
 }
 
-/* The dot representing the section of the slider that is currently displayed */
-.slick-active {
-    opacity: 1;
-}
-
-/* The first div box in the section of the slider that is currently displayed */
-.slick-current {
-    opacity: 1;
-}
-
-/* The previous and next arrows */
-.slick-prev:before, .slick-next:before {
+/* The previous and next arrows of the image slider */
+.img-slider .slick-prev:before, .img-slider .slick-next:before {
     color: #000000;
 }
 
-/* The div wrapper around each of the images */
-.slick-slide {
+/* The div wrapper around each of the images in the image slider */
+.img-slider .slick-slide {
     margin: 0 20px;
     opacity: 1;
     -moz-transition: all ease-in-out .3s;
@@ -395,14 +388,14 @@ section .inner-alt {
     -ms-transition: all ease-in-out .3s;
     transition: all ease-in-out .3s;
 }
-.slick-slide:hover {
+.img-slider .slick-slide:hover {
     -moz-transform: scale(0.9);
     -webkit-transform: scale(0.9);
     -ms-transform: scale(0.9);
     transform: scale(0.9);
 }
 
-.slick-slide img {
+.img-slider .slick-slide img {
     width: 100%;
 }
 
@@ -443,53 +436,89 @@ body[data-page="home"] #gallery-section {
     background: #249956;
 }
 
-#no-galleries-msg {
+#no-galleries-msg.show {
+    display: block;
     font-size: 1.5em;
-    margin-bottom: 20px;
+    margin: 0;
+}
+#no-galleries-msg.hide {
+    display: none;
 }
 
-/* The div wrapper around the gallery info and the gallery box */
-#gallery-section .gallery {
-    display: -ms-flexbox;
-    -ms-flex-pack: justify;
-    display: -moz-flex;
-    display: -webkit-flex;
-    display: -ms-flex;
-    display: flex;
-    -moz-flex-wrap: wrap;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    -moz-justify-content: space-between;
-    -webkit-justify-content: space-between;
-    -ms-justify-content: space-between;
-    justify-content: space-between;
-    margin-bottom: 20px;
+/* The div wrapper around the previous and next arrows of the gallery slider */
+#prev-next-arrows.show {
+    display: inline-block;
+    margin-left: 20px;
+}
+#prev-next-arrows.hide {
+    display: none;
 }
 
-#gallery-section .gallery .column {
-    padding: 2em 1em 1em 1em;
-    width: 50%;
+/* The previous and next arrows of the gallery slider */
+#prev-next-arrows .icon {
+    color: #0D1217;
+    font-size: 1.25em;
+    margin: 0 5px;
+}
+#prev-next-arrows .icon:hover {
+    color: #19B5FE;
+    cursor: pointer;
+}
+
+#galleries {
+    margin: 0 auto 2em auto;
+    width: 1200px;
+}
+#galleries .gallery-box a {
+    width: 15%;
+}
+@media screen and (max-width: 1380px) {
+    #galleries { width: 1100px; }
+    #galleries .gallery-box a { width: 17.5%; }
+}
+@media screen and (max-width: 1280px) {
+    #galleries { width: 1000px; }
+}
+@media screen and (max-width: 1180px) {
+    #galleries { width: 900px; }
+    #galleries .gallery-box a { width: 22.5%; }
+}
+@media screen and (max-width: 1080px) {
+    #galleries { width: 800px; }
 }
 @media screen and (max-width: 980px) {
-    #gallery-section .gallery .column {
-        padding: 1.625em 0.625em 0.625em 0.625em;
-    }
+    #galleries { width: 700px; }
+    #galleries .gallery-box a { width: 27.5%; }
 }
-@media screen and (max-width: 736px) {
-    #gallery-section .gallery .column {
-        padding: 1.25em 0.25em 0.25em 0.25em;
-        width: 100%;
-    }
-}
-@media screen and (max-width: 480px) {
-    #gallery-section .gallery .column {
-        padding: 1em 1em 0.1em 1em;
-    }
+@media screen and (max-width: 880px) {
+    #galleries { width: 600px; }
 }
 
+/* The div wrapper around each of the galleries in the gallery slider */
+#galleries .slick-slide {
+    opacity: 0;
+    outline: 0;
+    -moz-transition: all ease-in-out .3s;
+    -webkit-transition: all ease-in-out .3s;
+    -ms-transition: all ease-in-out .3s;
+    transition: all ease-in-out .3s;
+}
+/* The div wrapper around the displayed gallery in the gallery slider */
+#galleries .slick-slide.slick-active {
+    opacity: 1;
+}
+
+/* The dot representing the section of the
+   gallery slider that is currently displayed */
+#galleries .slick-dots li.slick-active button:before {
+    color: #0D1217;
+    opacity: 1;
+}
+
+/* The div wrappers around the gallery info and the gallery box */
 .gallery-info, .gallery-box {
-    height: 190px;
+    display: inline-block;
+    width: 100%;
 }
 
 /* The div wrapper around the gallery info */
@@ -497,22 +526,27 @@ body[data-page="home"] #gallery-section {
     background: #0D1217;
     color: #FFFFFF;
     font-size: 1.5em;
-}
-
-.gallery-name, .gallery-name-input {
-    margin-bottom: 15px;
+    padding: 1.5em 1em 1em 1em;
+    -moz-user-select: text;
+    -webkit-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
 }
 
 .gallery-name.show {
     color: #19B5FE;
     display: inline-block;
+    margin-bottom: 10px;
+    max-height: 40px;
+    max-width: 450px;
+    word-wrap: break-word;
 }
 .gallery-name.hide {
     display: none;
 }
 
 /* The input element where the new gallery name is typed in */
-#gallery-section .gallery-name-input.show {
+.gallery-info .gallery-name-input.show {
     background: transparent;
     border: 0;
     border-bottom: 1px solid #FFFFFF;
@@ -520,26 +554,30 @@ body[data-page="home"] #gallery-section {
     color: #FFFFFF;
     display: inline-block;
     font-size: 14pt;
+    margin-bottom: 6.5px;
+    max-height: 40px;
     outline: 0;
-    width: 175px;
+    text-align: center;
+    width: 260px;
 }
 .gallery-name-input.hide {
     display: none;
 }
-.gallery-name-input.hide ~ .gallery-name-btn:hover,
-.gallery-name-input.hide ~ .gallery-delete-btn:hover {
+.gallery-name-input.hide ~ .gallery-info-btns .icon:hover {
     color: #19B5FE;
     cursor: pointer;
 }
 
-.gallery-name-btn, .gallery-delete-btn {
+.gallery-info-btns {
     display: inline-block;
+}
+
+.gallery-info-btns .icon {
     margin-left: 10px;
 }
 
 .gallery-info div.text {
     font-size: 0.85em;
-    margin: 0 0 15px 0;
 }
 
 .gallery-number-images {
@@ -553,13 +591,15 @@ body[data-page="home"] #gallery-section {
     -webkit-overflow-y: scroll;
     -ms-overflow-y: scroll;
     overflow-y: scroll;
+    padding: 1em 0;
+    height: 260px;
 }
 
-/* Scrollbar inside each gallery-box */
+/* Scrollbar inside each gallery box */
 .gallery-box::-webkit-scrollbar {
     background: #000000;
     border-radius: 0;
-    width: 8px;
+    width: 10px;
 }
 
 .gallery-box::-webkit-scrollbar-thumb {
@@ -573,9 +613,10 @@ body[data-page="home"] #gallery-section {
 .gallery-box a {
     display: inline-block;
     height: auto;
-    width: 30%;
+    width: 15%;
 }
 .gallery-box a:hover img {
+    border: 2px solid #19B5FE;
     -moz-transform: scale(0.95);
     -webkit-transform: scale(0.95);
     -ms-transform: scale(0.95);
