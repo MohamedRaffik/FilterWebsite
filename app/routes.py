@@ -27,6 +27,7 @@ def galleries():
             cur = conn.cursor()
             cur.execute("select albums from accounts where email=%s", [session['email']])
             data = cur.fetchone()[0]
+<<<<<<< HEAD
             for i in data:
                 if i['album_name'] == request.form['old']:
                     i['album_name'] = request.form['new']
@@ -44,6 +45,14 @@ def galleries():
     cur = conn.cursor()
     cur.execute("select albums from accounts where email=%s", [session['email']])
     data = cur.fetchone()[0]
+=======
+            dic = json.loads(data)
+            print(dic)
+            return
+        cur = conn.cursor()
+        cur.execute("select albums from accounts where email=(%s)", [session['email']])
+        data = cur.fetchone()[0]
+>>>>>>> fe961a465fdf213166819c712cb472e8c8c16c45
     return json.dumps(data)
     
 @app.route('/logout', methods=['GET'])
