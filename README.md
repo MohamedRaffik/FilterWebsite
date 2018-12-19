@@ -49,11 +49,13 @@ our sprint went - the good aspects, the bad aspects, and what we could change (t
 Our application went through two versions (see below) and as of now, we have V3 hosted on Heroku.
 
 ## Version History
-#### V1 (October 17, 2018)
-- 3 filters
-- One upload method
-- Very clunky UI
-![filterx_v1](https://user-images.githubusercontent.com/37593075/49114893-523bbc80-f267-11e8-880e-429f7401b287.png)
+#### V3 (December 19, 2018) (Current Version)
+- Considerably re-worked UI
+- Sign Up / Log In functionality
+- Recent Images section
+- Image Galleries section
+- Contact Us section
+- More than 10 filters
 
 #### V2 (November 14, 2018)
 - 10 filters
@@ -63,13 +65,11 @@ Our application went through two versions (see below) and as of now, we have V3 
 - Slightly re-worked UI
 ![filterx_v2](https://user-images.githubusercontent.com/37593075/49114920-6089d880-f267-11e8-8234-c5b4dd6424c8.png)
 
-#### V3 (December 19, 2018) (Current Version)
-- Considerably re-worked UI
-- Sign Up / Log In functionality
-- Recent Images section
-- Image Galleries section
-- Contact Us section
-- More than 10 filters
+#### V1 (October 17, 2018)
+- 3 filters
+- One upload method
+- Very clunky UI
+![filterx_v1](https://user-images.githubusercontent.com/37593075/49114893-523bbc80-f267-11e8-880e-429f7401b287.png)
 
 ## Contributors
 - Hasan Abdullah (Team Leader, Front-end)
