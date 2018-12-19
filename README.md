@@ -73,6 +73,9 @@ Our application went through two versions (see below) and as of now, we have V3 
 - Very clunky UI
 ![filterx_v1](https://user-images.githubusercontent.com/37593075/49114893-523bbc80-f267-11e8-880e-429f7401b287.png)
 
+## Image of Website on Heroku
+![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_full_image.png)
+
 ## Contributors
 - Hasan Abdullah (Team Leader, Front-end)
 - Harneet Multani (Back-end)
