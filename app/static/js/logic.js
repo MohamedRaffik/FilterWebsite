@@ -499,8 +499,9 @@ function add_img_to_galleries(b64_string, names) {
    gallery section of home.html. If @go_to is true, then switch to that gallery.
    Side effect: ++$next_gallery_num */
 function add_gallery_to_document(name, images_html, go_to) {
+    console.log('hi');
     var id = 'gallery'+(++$next_gallery_num);
-    var gallery_html = '<div><div id="'+id+'" class="gallery"><div class="gallery-info"><span class="gallery-name show">'+name+'</span><input class="gallery-name-input hide" type="text" maxlength="50" onfocusout="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'), \'hide\');"><div class="gallery-info-btns"><span class="gallery-name-btn fa-pencil icon" onclick="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'), \'show\');"></span><span class="gallery-delete-btn fa-trash icon" onclick="delete_gallery($(this).closest(\'.gallery\').attr(\'id\'));"></span></div><div class="text">Number of images: <span class="gallery-number-images">7</span></div></div><div class="gallery-box-wrapper"><div class="gallery-box">'+images_html+'</div></div></div></div>';
+    var gallery_html = '<div><div id="'+id+'" class="gallery"><div class="gallery-info"><span class="gallery-name show">'+name+'</span><input class="gallery-name-input hide" type="text" maxlength="50" onfocusout="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'), \'hide\');"><div class="gallery-info-btns"><span class="gallery-name-btn fa-pencil icon" onclick="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'), \'show\');"></span><span class="gallery-delete-btn fa-trash icon" onclick="delete_gallery($(this).closest(\'.gallery\').attr(\'id\'));"></span></div><div class="text">Number of images: <span class="gallery-number-images"><span></div></div><div class="gallery-box-wrapper"><div class="gallery-box">'+images_html+'</div></div></div></div>';
     $('#galleries').slick('slickAdd', gallery_html);
     $('#gallery-select').append('<option>'+name+'</option>');
     $('#gallery-select').multipleSelect('refresh');
@@ -603,6 +604,7 @@ function setup_galleries() {
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var data = JSON.parse(xhr.responseText);
+                console.log(data);
                 if (data.length === 0)
                     document.getElementById('no-galleries-msg').className = 'show';
                 else {   // There are 1 or more galleries
