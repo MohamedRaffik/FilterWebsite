@@ -6,7 +6,8 @@ Have fun and be creative with our filters!
 
 
 ## Features and Screenshots
-- Side navigation bar:
+### Side navigation bar
+
 ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_side_nav_bar.png)
 
 - Multiple upload methods:
