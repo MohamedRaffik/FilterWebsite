@@ -6,16 +6,24 @@ Have fun and be creative with our filters!
 
 
 ## Features and Screenshots
-- Side navigation bar: ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_side_nav_bar.png)
+- Side navigation bar:
+![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_side_nav_bar.png)
+
 - Multiple upload methods:
   - File upload
   - URL upload
   - Drag and drop
+
 - Side by side before and after images
+
 - Recently uploaded/filtered images (Sign up required)
+
 - Image galleries (Sign up required)
+
 - Share to social media (Facebook, Twitter, LinkedIn)
+
 - Download filtered image
+
 - At least 10 different filters!
 
 ## Screenshots
