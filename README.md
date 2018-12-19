@@ -6,9 +6,13 @@ Have fun and be creative with our filters!
 
 
 ## Features and Screenshots
-| Side navigation bar | Side by side before and after images |
-| ------------------- | ------------------------------------ |
+| Side navigation bar | Before and after images |
+| :-----------------: | :----------------------------------: |
 | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_side_nav_bar.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_before_and_after_filter.png) |
+
+| Download and Share to social media |
+| :--------------------------------: |
+| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_download_and_share.png) |
 
 | Recently Images | Image Galleries |
 | ------------------- | ------------------------------------ |
@@ -18,14 +22,6 @@ Have fun and be creative with our filters!
   - File upload
   - URL upload
   - Drag and drop
-
-- Recently uploaded/filtered images (Sign up required)
-
-- Image galleries (Sign up required)
-
-- Share to social media (Facebook, Twitter, LinkedIn)
-
-- Download filtered image
 
 - At least 10 different filters!
 
