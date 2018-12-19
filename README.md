@@ -4,8 +4,8 @@ This application provides you with many filters that you can use on an image of 
 Have fun and be creative with our filters!
 
 ## Features and Screenshots
-| Side by Side Before and After Images | Multiple Image Upload methods |
-| :----------------------------------: | :---------------------------: |
+| Side by Side Before and After Images | Multiple Image Upload methods (+ Drag and Drop) |
+| :----------------------------------: | :---------------------------------------------: |
 | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_before_and_after_filter.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_file_and_url_upload.png) |
 
 | Responsive Navigation Bar | Download/Share Filtered Image | Tons of Filters |
