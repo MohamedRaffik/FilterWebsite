@@ -5,9 +5,10 @@ function signin() {
                          'application/x-www-form-urlencoded;charset=UTF-8');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
-            if (xhr.status === 200)
-            console.log(xhr.responseURL);
+            if (xhr.status === 200) {
+                console.log(xhr.responseURL);
                 window.location.href = xhr.responseURL;
+            }
             else if (xhr.status === 299)
                 alert('Incorrect password.');
             else if (xhr.status === 298)
