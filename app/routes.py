@@ -1,8 +1,8 @@
 # Page routes
 
-from flask import request, render_template, redirect, url_for, session, json
+from flask import request, render_template, redirect, url_for, json
 from passlib.hash import bcrypt
-from app import app, filter, conn, psycopg2, mail, Message
+from app import app, filter, conn, psycopg2, mail, Message, session
 
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET', 'POST'])
