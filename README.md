@@ -3,30 +3,22 @@ FilterX is a simple web application hosted on Heroku ([https://filterx.herokuapp
 This application provides you with many filters that you can use on an image of your choice.
 Have fun and be creative with our filters!
 
-
-
 ## Features and Screenshots
-| Side by side before and after images | Download and Share to social media |
-| :----------------------------------: | :--------------------------------: |
-| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_before_and_after_filter.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_download_and_share.png) |
+| Side by Side Before and After Images | Multiple Image Upload methods (+ Drag and Drop) |
+| :----------------------------------: | :---------------------------------------------: |
+| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_before_and_after_filter.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_file_and_url_upload.png) |
 
-| Recently Images | Image Galleries |
-| ------------------- | ------------------------------------ |
+| Responsive Navigation Bar | Download/Share Filtered Image | Tons of Filters |
+| :-----------------------: | :---------------------------: | :-------------: |
+| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_nav_bar.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_download_and_share.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_multiple_filters.png) |
+
+| Recent Images | Image Galleries |
+| :-----------: | :-------------: |
 | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_recent_images.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_my_galleries.png) |
 
-- Side navigation bar
-
-- Multiple upload methods:
-  - File upload
-  - URL upload
-  - Drag and drop
-
-- At least 10 different filters!
-
-## Screenshots
-![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/filterx_v3.png)
-
-
+| About Us | Share & Connect | Get in Touch |
+| :------: | :-------------: | :----------: |
+| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_about_us.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_share_and_connect.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_get_in_touch.png) |
 
 ## Main Tech/frameworks used
 - Flask
@@ -80,6 +72,9 @@ Our application went through two versions (see below) and as of now, we have V3 
 - One upload method
 - Very clunky UI
 ![filterx_v1](https://user-images.githubusercontent.com/37593075/49114893-523bbc80-f267-11e8-880e-429f7401b287.png)
+
+## Image of Website on Heroku
+![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_full_image.png)
 
 ## Contributors
 - Hasan Abdullah (Team Leader, Front-end)

@@ -181,6 +181,7 @@ def filter(b64_img, filter_type):
                  "Life Saving Tip: Do not eat erasers. Even if they smell like Japanese blue soda candy!",\
                  "YOU'RE*",\
                  "Can you get in done by tonight?",\
+                 "I red dictionaries durig my childhood, thas why i splle goo",\
                  "I love deadlines. I love the whooshing noise they make as they go by."
         quote = random.choice(quotes)
         x, y = font.getsize(quote) 
