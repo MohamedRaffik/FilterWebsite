@@ -10,6 +10,10 @@ Have fun and be creative with our filters!
 | ------------------- | ------------------------------------ |
 | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_side_nav_bar.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_before_and_after_filter.png) |
 
+| Recently Images | Image Galleries |
+| ------------------- | ------------------------------------ |
+| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_recent_images.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_my_galleries.png) |
+
 - Multiple upload methods:
   - File upload
   - URL upload
