@@ -4,7 +4,7 @@ This application provides you with many filters that you can use on an image of 
 Have fun and be creative with our filters!
 
 
-
+<center>
 ## Features and Screenshots
 | Side by side before and after images | Download and Share to social media |
 | :----------------------------------: | :--------------------------------: |
@@ -22,6 +22,8 @@ Have fun and be creative with our filters!
   - File upload
   - URL upload
   - Drag and drop
+
+</center>
 
 ## Main Tech/frameworks used
 - Flask
