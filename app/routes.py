@@ -78,7 +78,7 @@ def change_pass():
 def logout():
     if session.get('email'):
         session.pop('email')
-    return redirect(url_for('index'))
+    return redirect(url_for('index'), 303)
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
@@ -102,7 +102,7 @@ def login():
             if not bcrypt.verify(request.form['pass'], data[1]): return '', 299
             # If good got to index
             session['email'] = data[0]
-            return redirect(url_for('home'))
+            return redirect(url_for('home'), 303)
 
         elif request.form['type'] == 'signup':
             try:
@@ -115,7 +115,7 @@ def login():
                             [request.form['email'], request.form['user'], password, albums])
                 conn.commit()
                 session['email'] = request.form['email']
-                return redirect(url_for('home'))
+                return redirect(url_for('home'), 303)
             except psycopg2.IntegrityError:
                 cur.execute('ROLLBACK')
                 return '', 299
