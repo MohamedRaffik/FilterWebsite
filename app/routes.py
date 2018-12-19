@@ -78,7 +78,6 @@ def change_pass():
 def logout():
     if session.get('email'):
         session.pop('email')
-        session.modified = True
     return redirect(url_for('index'))
 
 @app.route('/home', methods=['GET', 'POST'])
@@ -103,7 +102,6 @@ def login():
             if not bcrypt.verify(request.form['pass'], data[1]): return '', 299
             # If good got to index
             session['email'] = data[0]
-            session.modified = True
             return redirect(url_for('home'))
 
         elif request.form['type'] == 'signup':

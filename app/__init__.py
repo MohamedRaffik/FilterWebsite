@@ -1,14 +1,15 @@
 # Flask application instance
 
-from flask import Flask, Session
+from flask import Flask
 from flask_mail import Mail, Message
 import os
 import psycopg2
 
 app = Flask(__name__)
 
+app.secret_key = os.environ['SECRET_KEY']
+
 app.config.update(
-    SECRET_KEY = os.environ['SECRET_KEY'],
     SESSION_USE_SIGNER = True,
     MAIL_SERVER   = 'smtp.gmail.com',
     MAIL_PORT     = 587,
@@ -19,7 +20,7 @@ app.config.update(
 )
 
 mail = Mail(app)
-session = Session()
+session = {}
 DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
