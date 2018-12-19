@@ -6,9 +6,9 @@ Have fun and be creative with our filters!
 
 
 ## Features and Screenshots
-| Side navigation bar | Before and after images |
-| :-----------------: | :----------------------------------: |
-| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_side_nav_bar.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_before_and_after_filter.png) |
+| Side by side Before and after images |
+| :----------------------------------: |
+| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_before_and_after_filter.png) |
 
 | Download and Share to social media |
 | :--------------------------------: |
@@ -17,6 +17,8 @@ Have fun and be creative with our filters!
 | Recently Images | Image Galleries |
 | ------------------- | ------------------------------------ |
 | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_recent_images.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_my_galleries.png) |
+
+- Side navigation bar
 
 - Multiple upload methods:
   - File upload
