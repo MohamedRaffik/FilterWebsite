@@ -18,7 +18,7 @@ Have fun and be creative with our filters!
 
 | About Us | Share & Connect | Get in Touch |
 | :------: | :-------------: | :----------: |
-| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_nav_bar.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_download_and_share.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_multiple_filters.png) |
+| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_about_us.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_share_and_connect.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_get_in_touch.png) |
 
 - Multiple upload methods:
   - File upload
