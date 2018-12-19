@@ -3,20 +3,36 @@ FilterX is a simple web application hosted on Heroku ([https://filterx.herokuapp
 This application provides you with many filters that you can use on an image of your choice.
 Have fun and be creative with our filters!
 
-## Features
+
+
+## Features and Screenshots
+| Side navigation bar | Side by side before and after images |
+| ------------------- | ------------------------------------ |
+| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_side_nav_bar.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_before_and_after_filter.png) |
+
+| Recently Images | Image Galleries |
+| ------------------- | ------------------------------------ |
+| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_recent_images.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_my_galleries.png) |
+
 - Multiple upload methods:
   - File upload
   - URL upload
   - Drag and drop
-- Side by side before and after images
-- Recently uploaded/filtered images (requires signing up)
-- Image galleries (requires signing up)
+
+- Recently uploaded/filtered images (Sign up required)
+
+- Image galleries (Sign up required)
+
 - Share to social media (Facebook, Twitter, LinkedIn)
+
 - Download filtered image
+
 - At least 10 different filters!
 
 ## Screenshots
 ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/filterx_v3.png)
+
+
 
 ## Main Tech/frameworks used
 - Flask
