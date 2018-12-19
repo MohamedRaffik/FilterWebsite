@@ -83,7 +83,7 @@ def logout():
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
-    if 'email' in session:
+    if not session.get('email'):
         return redirect(url_for('index'))
     cur = conn.cursor()
     cur.execute("select username from accounts where email=%s", [session['email']])

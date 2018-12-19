@@ -8,7 +8,7 @@ import psycopg2
 app = Flask(__name__)
 
 app.config.update(
-    SECRET_KEY = os.urandom(16),
+    SECRET_KEY = os.environ['SECRET_KEY']
     SESSION_USE_SIGNER = True,
     MAIL_SERVER   = 'smtp.gmail.com',
     MAIL_PORT     = 587,
