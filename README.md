@@ -5,6 +5,7 @@ Have fun and be creative with our filters!
 
 
 <center>
+  
 ## Features and Screenshots
 | Side by side before and after images | Download and Share to social media |
 | :----------------------------------: | :--------------------------------: |
