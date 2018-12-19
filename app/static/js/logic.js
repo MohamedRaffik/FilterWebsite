@@ -364,8 +364,8 @@ function toggle_password(password) {
 /* Changes the user's password given the information in the
    #change-password and #current-password input fields */
 function change_password() {
-    var new_password = document.getElementByID('change-password').value;
-    var curr_password = document.getElementByID('current-password').value;
+    var new_password = document.getElementById('change-password').value;
+    var curr_password = document.getElementById('current-password').value;
     // Mohamed code ...
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/password', true);
@@ -373,8 +373,11 @@ function change_password() {
                          'application/x-www-form-urlencoded;charset=UTF-8');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            if (xhr.responseText === 'Success')
+            if (xhr.responseText === 'Success') {
                 alert('Password successfully changed.');
+                document.getElementById('change-password').value = "";
+                document.getElementById('current-password').value = "";
+            }
             else if (xhr.responseText === 'wrong')
                 alert('Current password is incorrect');
             else if (xhr.responseText === 'same')
