@@ -83,7 +83,7 @@ def logout():
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
-    if not session.get('email'):
+    if 'email' in session:
         return redirect(url_for('index'))
     cur = conn.cursor()
     cur.execute("select username from accounts where email=%s", [session['email']])
@@ -117,7 +117,6 @@ def login():
                             [request.form['email'], request.form['user'], password, albums])
                 conn.commit()
                 session['email'] = request.form['email']
-                session.modified = True
                 return redirect(url_for('home'))
             except psycopg2.IntegrityError:
                 cur.execute('ROLLBACK')
