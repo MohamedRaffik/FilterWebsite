@@ -6,6 +6,7 @@ function signin() {
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200)
+            console.log(xhr.responseURL);
                 window.location.href = xhr.responseURL;
             else if (xhr.status === 299)
                 alert('Incorrect password.');
@@ -39,7 +40,7 @@ function signup() {
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200)
-                    window.location.href = xhr.responseURL;
+                    
                 else if (xhr.status === 299)
                     alert('Account with this email already exists.');
             }
