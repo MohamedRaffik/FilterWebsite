@@ -10,6 +10,7 @@ app = Flask(__name__)
 app.secret_key = os.urandom(16)
 
 app.config.update(
+    SESSION_TYPE = 'redis',
     SESSION_USE_SIGNER = True,
     MAIL_SERVER   = 'smtp.gmail.com',
     MAIL_PORT     = 587,
