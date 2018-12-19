@@ -16,7 +16,7 @@ Have fun and be creative with our filters!
 - At least 10 different filters!
 
 ## Screenshots
-![demo](https://user-images.githubusercontent.com/37593075/49106279-c454d700-f250-11e8-9321-aad5978ced56.png)
+![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/filterx_v3.png)
 
 ## Main Tech/frameworks used
 - Flask
@@ -63,7 +63,7 @@ Our application went through two versions (see below) and as of now, we have V3 
 - Slightly re-worked UI
 ![filterx_v2](https://user-images.githubusercontent.com/37593075/49114920-6089d880-f267-11e8-8234-c5b4dd6424c8.png)
 
-#### V3 (December 19, 2018)
+#### V3 (December 19, 2018) (Current Version)
 - Considerably re-worked UI
 - Sign Up / Log In functionality
 - Recent Images section
