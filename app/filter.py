@@ -166,20 +166,32 @@ def filter(b64_img, filter_type):
     #add text to image
     elif filter_type == 'quote_it':
         draw = ImageDraw.Draw(img)
-        font = ImageFont.truetype('app/Roboto-BoldItalic.ttf', size = 40)
+        font1 = ImageFont.truetype('app/filterfonts/Roboto-BoldItalic.ttf', size = 35)
+        font2 = ImageFont.truetype('app/filterfonts/Roboto-Thin.ttf', size = 40)
+        font3 = ImageFont.truetype('app/filterfonts/Satisfy-Regular.ttf', size = 40)
+        font4 = ImageFont.truetype('app/filterfonts/JustAnotherHand-Regular.ttf', size = 40)
+        font5 = ImageFont.truetype('app/filterfonts/Schoolbell-Regular.ttf', size = 40)
+        font6 = ImageFont.truetype('app/filterfonts/Tinos-Regular.ttf', size = 40)
+        font = random.choice([font1, font2, font3, font4, font5, font6])
         quotes = "Don't cry because it's over, smile because it happened.",\
                  "Not my circus, not my monkeys.",\
                  "Goals transform a random walk into a chase.",\
                  "WE LOVE TRELLO.",\
                  "Why are you dressed like someone died?",\
-                 "Sometime I wonder, why am I here?",\
+                 "Life Saving Tip: Do not eat erasers. Even if they smell like Japanese blue soda candy!",\
                  "YOU'RE*",\
                  "Can you get in done by tonight?",\
                  "I love deadlines. I love the whooshing noise they make as they go by."
         quote = random.choice(quotes)
         x, y = font.getsize(quote) 
-        color = 'rgb(255,255,255)'  
-        quote = textwrap.fill(quote, width=40)
+        white_text = 'rgb(255,255,255)'  
+        black_text = 'rgb(0, 0, 0)'
+        gold_text = 'rgb(255, 215, 0)'
+        steel_blue_text = 'rgb(176, 196, 222)'
+        color = random.choice([white_text, black_text, gold_text, steel_blue_text])
+        quote = textwrap.fill(quote, width=35)
         draw.text(((width-x)/width,(height-y)/2), quote, fill=color, font=font)
+
+
 
     return convert_to_b64(img, meta_data)
