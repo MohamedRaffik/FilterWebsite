@@ -4,9 +4,9 @@ This application provides you with many filters that you can use on an image of 
 Have fun and be creative with our filters!
 
 ## Features and Screenshots
-| Side by Side Before and After Images |
-| :----------------------------------: |
-| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_before_and_after_filter.png) |
+| Side by Side Before and After Images | Multiple Image Upload methods |
+| :----------------------------------: | :---------------------------: |
+| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_before_and_after_filter.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_file_and_url_upload.png) |
 
 | Responsive Navigation Bar | Download/Share Filtered Image | Tons of Filters |
 | :-----------------------: | :---------------------------: | :-------------: |
@@ -19,11 +19,6 @@ Have fun and be creative with our filters!
 | About Us | Share & Connect | Get in Touch |
 | :------: | :-------------: | :----------: |
 | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_about_us.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_share_and_connect.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_get_in_touch.png) |
-
-- Multiple upload methods:
-  - File upload
-  - URL upload
-  - Drag and drop
 
 ## Main Tech/frameworks used
 - Flask
