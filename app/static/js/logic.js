@@ -367,7 +367,7 @@ function change_password() {
     var new_password = document.getElementByID('change-password').value;
     var curr_password = document.getElementByID('current-password').value;
     // Mohamed code ...
-    /*var xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
     xhr.open('POST', '/password', true);
     xhr.setRequestHeader('content-type',
                          'application/x-www-form-urlencoded;charset=UTF-8');
@@ -375,13 +375,15 @@ function change_password() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             if (xhr.responseText === 'Success')
                 alert('Password successfully changed.');
-            else
-                alert('Current password is incorrect.');
+            else if (xhr.responseText === 'wrong')
+                alert('Current password is incorrect');
+            else if (xhr.responseText === 'same')
+                alert('New Password cannot be the same as the Old Password');
         }
     };
     // Add time to URL to keep AJAX call unique and not cached by browser
     xhr.send('new=' + new_password + '&curr=' +
-             curr_password + '&t=' + new Date().getTime());*/
+             curr_password + '&t=' + new Date().getTime());
 }
 
 /* If @mode is 'hide', changes the gallery (with @id) name to what was typed into

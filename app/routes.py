@@ -68,8 +68,10 @@ def change_pass():
     cur = conn.cursor()
     cur.execute("select password from accounts where email=%s", [session['email']])
     data = cur.fetchone()[0]
-    print(data)
-    return 'change'
+    if not bcrypt.verify(request.form['pass'], data[1]): return 'wrong'
+    elif request.form['new'] == request.form['old']: return 'same'
+    cur.execute("update accounts set password=%s where email=%s", [bcrypt.hash(request.form['new']), session['email']])
+    return 'Success'
 
 @app.route('/logout', methods=['GET'])
 def logout():
