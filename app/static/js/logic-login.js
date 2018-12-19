@@ -5,13 +5,13 @@ function signin() {
                          'application/x-www-form-urlencoded;charset=UTF-8');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                window.location.href = xhr.responseURL;
-            }
-            else if (xhr.status === 299)
+            if (xhr.status === 299)
                 alert('Incorrect password.');
             else if (xhr.status === 298)
                 alert('No account with this email.');
+            else {
+                window.location.href = xhr.responseURL;
+            }
         }
     };
     xhr.send('type=signin&email='+document.getElementById('signin-email').value+
@@ -39,10 +39,11 @@ function signup() {
                              'application/x-www-form-urlencoded;charset=UTF-8');
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
-                if (xhr.status === 200)
-                    window.location.href = xhr.responseURL;
-                else if (xhr.status === 299)
+                if (xhr.status === 299)
                     alert('Account with this email already exists.');
+                else {
+                    window.location.href = xhr.responseURL;
+                }
             }
         };
         xhr.send('type=signup&pass='+cred['password']+'&user='+
