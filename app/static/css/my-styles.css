@@ -671,7 +671,13 @@ body[data-page="home"] #gallery-section {
     background: #019BE3;
 }
 
+.gallery-box a {
+    display: inline-block;
+}
+
 .gallery-box a img {
+    margin: 0 2px;
+    max-height: 125px;
     pointer-events: auto;
 }
 .gallery-box a:hover img {
