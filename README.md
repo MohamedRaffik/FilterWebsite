@@ -10,23 +10,18 @@ Have fun and be creative with our filters!
 | :----------------------------------: | :--------------------------------: |
 | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_before_and_after_filter.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_download_and_share.png) |
 
-| Recently Images | Image Galleries |
-| ------------------- | ------------------------------------ |
-| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_recent_images.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_my_galleries.png) |
+| Responsive navigation bar | Tons of filters |
+| :-------------- --------: | :-------------: |
+| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_before_and_after_filter.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_download_and_share.png) |
 
-- Side navigation bar
+| Recent Images | Image Galleries |
+| :-----------: | :-------------: |
+| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_recent_images.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_my_galleries.png) |
 
 - Multiple upload methods:
   - File upload
   - URL upload
   - Drag and drop
-
-- At least 10 different filters!
-
-## Screenshots
-![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/filterx_v3.png)
-
-
 
 ## Main Tech/frameworks used
 - Flask
