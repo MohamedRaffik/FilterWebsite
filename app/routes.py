@@ -95,14 +95,14 @@ def login():
         if request.form['type'] == 'signin':
             # Query Database
             cur = conn.cursor()
-            cur.execute("select email, password from accounts where email=%s", [request.form['email']])
+            cur.execute("select email, username, password from accounts where email=%s", [request.form['email']])
             data = cur.fetchone()
             # Fail conditions [No user by that email or password does not match]
             if data == None: return '', 298
-            if not bcrypt.verify(request.form['pass'], data[1]): return '', 299
+            if not bcrypt.verify(request.form['pass'], data[2]): return '', 299
             # If good got to index
             session['email'] = data[0]
-            return redirect(url_for('home'))
+            return render_template('home.html', username=data[1]) 
 
         elif request.form['type'] == 'signup':
             try:
@@ -115,7 +115,7 @@ def login():
                             [request.form['email'], request.form['user'], password, albums])
                 conn.commit()
                 session['email'] = request.form['email']
-                return redirect(url_for('home'))
+                return render_template('home.html', username=request.form['user'])
             except psycopg2.IntegrityError:
                 cur.execute('ROLLBACK')
                 return '', 299
