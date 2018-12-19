@@ -4,17 +4,21 @@ This application provides you with many filters that you can use on an image of 
 Have fun and be creative with our filters!
 
 ## Features and Screenshots
-| Side by side before and after images |
+| Side by Side Before and After Images |
 | :----------------------------------: |
 | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_before_and_after_filter.png) |
 
-| Responsive navigation bar | Download and Share to social media | Tons of filters |
-| :-----------------------: | :--------------------------------: | :-------------: |
+| Responsive Navigation Bar | Download/Share Filtered Image | Tons of Filters |
+| :-----------------------: | :---------------------------: | :-------------: |
 | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_nav_bar.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_download_and_share.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_multiple_filters.png) |
 
 | Recent Images | Image Galleries |
 | :-----------: | :-------------: |
 | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_recent_images.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_my_galleries.png) |
+
+| About Us | Share & Connect | Get in Touch |
+| :------: | :-------------: | :----------: |
+| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_nav_bar.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_download_and_share.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_multiple_filters.png) |
 
 - Multiple upload methods:
   - File upload
