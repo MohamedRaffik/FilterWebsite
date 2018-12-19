@@ -364,24 +364,29 @@ function toggle_password(password) {
 /* Changes the user's password given the information in the
    #change-password and #current-password input fields */
 function change_password() {
-    var new_password = document.getElementByID('change-password').value;
-    var curr_password = document.getElementByID('current-password').value;
+    var new_password = document.getElementById('change-password').value;
+    var curr_password = document.getElementById('current-password').value;
     // Mohamed code ...
-    /*var xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
     xhr.open('POST', '/password', true);
     xhr.setRequestHeader('content-type',
                          'application/x-www-form-urlencoded;charset=UTF-8');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            if (xhr.responseText === 'Success')
+            if (xhr.responseText === 'Success') {
                 alert('Password successfully changed.');
-            else
-                alert('Current password is incorrect.');
+                document.getElementById('change-password').value = "";
+                document.getElementById('current-password').value = "";
+            }
+            else if (xhr.responseText === 'wrong')
+                alert('Current password is incorrect');
+            else if (xhr.responseText === 'same')
+                alert('New Password cannot be the same as the Old Password');
         }
     };
     // Add time to URL to keep AJAX call unique and not cached by browser
     xhr.send('new=' + new_password + '&curr=' +
-             curr_password + '&t=' + new Date().getTime());*/
+             curr_password + '&t=' + new Date().getTime());
 }
 
 /* If @mode is 'hide', changes the gallery (with @id) name to what was typed into
@@ -458,8 +463,7 @@ function change_gallery_name(id, old_name, new_name) {
             if (xhr.readyState === 4 && xhr.status === 200) {}
         };
         // Add time to URL to keep AJAX call unique and not cached by browser
-        xhr.send('type=name&old=' + old_name + '&new=' +
-                 new_name + '&t=' + new Date().getTime());
+        xhr.send('type=name&old=' + old_name + '&new=' + new_name + '&t=' + new Date().getTime());
         $('#'+id+' .gallery-name').text(new_name);
         $('#gallery-select option').filter(function() {
             return $(this).text() === old_name;
@@ -473,6 +477,15 @@ function change_gallery_name(id, old_name, new_name) {
 function add_img_to_galleries(b64_string, names) {
     // Add @b64_string image to current user's galleries with @names in database:
     // Mohamed code ...
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/galleries', true);
+    xhr.setRequestHeader('content-type',
+                            'application/x-www-form-urlencoded;charset=UTF-8');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {}
+    };
+    // Add time to URL to keep AJAX call unique and not cached by browser
+    xhr.send('type=addimg&name=' + names + '&img=' + b64_string + '&t=' + new Date().getTime());
     for (var i = 0; i < names.length; ++i) {
         var gallery_id = get_gallery_id(names[i]);
         var num_images = get_gallery_num_images(gallery_id);
@@ -493,6 +506,7 @@ function add_gallery_to_document(name, images_html, go_to) {
     $('#gallery-select').multipleSelect('refresh');
     if (go_to)
         $('#galleries').slick('slickGoTo', -1, true);
+    var id = $next_gallery_num;
     $('#'+id+' .gallery-number-images').text(get_gallery_num_images(id));
 }
 
@@ -565,6 +579,17 @@ function delete_gallery(id) {
         }
         else if (num_galleries === 0)
             document.getElementById('no-galleries-msg').className = 'show';
+            
+        // Delete gallery with @name from database ...
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/galleries', true);
+        xhr.setRequestHeader('content-type',
+        'application/x-www-form-urlencoded;charset=UTF-8');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) { }
+        };
+        // Add time to URL to keep AJAX call unique and not cached by browser
+        xhr.send('type=remove&name='+name+'&t=' + new Date().getTime());
     }
 }
 
