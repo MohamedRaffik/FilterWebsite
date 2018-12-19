@@ -6,13 +6,9 @@ Have fun and be creative with our filters!
 
 
 ## Features and Screenshots
-| Side by side Before and after images |
-| :----------------------------------: |
-| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_before_and_after_filter.png) |
-
-| Download and Share to social media |
-| :--------------------------------: |
-| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_download_and_share.png) |
+| Side by side before and after images | Download and Share to social media |
+| :----------------------------------: | :--------------------------------: |
+| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_before_and_after_filter.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_download_and_share.png) |
 
 | Recently Images | Image Galleries |
 | ------------------- | ------------------------------------ |
