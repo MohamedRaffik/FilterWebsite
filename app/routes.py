@@ -30,8 +30,8 @@ def galleries():
             for i in data:
                 if i['album_name'] == request.form['old']:
                     i['album_name'] = request.form['new']
-            cur.execute("update accounts set albums=%s where email=%s", [json.dumps(data), session['email']])
-            conn.commit()
+                    cur.execute("update accounts set albums=%s where email=%s", [json.dumps(data), session['email']])
+                    conn.commit()
             return 'update'
         elif request.form['type'] == 'add':
             cur = conn.cursor()
@@ -41,11 +41,11 @@ def galleries():
             cur.execute("update accounts set albums=%s where email=%s", [session['email']])
             conn.commit()
             return 'add'
-    cur = conn.cursor()
-    cur.execute("select albums from accounts where email=%s", [session['email']])
-    data = cur.fetchone()[0]
+        cur = conn.cursor()
+        cur.execute("select albums from accounts where email=%s", [session['email']])
+        data = cur.fetchone()[0]
     return json.dumps(data)
-    
+
 @app.route('/logout', methods=['GET'])
 def logout():
     if session.get('email'):

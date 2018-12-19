@@ -4,7 +4,9 @@ CSS:
       + https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600
       + font-awesome.min.css
       + main.css
+      + multiple-select.min.css
       + slick.min.css
+      + justifiedGallery.min.css
       + lightgallery.min.css
 
   * font-awesome.min.css - awesome icons used throughout the site
@@ -12,11 +14,17 @@ CSS:
     - e.g. <span class="fa-cog icon"></span> creates an inline cog icon and
            <button class="fa-print icon">Print</button> creates a button with a print icon followed by the word "Print"
 
-  * lightgallery.min.css - styling for the image galleries in the Gallery section,
+  * justifiedGallery.min.css - styling for the image galleries in the Gallery section,
+                               documentation at http://miromannino.github.io/Justified-Gallery
+
+  * lightgallery.min.css - styling for the popup image galleries in the Gallery section,
                            documentation at http://sachinchoolur.github.io/lightGallery/docs/api.html
 
   * main.css - template CSS from TEMPLATED, makes the styling cohesive across different viewport widths
-  * main.min.css - minified version of main.css
+  * main.min.css - minified version of main.css (without Font Awesome), used in login.html only
+
+  * multiple-select.min.css - styling for the galleries select in the filter section,
+                              documentation at http://multiple-select.wenzhixin.net.cn/documentation
 
   * my-styles.css - styles for index.html and home.html written by Hasan and Chuck, documentation is in the file itself
   * my-styles-login.css - styles for login.html written by Hasan, documentation is in the file itself
@@ -28,8 +36,10 @@ JS:
   * combined.min.js - combines JS files to reduce HTTP requests
     - contains the minified text from the following files (in this exact order):
       + slick.min.js
+      + jquery.justifiedGallery.min.js
       + lightgallery.min.js
       + lg-thumbnail.min.js
+      + multiple-select.min.js
       + jquery.scrollex.min.js
       + jquery.scrolly.min.js
       + download.min.js
@@ -43,6 +53,9 @@ JS:
     - e.g. download(b64_string, 'download.png', 'image/png')
     - used for the download button's functionality, so that the downloaded file is of the same type as the uploaded file
 
+  * jquery.justifiedGallery.min.js - documentation at http://miromannino.github.io/Justified-Gallery
+    - logic for the image galleries in the Gallery section
+
   * jquery.min.js - jQuery v1.11.3 | (c) 2005, 2015 jQuery Foundation, Inc.
 
   * jquery.scrollex.min.js - documentation at https://github.com/ajlkn/jquery.scrollex
@@ -53,7 +66,7 @@ JS:
     - use: <a href="#some-id" class="scrolly"></a> makes the transition to #some-id smooth rather than instant
 
   * lightgallery.min.js - documentation at http://sachinchoolur.github.io/lightGallery/docs/api.html
-    - logic for the image galleries in the Gallery section
+    - logic for the popup image galleries in the Gallery section
   * lg-thumbnail.min.js - lightgallery plugin for thumbnail logic
 
   * loading.min.js - documentation at https://gasparesganga.com/labs/jquery-loading-overlay/
@@ -63,6 +76,9 @@ JS:
   * logic-login.js - code for login.html written by Hasan and Chuck, documentation is in the file itself
 
   * main.js - template JS from TEMPLATED
+
+  * multiple-select.min.js - documentation at http://multiple-select.wenzhixin.net.cn/documentation
+    - logic for the galleries select in the filter section
 
   * skel.min.js - skel.js v3.0.1 | (c) skel.io | MIT licensed
     - used in main.js for managing viewport width breakpoints and their behaviours

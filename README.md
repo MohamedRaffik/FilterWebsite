@@ -36,8 +36,10 @@ Have fun and be creative with our filters!
     1) Download this repo
     2) Type the following commands into a terminal (in the same directory that this file resides in):
        export DATABASE_URL=postgres://sjcsiatwgpcqlp:85c103da013b504690d45b859858ee11f0bd8206eb15fc6884e15aa7fabf65a4@ec2-54-197-234-33.compute-1.amazonaws.com:5432/d7pusuiupekkr0
+       export GMAIL_PASSWORD=foobar123
        flask run
     3) Go to http://localhost:5000 in a web browser
+    Note: The 'Send Message' functionality won't work because our password isn't foobar123 (*gasp*)
 
 ## Design and Approach
 Our team designed this application based on the Agile Methodology. We held weekly meetings where we discussed

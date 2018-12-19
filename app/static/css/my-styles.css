@@ -259,17 +259,28 @@ section .inner-alt {
    as well as the filter drop-down menu and button */
 #filter-section {
     background: #4682B4;
-    padding: 2.5% 2.5% 0 2.5%;
+    padding: 1em 2em;
     text-align: center;
-    height: auto;
+}
+
+#display-boxes {
+    display: inline-block;
     width: 100%;
+}
+
+#left-display-box {
+    margin-right: 2%;
+}
+
+#right-display-box {
+    margin-left: 2%;
 }
 
 .display-box {
     background: #FFFFFF;
     float: left;
     height: 100%;
-    width: 45%;
+    width: 48%;
 }
 
 .display-box p {
@@ -315,18 +326,28 @@ section .inner-alt {
     margin: 0 auto;
 }
 
-/* Styling for filter drop-down menu and button */
+/* Styling for filter drop-down menu and button,
+   as well as gallery drop-down menu and button */
+#filter-box, #gallery-select-box {
+    display: inline-block;
+    margin: 10px 20px;
+    padding: 0;
+}
+
+#filter-btn, #gallery-select-btn {
+    margin-left: 5px;
+    padding-left: 1.35em;
+    padding-right: 1.5em;
+}
+
 #filter-box {
     cursor: default;
-    display: inline-block;
     list-style: none;
-    margin-top: 20px;
-    padding-left: 0;
 }
 
 #filter-box li {
     display: inline-block;
-    padding: 0 1em 0 0;
+    padding: 0;
     vertical-align: middle;
 }
 #filter-box li:last-child {
@@ -338,14 +359,57 @@ section .inner-alt {
     color: #000000;
     width: 175px;
 }
+#filter-select:hover {
+    cursor: pointer;
+}
 
 #filter-btn {
     background: #FFFF32;
     color: #000000;
-    padding-left: 1.35em;
-    padding-right: 1.5em;
 }
 #filter-btn:active, #filter-btn:hover {
+    background: #E7E517;
+}
+
+#gallery-select-box input[type="checkbox"] {
+    -moz-appearance: checkbox;
+    -webkit-appearance: checkbox;
+    -ms-appearance: checkbox;
+    appearance: checkbox;
+    display: inline-block;
+    margin-right: 10px;
+    opacity: 1;
+}
+
+#gallery-select-box .ms-parent, #gallery-select-box .placeholder {
+    color: #000000;
+    font-family: "Nunito Sans", Arial, Helvetica, sans-serif;
+    font-size: 11pt;
+    text-align: left;
+}
+
+#gallery-select-box .placeholder {
+    margin-left: 10px;
+    margin-top: 6px;
+}
+
+#gallery-select-box .ms-choice {
+    background: #FFFFFF;
+    height: 2.75em;
+}
+#gallery-select-box .ms-choice:hover {
+    background: #FFFFFF;
+}
+
+#gallery-select {
+    width: 250px;
+}
+
+#gallery-select-btn {
+    background: #FFFF32;
+    color: #000000;
+}
+#gallery-select-btn:active, #gallery-select-btn:hover {
     background: #E7E517;
 }
 
@@ -389,10 +453,15 @@ section .inner-alt {
     transition: all ease-in-out .3s;
 }
 .img-slider .slick-slide:hover {
+    cursor: move;
+    cursor: grab;
     -moz-transform: scale(0.9);
     -webkit-transform: scale(0.9);
     -ms-transform: scale(0.9);
     transform: scale(0.9);
+}
+.img-slider .slick-slide:active {
+    cursor: grabbing;
 }
 
 .img-slider .slick-slide img {
@@ -469,26 +538,19 @@ body[data-page="home"] #gallery-section {
     margin: 0 auto 2em auto;
     width: 1200px;
 }
-#galleries .gallery-box a {
-    width: 15%;
-}
 @media screen and (max-width: 1380px) {
     #galleries { width: 1100px; }
-    #galleries .gallery-box a { width: 17.5%; }
 }
 @media screen and (max-width: 1280px) {
-    #galleries { width: 1000px; }
 }
 @media screen and (max-width: 1180px) {
     #galleries { width: 900px; }
-    #galleries .gallery-box a { width: 22.5%; }
 }
 @media screen and (max-width: 1080px) {
     #galleries { width: 800px; }
 }
 @media screen and (max-width: 980px) {
     #galleries { width: 700px; }
-    #galleries .gallery-box a { width: 27.5%; }
 }
 @media screen and (max-width: 880px) {
     #galleries { width: 600px; }
@@ -515,22 +577,18 @@ body[data-page="home"] #gallery-section {
     opacity: 1;
 }
 
-/* The div wrappers around the gallery info and the gallery box */
-.gallery-info, .gallery-box {
-    display: inline-block;
-    width: 100%;
-}
-
 /* The div wrapper around the gallery info */
 .gallery-info {
     background: #0D1217;
     color: #FFFFFF;
+    display: inline-block;
     font-size: 1.5em;
     padding: 1.5em 1em 1em 1em;
     -moz-user-select: text;
     -webkit-user-select: text;
     -ms-user-select: text;
     user-select: text;
+    width: 100%;
 }
 
 .gallery-name.show {
@@ -585,35 +643,36 @@ body[data-page="home"] #gallery-section {
 }
 
 /* The div wrapper around the gallery box */
-.gallery-box {
+.gallery-box-wrapper {
     background: #252C32;
     -moz-overflow-y: scroll;
     -webkit-overflow-y: scroll;
     -ms-overflow-y: scroll;
     overflow-y: scroll;
-    padding: 1em 0;
-    height: 260px;
+}
+
+.gallery-box-wrapper, .gallery-box {
+    height: 250px;
+    width: 100%;
 }
 
 /* Scrollbar inside each gallery box */
-.gallery-box::-webkit-scrollbar {
+.gallery-box-wrapper::-webkit-scrollbar {
     background: #000000;
     border-radius: 0;
-    width: 10px;
+    width: 8px;
 }
 
-.gallery-box::-webkit-scrollbar-thumb {
+.gallery-box-wrapper::-webkit-scrollbar-thumb {
     background: #19B5FE;
     border-radius: 0;
 }
-.gallery-box::-webkit-scrollbar-thumb:hover {
+.gallery-box-wrapper::-webkit-scrollbar-thumb:hover {
     background: #019BE3;
 }
 
-.gallery-box a {
-    display: inline-block;
-    height: auto;
-    width: 15%;
+.gallery-box a img {
+    pointer-events: auto;
 }
 .gallery-box a:hover img {
     border: 2px solid #19B5FE;
@@ -621,12 +680,6 @@ body[data-page="home"] #gallery-section {
     -webkit-transform: scale(0.95);
     -ms-transform: scale(0.95);
     transform: scale(0.95);
-}
-
-.gallery-box a img {
-    max-height: 100%;
-    max-width: 100%;
-    pointer-events: auto;
 }
 
 /* The image thumbs in the opened lightgallery */

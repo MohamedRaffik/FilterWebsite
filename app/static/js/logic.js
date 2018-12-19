@@ -316,6 +316,7 @@ function send_message() {
     else if (message.length < 25)
         alert('Message must be at least 25 characters long.');
     else {
+        document.getElementById('send-msg-btn').value = 'Sending...';
         // Sends a xhr POST request to the '/message' route with three fields
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/message', true);
@@ -323,6 +324,7 @@ function send_message() {
                              'application/x-www-form-urlencoded;charset=UTF-8');
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
+                document.getElementById('send-msg-btn').value = 'Send Message';
                 alert('Message successfully sent to filterx.website@gmail.com.');
             }
         };
@@ -359,6 +361,29 @@ function toggle_password(password) {
         password.type = 'password';
 }
 
+/* Changes the user's password given the information in the
+   #change-password and #current-password input fields */
+function change_password() {
+    var new_password = document.getElementByID('change-password').value;
+    var curr_password = document.getElementByID('current-password').value;
+    // Mohamed code ...
+    /*var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/password', true);
+    xhr.setRequestHeader('content-type',
+                         'application/x-www-form-urlencoded;charset=UTF-8');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            if (xhr.responseText === 'Success')
+                alert('Password successfully changed.');
+            else
+                alert('Current password is incorrect.');
+        }
+    };
+    // Add time to URL to keep AJAX call unique and not cached by browser
+    xhr.send('new=' + new_password + '&curr=' +
+             curr_password + '&t=' + new Date().getTime());*/
+}
+
 /* If @mode is 'hide', changes the gallery (with @id) name to what was typed into
    the input field, and then hides the input field and shows the new gallery name.
    Otherwise, hides the gallery name and shows the input field */
@@ -383,7 +408,7 @@ function gallery_name_input(id, mode) {
 function gallery_name_exists(name) {
     var exists = false;
     $('.gallery[id!=""] .gallery-name').each(function() {
-        if (this.textContent === name) {
+        if (this.textContent === name.replace(/^\s+|\s+$/gm, '')) {
             exists = true;
             return false;   // Break out of the each loop
         }
@@ -394,6 +419,18 @@ function gallery_name_exists(name) {
 // Returns the number of galleries
 function get_num_galleries() {
     return $('.gallery[id!=""]').length;
+}
+
+// Returns the DOM id of the gallery with @name, if it exists. Otherwise returns ''
+function get_gallery_id(name) {
+    var id = '';
+    $('.gallery[id!=""] .gallery-name').each(function() {
+        if (this.textContent === name) {
+            id = $(this).closest('.gallery').attr('id');
+            return false;   // Break out of the each loop
+        }
+    });
+    return id;
 }
 
 // Returns the number of images in the gallery with @id
@@ -412,17 +449,36 @@ function change_gallery_name(id, old_name, new_name) {
     else if (gallery_name_exists(new_name))
         alert('That gallery name already exists! Try again.');
     else {
-        // Change gallery @old_name in database to @new_name:
+        // Change current user's gallery @old_name to @new_name in database:
         var xhr = new XMLHttpRequest();
-          xhr.open('POST', '/galleries', true);
-          xhr.setRequestHeader('content-type',
-          'application/x-www-form-urlencoded;charset=UTF-8');
-          xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) { }
-          };
-          // Add time to URL to keep AJAX call unique and not cached by browser
-          xhr.send('type=name&old='+old_name+'&new='+new_name+'&t=' + new Date().getTime());
+        xhr.open('POST', '/galleries', true);
+        xhr.setRequestHeader('content-type',
+                             'application/x-www-form-urlencoded;charset=UTF-8');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {}
+        };
+        // Add time to URL to keep AJAX call unique and not cached by browser
+        xhr.send('type=name&old=' + old_name + '&new=' +
+                 new_name + '&t=' + new Date().getTime());
         $('#'+id+' .gallery-name').text(new_name);
+        $('#gallery-select option').filter(function() {
+            return $(this).text() === old_name;
+        }).replaceWith('<option>'+new_name+'</option>');
+        $('#gallery-select').multipleSelect('refresh');
+    }
+}
+
+/* Adds the image represented by the string @b64_string to the gallery
+   (or galleries) with array @names in the database and in the document */
+function add_img_to_galleries(b64_string, names) {
+    // Add @b64_string image to current user's galleries with @names in database:
+    // Mohamed code ...
+    for (var i = 0; i < names.length; ++i) {
+        var gallery_id = get_gallery_id(names[i]);
+        var num_images = get_gallery_num_images(gallery_id);
+        $('#'+gallery_id+' .gallery-box').append(
+            '<a href="'+b64_string+'"><img src="'+b64_string+'"></a>');
+        $('#'+gallery_id+' .gallery-number-images').text(num_images+1);
     }
 }
 
@@ -430,23 +486,14 @@ function change_gallery_name(id, old_name, new_name) {
    gallery section of home.html. If @go_to is true, then switch to that gallery.
    Side effect: ++$next_gallery_num */
 function add_gallery_to_document(name, images_html, go_to) {
-    var gallery_html = '<div><div id="gallery'+(++$next_gallery_num)+'" class="gallery"><div class="gallery-info"><span class="gallery-name show">'+name+'</span><input class="gallery-name-input hide" type="text" maxlength="100" onfocusout="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'), \'hide\');"><div class="gallery-info-btns"><span class="gallery-name-btn fa-pencil icon" onclick="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'), \'show\');"></span><span class="gallery-delete-btn fa-trash icon" onclick="delete_gallery($(this).closest(\'.gallery\').attr(\'id\'));"></span></div><div class="text">Number of images: <span class="gallery-number-images">7</span></div></div><div class="gallery-box">'+images_html+'</div></div></div>';
+    var id = 'gallery'+(++$next_gallery_num);
+    var gallery_html = '<div><div id="'+id+'" class="gallery"><div class="gallery-info"><span class="gallery-name show">'+name+'</span><input class="gallery-name-input hide" type="text" maxlength="50" onfocusout="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'), \'hide\');"><div class="gallery-info-btns"><span class="gallery-name-btn fa-pencil icon" onclick="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'), \'show\');"></span><span class="gallery-delete-btn fa-trash icon" onclick="delete_gallery($(this).closest(\'.gallery\').attr(\'id\'));"></span></div><div class="text">Number of images: <span class="gallery-number-images">7</span></div></div><div class="gallery-box-wrapper"><div class="gallery-box">'+images_html+'</div></div></div></div>';
     $('#galleries').slick('slickAdd', gallery_html);
+    $('#gallery-select').append('<option>'+name+'</option>');
+    $('#gallery-select').multipleSelect('refresh');
     if (go_to)
         $('#galleries').slick('slickGoTo', -1, true);
     $('#'+id+' .gallery-number-images').text(get_gallery_num_images(id));
-    // Add Gallery to backend
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/gallery', true);
-    xhr.setRequestHeader('content-type',
-    'application/x-www-form-urlencoded;charset=UTF-8');
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-          console.log(xhr.responseText);
-      }
-    };
-    // Add time to URL to keep AJAX call unique and not cached by browser
-    xhr.send('type=add&name='+new_name+'&t=' + new Date().getTime());
 }
 
 /* If the $GALLERY_NUM_LIMIT is not reached, prompts the user for a new
@@ -454,23 +501,6 @@ function add_gallery_to_document(name, images_html, go_to) {
    new empty gallery with that name in the database and in the document.
    Returns false if the $GALLERY_NUM_LIMIT is reached */
 function create_gallery() {
-    var num_galleries = get_num_galleries();
-    if (num_galleries === $GALLERY_NUM_LIMIT) {
-        alert('You can have at most ' + $GALLERY_NUM_LIMIT + ' galleries!');
-        return false;
-    }
-    else if (num_galleries === 0) {
-        // There will be 1 gallery only, so hide the slider arrows + dots and the "no galleries" message
-        $('#galleries').slick('slickSetOption', 'dots', false, true);
-        document.getElementById('prev-next-arrows').className = 'hide';
-        document.getElementById('no-galleries-msg').className = 'hide';
-    }
-    else if (num_galleries === 1) {
-        // There will be 2 galleries, so show the slider arrows + dots
-        $('#galleries').slick('slickSetOption', 'dots', true, true);
-        document.getElementById('prev-next-arrows').className = 'show';
-    }
-
     var name = prompt('Enter the name of the gallery:');
     if (name !== null) {   // When the user presses 'Cancel', name is null
         if (name === '')
@@ -481,7 +511,33 @@ function create_gallery() {
         else if (gallery_name_exists(name))
             alert('That gallery name already exists! Try again.');
         else {
-            // Create empty gallery in database ...
+            var num_galleries = get_num_galleries();
+            if (num_galleries === $GALLERY_NUM_LIMIT) {
+                alert('You can have at most ' + $GALLERY_NUM_LIMIT + ' galleries!');
+                return false;
+            }
+            else if (num_galleries === 0) {
+                /* There will be 1 gallery only, so hide the slider
+                   arrows + dots and the "no galleries" message */
+                $('#galleries').slick('slickSetOption', 'dots', false, true);
+                document.getElementById('prev-next-arrows').className = 'hide';
+                document.getElementById('no-galleries-msg').className = 'hide';
+            }
+            else if (num_galleries === 1) {
+                // There will be 2 galleries, so show the slider arrows + dots
+                $('#galleries').slick('slickSetOption', 'dots', true, true);
+                document.getElementById('prev-next-arrows').className = 'show';
+            }
+            // Create empty gallery with @name (for current user) in database:
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/galleries', true);
+            xhr.setRequestHeader('content-type',
+                                 'application/x-www-form-urlencoded;charset=UTF-8');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {}
+            };
+            // Add time to URL to keep AJAX call unique and not cached by browser
+            xhr.send('type=add&name=' + name + '&t=' + new Date().getTime());
             // Add new gallery at the end of the slider, and then go to it:
             add_gallery_to_document(name, '', true);
         }
@@ -493,9 +549,14 @@ function create_gallery() {
 function delete_gallery(id) {
     if (confirm('Are you sure? The action cannot be undone.')) {
         var name = $('#'+id+' .gallery-name').text();
-        // Delete gallery with @name from database ...
+        // Delete current user's gallery with @name from database:
+        // Mohamed code ...
         var index = $('#galleries').slick('slickCurrentSlide');
         $('#galleries').slick('slickRemove', index, false);
+        $('#gallery-select option').filter(function() {
+            return $(this).text() === name;
+        }).remove();
+        $('#gallery-select').multipleSelect('refresh');
         var num_galleries = get_num_galleries();
         if (num_galleries === 1) {
             // Hide the slider arrows + dots
@@ -517,7 +578,9 @@ function setup_galleries() {
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var data = JSON.parse(xhr.responseText);
-                if (data.length > 0) {
+                if (data.length === 0)
+                    document.getElementById('no-galleries-msg').className = 'show';
+                else {   // There are 1 or more galleries
                     document.getElementById('no-galleries-msg').className = 'hide';
                     if (data.length > 1) {
                         // There are 2 or more galleries, so show the slider arrows + dots
@@ -655,6 +718,27 @@ $(document).ready(function() {
     });
     //$('#drop-area').LoadingOverlay('show');
 
+    /* Configure multiple select functionality
+       Documentation at http://multiple-select.wenzhixin.net.cn/documentation */
+    $('#gallery-select').multipleSelect({
+        placeholder: 'Choose a gallery',
+        position: 'top',
+        multiple: false,
+        filter: true
+    });
+    $('#gallery-select-btn').click(function() {
+        var gallery_names = $('#gallery-select').multipleSelect(
+            'getSelects', 'text');
+        if (document.getElementById('old-img').className === 'default')
+            alert('Upload an image before clicking the gallery button!');
+        else if (gallery_names.length === 0)
+            alert('Select at least one gallery to add the image to!');
+        else {
+            var b64_string = document.getElementById('new-img').src;
+            add_img_to_galleries(b64_string, gallery_names);
+        }
+    });
+
     /* Configure image slider functionality
        Documentation at http://kenwheeler.github.io/slick */
     $('.img-slider').slick({
@@ -697,8 +781,9 @@ $(document).ready(function() {
         }
     });
 
-    /* Configure image gallery functionality
-       Documentation at http://kenwheeler.github.io/slick and at
+    /* Configure image gallery functionality. Documentation at:
+       http://kenwheeler.github.io/slick
+       http://miromannino.github.io/Justified-Gallery
        http://sachinchoolur.github.io/lightGallery/docs/api.html */
     setup_galleries();
     $('#galleries').slick({
@@ -715,6 +800,11 @@ $(document).ready(function() {
         verticalSwiping: true
     });
     var galleries = $('.gallery-box');
+    galleries.justifiedGallery({
+        rowHeight: 100,
+        lastRow: 'nojustify',
+        margins: 5
+    });
     galleries.lightGallery({
         cssEasing: 'ease-in-out', // Type of easing used for css animations
         speed: 600, // Transition duration (in ms)
