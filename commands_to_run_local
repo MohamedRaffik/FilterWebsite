@@ -1,2 +1,0 @@
-export GMAIL_PASSWORD=captainhasan123;
-export DATABASE_URL=postgres://sjcsiatwgpcqlp:85c103da013b504690d45b859858ee11f0bd8206eb15fc6884e15aa7fabf65a4@ec2-54-197-234-33.compute-1.amazonaws.com:5432/d7pusuiupekkr0;

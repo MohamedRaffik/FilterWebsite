@@ -413,35 +413,16 @@ function change_gallery_name(id, old_name, new_name) {
         alert('That gallery name already exists! Try again.');
     else {
         // Change gallery @old_name in database to @new_name:
-<<<<<<< Updated upstream
-        /*var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/...', true);
-        xhr.setRequestHeader('content-type',
-                             'application/x-www-form-urlencoded;charset=UTF-8');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log(xhr.responseText);
-            }
-        };
-        // Add time to URL to keep AJAX call unique and not cached by browser
-        xhr.send(... + '&t=' + new Date().getTime());
-        $('#'+id+' .gallery-name').text(new_name);*/
-=======
         var xhr = new XMLHttpRequest();
-          xhr.open('POST', '/gallery', true);
+          xhr.open('POST', '/galleries', true);
           xhr.setRequestHeader('content-type',
           'application/x-www-form-urlencoded;charset=UTF-8');
           xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log(xhr.responseText);
-            }
+            if (xhr.readyState === 4 && xhr.status === 200) { }
           };
-          var galleries = document.getElementById("gallery-section");
-          console.log(galleries.childNodes[0]);
           // Add time to URL to keep AJAX call unique and not cached by browser
           xhr.send('type=name&old='+old_name+'&new='+new_name+'&t=' + new Date().getTime());
         $('#'+id+' .gallery-name').text(new_name);
->>>>>>> Stashed changes
     }
 }
 
@@ -454,6 +435,18 @@ function add_gallery_to_document(name, images_html, go_to) {
     if (go_to)
         $('#galleries').slick('slickGoTo', -1, true);
     $('#'+id+' .gallery-number-images').text(get_gallery_num_images(id));
+    // Add Gallery to backend
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/gallery', true);
+    xhr.setRequestHeader('content-type',
+    'application/x-www-form-urlencoded;charset=UTF-8');
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+          console.log(xhr.responseText);
+      }
+    };
+    // Add time to URL to keep AJAX call unique and not cached by browser
+    xhr.send('type=add&name='+new_name+'&t=' + new Date().getTime());
 }
 
 /* If the $GALLERY_NUM_LIMIT is not reached, prompts the user for a new
@@ -517,7 +510,7 @@ function delete_gallery(id) {
 /* Appends the HTML of the user's galleries to the gallery section of home.html */
 function setup_galleries() {
     if (is_homepage()) {   // Only home.html has the galleries
-        /*var xhr = new XMLHttpRequest();
+        var xhr = new XMLHttpRequest();
         xhr.open('GET', '/galleries', true);
         xhr.setRequestHeader('content-type',
                              'application/x-www-form-urlencoded;charset=UTF-8');
@@ -547,7 +540,7 @@ function setup_galleries() {
                 }
             }
         };
-        xhr.send();*/
+        xhr.send();
     }
 }
 

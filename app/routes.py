@@ -20,21 +20,32 @@ def apply_filter():
         new_img = filter.filter(b64_string, filter_type)
     return new_img
 
-@app.route('/galleries', methods=['GET'])
+@app.route('/galleries', methods=['GET', 'POST'])
 def galleries():
     if request.method == 'POST':
         if request.form['type'] == 'name':
             cur = conn.cursor()
-            cur.execute("select albums from accounts where email=(%s)", [session['email']])
+            cur.execute("select albums from accounts where email=%s", [session['email']])
             data = cur.fetchone()[0]
-            dic = json.loads(data)
-            print(dic)
-            return
+            for i in data:
+                if i['album_name'] == request.form['old']:
+                    i['album_name'] = request.form['new']
+            cur.execute("update accounts set albums=%s where email=%s", [json.dumps(data), session['email']])
+            conn.commit()
+            return 'update'
+        elif request.form['type'] == 'add':
+            cur = conn.cursor()
+            cur.execute("select albums from accounts where email=%s", [session['email']])
+            data = cur.fetchone()[0]
+            data.append({ 'album_name' : request.form['name'], 'images': [] })
+            cur.execute("update accounts set albums=%s where email=%s", [session['email']])
+            conn.commit()
+            return 'add'
     cur = conn.cursor()
-    cur.execute("select albums from accounts where email=(%s)", [session['email']])
+    cur.execute("select albums from accounts where email=%s", [session['email']])
     data = cur.fetchone()[0]
     return json.dumps(data)
-
+    
 @app.route('/logout', methods=['GET'])
 def logout():
     if session.get('email'):
@@ -46,7 +57,7 @@ def home():
     if not session.get('email'):
         return redirect(url_for('index'))
     cur = conn.cursor()
-    cur.execute("select username from accounts where email=(%s)", [session['email']])
+    cur.execute("select username from accounts where email=%s", [session['email']])
     username = cur.fetchone()[0]
     return render_template('home.html', username=username)
 
@@ -56,7 +67,7 @@ def login():
         if request.form['type'] == 'signin':
             # Query Database
             cur = conn.cursor()
-            cur.execute("select email, password from accounts where email=(%s)", [request.form['email']])
+            cur.execute("select email, password from accounts where email=%s", [request.form['email']])
             data = cur.fetchone()
             # Fail conditions [No user by that email or password does not match]
             if data == None: return '', 298
