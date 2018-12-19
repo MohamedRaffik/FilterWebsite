@@ -107,8 +107,8 @@ function update_images(b64_string) {
     var img_type = get_img_type(b64_string);
     if (!is_valid_b64img(b64_string))
         alert('Unable to upload item! Try another upload method.');
-    else if (img_type === 'svg+xml' || img_type === 'tiff')
-        alert('SVG and TIFF files are not supported!');
+    else if (img_type === 'svg+xml' || img_type === 'tiff' || img_type === 'x-icon')
+        alert('SVG, TIFF, and ICO files are not supported!');
     else {
         var add_to_slide = document.getElementById('new-img').src !== b64_string;
         var click_sound = new Audio('../static/sounds/camera_sound.mp3');
