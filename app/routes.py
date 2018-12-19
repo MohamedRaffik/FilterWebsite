@@ -80,7 +80,7 @@ def logout():
         session.pop('email')
     return redirect(url_for('index'))
 
-@app.route('/home', methods=['GET'])
+@app.route('/home', methods=['GET', 'POST'])
 def home():
     if not session.get('email'):
         return redirect(url_for('index'))
