@@ -20,31 +20,56 @@ def apply_filter():
         new_img = filter.filter(b64_string, filter_type)
     return new_img
 
+def get_galleries(cur):
+    cur.execute("select albums from accounts where email=%s", [session['email']])
+    return cur.fetchone()[0]
+
+def update_galleries(cur, data):
+    cur.execute("update accounts set albums=%s where email=%s", [json.dumps(data), session['email']])
+    conn.commit()
+
 @app.route('/galleries', methods=['GET', 'POST'])
 def galleries():
+    cur = conn.cursor()
     if request.method == 'POST':
         if request.form['type'] == 'name':
-            cur = conn.cursor()
-            cur.execute("select albums from accounts where email=%s", [session['email']])
-            data = cur.fetchone()[0]
+            data = get_galleries(cur)
             for i in data:
                 if i['album_name'] == request.form['old']:
                     i['album_name'] = request.form['new']
-            cur.execute("update accounts set albums=%s where email=%s", [json.dumps(data), session['email']])
-            conn.commit()
+            update_galleries(cur, data)
             return 'update'
         elif request.form['type'] == 'add':
-            cur = conn.cursor()
-            cur.execute("select albums from accounts where email=%s", [session['email']])
-            data = cur.fetchone()[0]
+            data = get_galleries(cur)
             data.append({ 'album_name' : request.form['name'], 'images': [] })
-            cur.execute("update accounts set albums=%s where email=%s", [session['email']])
-            conn.commit()
+            update_galleries(cur, data)
             return 'add'
-    cur = conn.cursor()
-    cur.execute("select albums from accounts where email=%s", [session['email']])
-    data = cur.fetchone()[0]
+        elif request.form['type'] == 'remove':
+            data = get_galleries(cur)
+            for i in data:
+                if i['album_name'] == request.form['name']:
+                    data.remove(i)
+                    break
+            update_galleries(cur, data)
+            return 'delete'
+        elif request.form['type'] == 'addimg':
+            data = get_galleries(cur)
+            for i in data:
+                if i['album_name'] == request.form['name']:
+                    i['images'].append(request.form['img'])
+                    break
+            update_galleries(cur, data)
+            return 'addimg'
+    data = get_galleries(cur)
     return json.dumps(data)
+
+@app.route('/password', methods=['POST'])
+def change_pass():
+    cur = conn.cursor()
+    cur.execute("select password from accounts where email=%s", [session['email']])
+    data = cur.fetchone()[0]
+    print(data)
+    return 'change'
 
 @app.route('/logout', methods=['GET'])
 def logout():
