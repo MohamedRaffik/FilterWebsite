@@ -3,17 +3,14 @@ FilterX is a simple web application hosted on Heroku ([https://filterx.herokuapp
 This application provides you with many filters that you can use on an image of your choice.
 Have fun and be creative with our filters!
 
-
-<center>
-  
 ## Features and Screenshots
-| Side by side before and after images | Download and Share to social media |
-| :----------------------------------: | :--------------------------------: |
-| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_before_and_after_filter.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_download_and_share.png) |
+| Side by side before and after images |
+| :----------------------------------: |
+| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_before_and_after_filter.png) |
 
-| Responsive navigation bar | Tons of filters |
-| :-----------------------: | :-------------: |
-| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_nav_bar.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_multiple_filters.png) |
+| Responsive navigation bar | Download and Share to social media | Tons of filters |
+| :-----------------------: | :--------------------------------: | :-------------: |
+| ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_nav_bar.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_download_and_share.png) | ![demo](https://github.com/MohamedRaffik/FilterWebsite/blob/master/versions/screenshots/filterx_v3_multiple_filters.png) |
 
 | Recent Images | Image Galleries |
 | :-----------: | :-------------: |
@@ -23,8 +20,6 @@ Have fun and be creative with our filters!
   - File upload
   - URL upload
   - Drag and drop
-
-</center>
 
 ## Main Tech/frameworks used
 - Flask
