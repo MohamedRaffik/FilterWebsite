@@ -612,7 +612,7 @@ body[data-page="home"] #gallery-section {
     color: #FFFFFF;
     display: inline-block;
     font-size: 14pt;
-    margin-bottom: 6.5px;
+    margin-bottom: 6.75px;
     max-height: 40px;
     outline: 0;
     text-align: center;
@@ -676,12 +676,10 @@ body[data-page="home"] #gallery-section {
 }
 
 .gallery-box a img {
-    margin: 0 2px;
-    max-height: 125px;
     pointer-events: auto;
 }
 .gallery-box a:hover img {
-    border: 2px solid #19B5FE;
+    border: 1.5px solid #19B5FE;
     -moz-transform: scale(0.95);
     -webkit-transform: scale(0.95);
     -ms-transform: scale(0.95);

@@ -10,7 +10,7 @@ var $prev_cloudinary_url = ''; // The URL of the image recently uploaded to Clou
    Note: if there are no galleries, then this remains 0 */
 var $next_gallery_num = 0;
 const $GALLERY_NAME_LIMIT = 30; // How long a gallery name can be
-const $GALLERY_NUM_LIMIT = 10; // How many galleries a user can have
+const $GALLERY_NUM_LIMIT = 5; // How many galleries a user can have
 
 /* Function that communicates with the Flask backend.
    Sends to Flask: 1) #old-img (the image in the 'Before' box) as a base64 encoded string
@@ -47,8 +47,9 @@ function filter(filter_type) {
             }
         };
         // Add time to URL to keep AJAX call unique and not cached by browser
-        xhr.send('filter_type=' + filter_type + '&img_string=' +
-                 encodeURIComponent(img_string) + '&t=' + new Date().getTime());
+        xhr.send('filter_type=' + filter_type +
+                 '&img_string=' + encodeURIComponent(img_string) +
+                 '&t=' + new Date().getTime());
     }
 }
 
@@ -237,7 +238,7 @@ function upload(input) {
     }
 }
 
-/* Uploads string @b64_string as an image to Cloudinary and then invokes function
+/* Uploads string @b64_string as an image to Cloudinary, and then invokes function
    @callback with the argument as the URL of the uploaded image. Side effects:
    $uploaded_to_cloudinary = true, $prev_cloudinary_url = '<URL of uploaded image>' */
 function upload_to_cloudinary(b64_string, callback) {
@@ -280,7 +281,8 @@ function share_to(website) {
     else if (website === 'twitter') {
         var callback = function(url) {
             var link = document.createElement('a');
-            link.href = 'https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw&text=Come%20see%20my%20filtered%20image!&tw_p=tweetbutton&url=' + encodeURIComponent(url) + '&t=' + new Date().getTime();
+            link.href = 'https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw&text=Come%20see%20my%20filtered%20image!&tw_p=tweetbutton&url=' +
+                encodeURIComponent(url) + '&t=' + new Date().getTime();
             link.target = '_blank';
             link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
         };
@@ -326,11 +328,16 @@ function send_message() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 document.getElementById('send-msg-btn').value = 'Send Message';
                 alert('Message successfully sent to filterx.website@gmail.com.');
+                document.getElementById('name').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('message').value = '';
             }
         };
         // Add time to URL to keep AJAX call unique and not cached by browser
-        xhr.send('name=' + name + '&email=' + email + '&message=' +
-                 message + '&t=' + new Date().getTime());
+        xhr.send('name=' + encodeURIComponent(name) +
+                 '&email=' + encodeURIComponent(email) +
+                 '&message=' + encodeURIComponent(message) +
+                 '&t=' + new Date().getTime());
     }
 }
 
@@ -364,29 +371,29 @@ function toggle_password(password) {
 /* Changes the user's password given the information in the
    #change-password and #current-password input fields */
 function change_password() {
-    var new_password = document.getElementById('change-password').value;
-    var curr_password = document.getElementById('current-password').value;
-    // Mohamed code ...
+    var new_password = document.getElementById('change-password');
+    var curr_password = document.getElementById('current-password');
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/password', true);
     xhr.setRequestHeader('content-type',
                          'application/x-www-form-urlencoded;charset=UTF-8');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            if (xhr.responseText === 'Success') {
+            if (xhr.responseText === 'success') {
                 alert('Password successfully changed.');
-                document.getElementById('change-password').value = "";
-                document.getElementById('current-password').value = "";
+                new_password.value = '';
+                curr_password.value = '';
             }
             else if (xhr.responseText === 'wrong')
-                alert('Current password is incorrect');
+                alert('Current password is incorrect.');
             else if (xhr.responseText === 'same')
-                alert('New Password cannot be the same as the Old Password');
+                alert('New password cannot be the same as old password.');
         }
     };
     // Add time to URL to keep AJAX call unique and not cached by browser
-    xhr.send('new=' + new_password + '&curr=' +
-             curr_password + '&t=' + new Date().getTime());
+    xhr.send('new=' + encodeURIComponent(new_password.value) +
+             '&curr=' + encodeURIComponent(curr_password.value) +
+             '&t=' + new Date().getTime());
 }
 
 /* If @mode is 'hide', changes the gallery (with @id) name to what was typed into
@@ -463,7 +470,10 @@ function change_gallery_name(id, old_name, new_name) {
             if (xhr.readyState === 4 && xhr.status === 200) {}
         };
         // Add time to URL to keep AJAX call unique and not cached by browser
-        xhr.send('type=name&old=' + old_name + '&new=' + new_name + '&t=' + new Date().getTime());
+        xhr.send('type=name&old=' + encodeURIComponent(old_name) +
+                 '&new=' + encodeURIComponent(new_name) +
+                 '&t=' + new Date().getTime());
+
         $('#'+id+' .gallery-name').text(new_name);
         $('#gallery-select option').filter(function() {
             return $(this).text() === old_name;
@@ -472,43 +482,81 @@ function change_gallery_name(id, old_name, new_name) {
     }
 }
 
+/* Sets up the light gallery for the DOM element(s) @gallery_box.
+   Documentation at http://sachinchoolur.github.io/lightGallery/docs/api.html */
+function light_gallery_setup(gallery_box) {
+    gallery_box.lightGallery({
+        selector: 'a', // What is considered a light gallery item
+        cssEasing: 'ease-in-out', // Type of easing used for css animations
+        speed: 600, // Transition duration (in ms)
+        backdropDuration: 250, // Backdrop transition duration (in ms)
+        hideBarsDelay: 5000 // Delay for hiding gallery controls (in ms)
+    });
+    // Actions to perform just before opening the gallery:
+    gallery_box.on('onBeforeOpen.lg', function(event) {
+        $('#nav').css('display', 'none');   // Hide the navbar
+    });
+    // Actions to perform just before closing the gallery:
+    gallery_box.on('onBeforeClose.lg', function(event) {
+        $('#nav').css('display', 'block');   // Show the navbar
+    });
+}
+
 /* Adds the image represented by the string @b64_string to the gallery
    (or galleries) with array @names in the database and in the document */
 function add_img_to_galleries(b64_string, names) {
-    // Add @b64_string image to current user's galleries with @names in database:
-    // Mohamed code ...
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/galleries', true);
-    xhr.setRequestHeader('content-type',
-                            'application/x-www-form-urlencoded;charset=UTF-8');
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {}
-    };
-    // Add time to URL to keep AJAX call unique and not cached by browser
-    xhr.send('type=addimg&name=' + names + '&img=' + b64_string + '&t=' + new Date().getTime());
-    for (var i = 0; i < names.length; ++i) {
-        var gallery_id = get_gallery_id(names[i]);
-        var num_images = get_gallery_num_images(gallery_id);
-        $('#'+gallery_id+' .gallery-box').append(
-            '<a href="'+b64_string+'"><img src="'+b64_string+'"></a>');
-        $('#'+gallery_id+' .gallery-number-images').text(num_images+1);
-    }
+    (function loop(i, length) {   // Use IIFE to avoid scope hoisting
+        if (i == length) return;
+        // Add @b64_string image to current user's galleries with @name in database:
+        xhr.open('POST', '/galleries', true);
+        xhr.setRequestHeader('content-type',
+                             'application/x-www-form-urlencoded;charset=UTF-8');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var gallery_id = get_gallery_id(names[i]);
+                var num_images = get_gallery_num_images(gallery_id);
+                var gallery_box = $('#'+gallery_id+' .gallery-box');
+                gallery_box.append(
+                    '<a href="'+b64_string+'"><img src="'+b64_string+'"></a>');
+                $('#'+gallery_id+' .gallery-number-images').text(num_images+1);
+                // Justify the new image, and then refresh the light gallery:
+                gallery_box.justifiedGallery('norewind');
+                gallery_box.data('lightGallery').destroy(true);
+                light_gallery_setup(gallery_box);
+                loop(i+1, names.length);
+            }
+        };
+        // Add time to URL to keep AJAX call unique and not cached by browser
+        xhr.send('type=addimg&name=' + encodeURIComponent(names[i]) +
+                 '&img=' + encodeURIComponent(b64_string) +
+                 '&t=' + new Date().getTime());
+    })(0, names.length);
 }
 
-/* Adds a gallery with @name and the HTML of the images (@images_html) to the
-   gallery section of home.html. If @go_to is true, then switch to that gallery.
+/* Adds a gallery with @name and the HTML of the images (@images_html) to the gallery section
+   of home.html and returns its DOM id. If @go_to is true, then switch to that gallery.
    Side effect: ++$next_gallery_num */
 function add_gallery_to_document(name, images_html, go_to) {
-    console.log('hi');
     var id = 'gallery'+(++$next_gallery_num);
-    var gallery_html = '<div><div id="'+id+'" class="gallery"><div class="gallery-info"><span class="gallery-name show">'+name+'</span><input class="gallery-name-input hide" type="text" maxlength="50" onfocusout="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'), \'hide\');"><div class="gallery-info-btns"><span class="gallery-name-btn fa-pencil icon" onclick="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'), \'show\');"></span><span class="gallery-delete-btn fa-trash icon" onclick="delete_gallery($(this).closest(\'.gallery\').attr(\'id\'));"></span></div><div class="text">Number of images: <span class="gallery-number-images">0<span></div></div><div class="gallery-box-wrapper"><div class="gallery-box">'+images_html+'</div></div></div></div>';
+    var gallery_html = '<div><div id="'+id+'" class="gallery"><div class="gallery-info"><span class="gallery-name show">'+name+'</span><input class="gallery-name-input hide" type="text" maxlength="50" onfocusout="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'), \'hide\');"><div class="gallery-info-btns"><span class="gallery-name-btn fa-pencil icon" onclick="gallery_name_input($(this).closest(\'.gallery\').attr(\'id\'), \'show\');"></span><span class="gallery-delete-btn fa-trash icon" onclick="delete_gallery($(this).closest(\'.gallery\').attr(\'id\'));"></span></div><div class="text">Number of images: <span class="gallery-number-images"><span></div></div><div class="gallery-box-wrapper"><div class="gallery-box">'+images_html+'</div></div></div></div>';
     $('#galleries').slick('slickAdd', gallery_html);
     $('#gallery-select').append('<option>'+name+'</option>');
     $('#gallery-select').multipleSelect('refresh');
     if (go_to)
         $('#galleries').slick('slickGoTo', -1, true);
-    var id = $next_gallery_num;
     $('#'+id+' .gallery-number-images').text(get_gallery_num_images(id));
+
+    var gallery_box = $('#'+id+' .gallery-box');
+    // Documentation at http://miromannino.github.io/Justified-Gallery
+    gallery_box.justifiedGallery({
+        rowHeight: 100,
+        lastRow: 'nojustify',
+        margins: 1
+    }).on('jg.complete', function() {
+        light_gallery_setup(gallery_box);
+    });
+    return id;
 }
 
 /* If the $GALLERY_NUM_LIMIT is not reached, prompts the user for a new
@@ -543,7 +591,7 @@ function create_gallery() {
                 $('#galleries').slick('slickSetOption', 'dots', true, true);
                 document.getElementById('prev-next-arrows').className = 'show';
             }
-            // Create empty gallery with @name (for current user) in database:
+            // Create new empty gallery with @name (for current user) in database:
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/galleries', true);
             xhr.setRequestHeader('content-type',
@@ -552,8 +600,10 @@ function create_gallery() {
                 if (xhr.readyState === 4 && xhr.status === 200) {}
             };
             // Add time to URL to keep AJAX call unique and not cached by browser
-            xhr.send('type=add&name=' + name + '&t=' + new Date().getTime());
-            // Add new gallery at the end of the slider, and then go to it:
+            xhr.send('type=add&name=' + encodeURIComponent(name) +
+                     '&t=' + new Date().getTime());
+
+            // Add new empty gallery at the end of the slider, and then go to it:
             add_gallery_to_document(name, '', true);
         }
     }
@@ -565,7 +615,20 @@ function delete_gallery(id) {
     if (confirm('Are you sure? The action cannot be undone.')) {
         var name = $('#'+id+' .gallery-name').text();
         // Delete current user's gallery with @name from database:
-        // Mohamed code ...
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/galleries', true);
+        xhr.setRequestHeader('content-type',
+                             'application/x-www-form-urlencoded;charset=UTF-8');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {}
+        };
+        // Add time to URL to keep AJAX call unique and not cached by browser
+        xhr.send('type=remove&name=' + encodeURIComponent(name) +
+                 '&t=' + new Date().getTime());
+
+        var gallery_box = $('#'+id+' .gallery-box');
+        gallery_box.data('lightGallery').destroy(true);
+        gallery_box.justifiedGallery('destroy');
         var index = $('#galleries').slick('slickCurrentSlide');
         $('#galleries').slick('slickRemove', index, false);
         $('#gallery-select option').filter(function() {
@@ -580,21 +643,11 @@ function delete_gallery(id) {
         }
         else if (num_galleries === 0)
             document.getElementById('no-galleries-msg').className = 'show';
-            
-        // Delete gallery with @name from database ...
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/galleries', true);
-        xhr.setRequestHeader('content-type',
-        'application/x-www-form-urlencoded;charset=UTF-8');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) { }
-        };
-        // Add time to URL to keep AJAX call unique and not cached by browser
-        xhr.send('type=remove&name='+name+'&t=' + new Date().getTime());
     }
 }
 
-/* Appends the HTML of the user's galleries to the gallery section of home.html */
+/* Precondition: $('#galleries').slick({ ... });
+   Appends the HTML of the user's galleries to the gallery section of home.html */
 function setup_galleries() {
     if (is_homepage()) {   // Only home.html has the galleries
         var xhr = new XMLHttpRequest();
@@ -604,7 +657,6 @@ function setup_galleries() {
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var data = JSON.parse(xhr.responseText);
-                console.log(data);
                 if (data.length === 0)
                     document.getElementById('no-galleries-msg').className = 'show';
                 else {   // There are 1 or more galleries
@@ -619,14 +671,12 @@ function setup_galleries() {
                         var images_html = '';
                         // Add each of the images in the current gallery to the HTML:
                         gallery['images'].forEach(function(b64_string) {
-                            // Format: <a><img src="foo"></a><a><img src="bar"></a> ...
-                            images_html += ('<a><img src="'+b64_string+'"></a>');
+                            // Format: <a href="foo"><img src="foo"></a><a href="bar"><img src="bar"></a> ...
+                            images_html += ('<a href="'+b64_string+'"><img src="'+b64_string+'"></a>');
                         });
                         // Add gallery at the end of the slider, but don't go to it:
-                        add_gallery_to_document(gallery['album_name'], images_html, false);
+                        var id = add_gallery_to_document(gallery['album_name'], images_html, false);
                     }
-                    // Update Format: <a href="foo"><img src="foo"></a><a href="bar"><img src="bar"></a> ...
-                    $('.gallery-box a').attr('href', this.children(':first').attr('src'));
                 }
             }
         };
@@ -808,11 +858,8 @@ $(document).ready(function() {
         }
     });
 
-    /* Configure image gallery functionality. Documentation at:
-       http://kenwheeler.github.io/slick
-       http://miromannino.github.io/Justified-Gallery
-       http://sachinchoolur.github.io/lightGallery/docs/api.html */
-    setup_galleries();
+    /* Configure image gallery functionality
+       Documentation at http://kenwheeler.github.io/slick */
     $('#galleries').slick({
         appendArrows: document.getElementById('prev-next-arrows'),
         prevArrow: '<span class="fa-arrow-left icon"></span>',
@@ -826,26 +873,7 @@ $(document).ready(function() {
         vertical: true,
         verticalSwiping: true
     });
-    var galleries = $('.gallery-box');
-    galleries.justifiedGallery({
-        rowHeight: 100,
-        lastRow: 'nojustify',
-        margins: 5
-    });
-    galleries.lightGallery({
-        cssEasing: 'ease-in-out', // Type of easing used for css animations
-        speed: 600, // Transition duration (in ms)
-        backdropDuration: 250, // Backdrop transition duration (in ms)
-        hideBarsDelay: 5000 // Delay for hiding gallery controls (in ms)
-    });
-    // Actions to perform just before opening a gallery:
-    galleries.on('onBeforeOpen.lg', function(event) {
-        $('#nav').css('display', 'none');   // Hide the navbar
-    });
-    // Actions to perform just before closing a gallery:
-    galleries.on('onBeforeClose.lg', function(event) {
-        $('#nav').css('display', 'block');   // Show the navbar
-    });
+    setup_galleries();
 
 });
 

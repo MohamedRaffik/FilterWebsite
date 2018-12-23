@@ -149,7 +149,7 @@ def filter(b64_img, filter_type):
 
     #blurs the perimeter of the image
     elif filter_type == 'border_blur':
-        RADIUS = 20    
+        RADIUS = 20
         perim = 2*RADIUS
         back = Image.new('RGB', (width + perim, height + perim), (255,255,255))
         back.paste(img, (RADIUS, RADIUS))
@@ -184,8 +184,8 @@ def filter(b64_img, filter_type):
                  "I red dictionaries durig my childhood, thas why i splle goo",\
                  "I love deadlines. I love the whooshing noise they make as they go by."
         quote = random.choice(quotes)
-        x, y = font.getsize(quote) 
-        white_text = 'rgb(255,255,255)'  
+        x, y = font.getsize(quote)
+        white_text = 'rgb(255,255,255)'
         black_text = 'rgb(0, 0, 0)'
         gold_text = 'rgb(255, 215, 0)'
         steel_blue_text = 'rgb(176, 196, 222)'

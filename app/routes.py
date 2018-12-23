@@ -72,7 +72,7 @@ def change_pass():
     elif request.form['new'] == request.form['curr']: return 'same'
     newpass = bcrypt.hash(request.form['new'])
     cur.execute("update accounts set password=%s where email=%s", [newpass, session['email']])
-    return 'Success'
+    return 'success'
 
 @app.route('/logout', methods=['GET'])
 def logout():
@@ -125,9 +125,9 @@ def login():
 
 @app.route('/message', methods=['GET', 'POST'])
 def message():
-    formName = request.form.get('name')
-    formEmail = request.form.get('email')
-    formMessage = request.form.get('message')
+    formName = request.form['name']
+    formEmail = request.form['email']
+    formMessage = request.form['message']
     msg = Message('Hello, this is ' + formName + ' from ' + formEmail, sender=formEmail, recipients=['filterx.website@gmail.com'])
     msg.body = formMessage
     mail.send(msg)
