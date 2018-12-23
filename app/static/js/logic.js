@@ -657,6 +657,7 @@ function setup_galleries() {
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var data = JSON.parse(xhr.responseText);
+                console.log(data.length);
                 if (data.length === 0)
                     document.getElementById('no-galleries-msg').className = 'show';
                 else {   // There are 1 or more galleries
