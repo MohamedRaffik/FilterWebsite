@@ -45,8 +45,9 @@ function signup() {
                 }
             }
         };
-        xhr.send('type=signup&pass='+cred['password']+'&user='+
-                 cred['username']+'&email='+cred['email']);
+        xhr.send('type=signup&email='+cred['email']+
+                 '&user='+cred['username']+
+                 '&pass='+cred['password']);
     }
 }
 

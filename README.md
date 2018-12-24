@@ -22,6 +22,7 @@ Have fun and be creative with our filters!
 
 ## Main Tech/frameworks used
 - Flask
+- Flask-Login
 - Flask-Mail
 - Gunicorn
 - Passlib, Bcrypt

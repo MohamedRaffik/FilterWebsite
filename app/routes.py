@@ -1,12 +1,40 @@
 # Page routes
 
-from flask import request, render_template, url_for, json
+from flask import request, render_template, redirect, url_for, json
+from flask_login import current_user, login_user, logout_user, login_required
 from passlib.hash import bcrypt
-from app import app, filter, conn, psycopg2, mail, Message, session
+from datetime import timedelta
+from app import app, filter, conn, psycopg2, login, mail, Message
 
-@app.route('/', methods=['GET'])
-@app.route('/index', methods=['GET', 'POST'])
+class User():
+    def __init__(self, email):
+        self.email = email
+    def is_authenticated(self):
+        return True
+    def is_active(self):
+        return True
+    def is_anonymous(self):
+        return False
+    def get_id(self):
+        return self.email
+
+@login.user_loader
+def load_user(id):
+    # Query Database
+    cur = conn.cursor()
+    cur.execute("select email, password from accounts where email=%s", [id])
+    data = cur.fetchone()
+    if data == None:
+        return None
+    else:
+        email = data[0]
+        return User(email)
+
+@app.route('/')
+@app.route('/index')
 def index():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     return render_template('index.html')
 
 @app.route('/filter', methods=['POST'])
@@ -30,11 +58,11 @@ def apply_filter():
     ]
 '''
 def get_galleries(cur):
-    cur.execute("select albums from accounts where email=%s", [session['email']])
+    cur.execute("select albums from accounts where email=%s", [current_user.get_id()])
     return cur.fetchone()[0]
 
 def update_galleries(cur, data):
-    cur.execute("update accounts set albums=%s where email=%s", [json.dumps(data), session['email']])
+    cur.execute("update accounts set albums=%s where email=%s", [json.dumps(data), current_user.get_id()])
     conn.commit()
 
 @app.route('/galleries', methods=['GET', 'POST'])
@@ -72,7 +100,7 @@ def galleries():
     data = get_galleries(cur)
     return json.dumps(data)
 
-@app.route('/message', methods=['GET', 'POST'])
+@app.route('/message', methods=['POST'])
 def message():
     formName = request.form['name']
     formEmail = request.form['email']
@@ -85,27 +113,25 @@ def message():
 @app.route('/password', methods=['POST'])
 def change_pass():
     cur = conn.cursor()
-    cur.execute("select password from accounts where email=%s", [session['email']])
+    cur.execute("select password from accounts where email=%s", [current_user.get_id()])
     data = cur.fetchone()[0]
     if not bcrypt.verify(request.form['curr'], data): return 'wrong'
     elif request.form['new'] == request.form['curr']: return 'same'
     newpass = bcrypt.hash(request.form['new'])
-    cur.execute("update accounts set password=%s where email=%s", [newpass, session['email']])
+    cur.execute("update accounts set password=%s where email=%s", [newpass, current_user.get_id()])
     return 'success'
 
-@app.route('/home', methods=['GET', 'POST'])
+@app.route('/home')
+@login_required
 def home():
-    if not session.get('email'):
-        return render_template('index.html')
     cur = conn.cursor()
-    cur.execute("select username from accounts where email=%s", [session['email']])
+    cur.execute("select username from accounts where email=%s", [current_user.get_id()])
     username = cur.fetchone()[0]
     return render_template('home.html', username=username)
 
 @app.route('/logout', methods=['GET'])
 def logout():
-    if session.get('email'):
-        session.pop('email')
+    logout_user()
     return url_for('index')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -120,7 +146,7 @@ def login():
             if data == None: return '', 298
             if not bcrypt.verify(request.form['pass'], data[1]): return '', 299
             # If good go to home page
-            session['email'] = data[0]
+            login_user(User(data[0]), remember=True, duration=timedelta(days=1))
             return url_for('home')
 
         elif request.form['type'] == 'signup':
@@ -133,11 +159,13 @@ def login():
                 cur.execute("insert into accounts (email, username, password, albums) values (%s, %s, %s, %s)",
                             [request.form['email'], request.form['user'], password, albums])
                 conn.commit()
-                session['email'] = request.form['email']
+                login_user(User(request.form['email']), remember=True, duration=timedelta(days=1))
                 return url_for('home')
             except psycopg2.IntegrityError:
                 cur.execute('ROLLBACK')
                 return '', 299
 
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     # Show the login page if it wasn't submitted yet
     return render_template('login.html')
