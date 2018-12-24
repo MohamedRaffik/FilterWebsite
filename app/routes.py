@@ -1,6 +1,6 @@
 # Page routes
 
-from flask import request, render_template, redirect, url_for, json
+from flask import request, render_template, url_for, json
 from passlib.hash import bcrypt
 from app import app, filter, conn, psycopg2, mail, Message, session
 
@@ -20,6 +20,15 @@ def apply_filter():
         new_img = filter.filter(b64_string, filter_type)
     return new_img
 
+'''
+    Data format for albums:
+    [
+        {
+                "album_name": "---",
+                "images": ["---", "---", "---", ...]
+        }, ...
+    ]
+'''
 def get_galleries(cur):
     cur.execute("select albums from accounts where email=%s", [session['email']])
     return cur.fetchone()[0]
@@ -63,6 +72,16 @@ def galleries():
     data = get_galleries(cur)
     return json.dumps(data)
 
+@app.route('/message', methods=['GET', 'POST'])
+def message():
+    formName = request.form['name']
+    formEmail = request.form['email']
+    formMessage = request.form['message']
+    msg = Message('Hello, this is ' + formName + ' from ' + formEmail, sender=formEmail, recipients=['filterx.website@gmail.com'])
+    msg.body = formMessage
+    mail.send(msg)
+    return 'success'
+
 @app.route('/password', methods=['POST'])
 def change_pass():
     cur = conn.cursor()
@@ -74,12 +93,6 @@ def change_pass():
     cur.execute("update accounts set password=%s where email=%s", [newpass, session['email']])
     return 'success'
 
-@app.route('/logout', methods=['GET'])
-def logout():
-    if session.get('email'):
-        session.pop('email')
-    return redirect(url_for('index'), 303)
-
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     if not session.get('email'):
@@ -89,6 +102,12 @@ def home():
     username = cur.fetchone()[0]
     return render_template('home.html', username=username)
 
+@app.route('/logout', methods=['GET'])
+def logout():
+    if session.get('email'):
+        session.pop('email')
+    return url_for('index')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -97,17 +116,17 @@ def login():
             cur = conn.cursor()
             cur.execute("select email, password from accounts where email=%s", [request.form['email']])
             data = cur.fetchone()
-            # Fail conditions [No user by that email or password does not match]
+            # Fail conditions [no user by that email or password does not match]
             if data == None: return '', 298
             if not bcrypt.verify(request.form['pass'], data[1]): return '', 299
-            # If good got to index
+            # If good go to home page
             session['email'] = data[0]
-            return redirect(url_for('home'), 303)
+            return url_for('home')
 
         elif request.form['type'] == 'signup':
             try:
                 albums = json.dumps([{ 'album_name': "My Gallery", 'images': [] }])
-                #Query Databse
+                #Query Database
                 cur = conn.cursor()
                 # Attempt to add new user and login
                 password = bcrypt.hash(request.form['pass'])
@@ -115,30 +134,10 @@ def login():
                             [request.form['email'], request.form['user'], password, albums])
                 conn.commit()
                 session['email'] = request.form['email']
-                return redirect(url_for('home'), 303)
+                return url_for('home')
             except psycopg2.IntegrityError:
                 cur.execute('ROLLBACK')
                 return '', 299
 
-    # show the login page if it wasn't submitted yet
+    # Show the login page if it wasn't submitted yet
     return render_template('login.html')
-
-@app.route('/message', methods=['GET', 'POST'])
-def message():
-    formName = request.form['name']
-    formEmail = request.form['email']
-    formMessage = request.form['message']
-    msg = Message('Hello, this is ' + formName + ' from ' + formEmail, sender=formEmail, recipients=['filterx.website@gmail.com'])
-    msg.body = formMessage
-    mail.send(msg)
-    return 'Success'
-
-'''
-    Data format for albums:
-    [
-        {
-                "album_name": "---",
-                "images": ["---", "---", "---", ...]
-        }, ...
-    ]
-'''

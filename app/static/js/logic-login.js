@@ -10,7 +10,7 @@ function signin() {
             else if (xhr.status === 298)
                 alert('No account with this email.');
             else {
-                window.location.href = xhr.responseURL;
+                window.location.href = xhr.responseText;
             }
         }
     };
@@ -25,7 +25,6 @@ function signup() {
         'password': document.getElementById('signup-password').value,
         'confirm': document.getElementById('confirm-password').value
     };
-
     if (!valid_email(cred['email']))
         alert('Please enter a valid email.');
     else if (cred['password'].length < 8)
@@ -42,7 +41,7 @@ function signup() {
                 if (xhr.status === 299)
                     alert('Account with this email already exists.');
                 else {
-                    window.location.href = xhr.responseURL;
+                    window.location.href = xhr.responseText;
                 }
             }
         };
