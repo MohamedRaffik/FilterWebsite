@@ -7,8 +7,9 @@ from datetime import timedelta
 from app import app, filter, conn, psycopg2, login, mail, Message
 
 class User():
-    def __init__(self, email):
+    def __init__(self, email, username):
         self.email = email
+        self.username = username
     def is_authenticated(self):
         return True
     def is_active(self):
@@ -17,25 +18,27 @@ class User():
         return False
     def get_id(self):
         return self.email
+    def get_username(self):
+        return self.username
 
 @login.user_loader
 def load_user(id):
     # Query Database
     cur = conn.cursor()
-    cur.execute("select email, password from accounts where email=%s", [id])
+    cur.execute("select email, username from accounts where email=%s", [id])
     data = cur.fetchone()
     if data == None:
         return None
     else:
-        email = data[0]
-        return User(email)
+        return User(data[0], data[1])
 
 @app.route('/')
 @app.route('/index')
 def index():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
-    return render_template('index.html')
+    else:
+        return render_template('index.html')
 
 @app.route('/filter', methods=['POST'])
 def apply_filter():
@@ -124,10 +127,7 @@ def change_pass():
 @app.route('/home')
 @login_required
 def home():
-    cur = conn.cursor()
-    cur.execute("select username from accounts where email=%s", [current_user.get_id()])
-    username = cur.fetchone()[0]
-    return render_template('home.html', username=username)
+    return render_template('home.html', username=current_user.get_username())
 
 @app.route('/logout', methods=['GET'])
 def logout():
@@ -140,13 +140,13 @@ def login():
         if request.form['type'] == 'signin':
             # Query Database
             cur = conn.cursor()
-            cur.execute("select email, password from accounts where email=%s", [request.form['email']])
+            cur.execute("select email, username, password from accounts where email=%s", [request.form['email']])
             data = cur.fetchone()
             # Fail conditions [no user by that email or password does not match]
             if data == None: return '', 298
-            if not bcrypt.verify(request.form['pass'], data[1]): return '', 299
+            if not bcrypt.verify(request.form['pass'], data[2]): return '', 299
             # If good go to home page
-            login_user(User(data[0]), remember=True, duration=timedelta(days=1))
+            login_user(User(data[0], data[1]), remember=True, duration=timedelta(days=1))
             return url_for('home')
 
         elif request.form['type'] == 'signup':
@@ -159,7 +159,7 @@ def login():
                 cur.execute("insert into accounts (email, username, password, albums) values (%s, %s, %s, %s)",
                             [request.form['email'], request.form['user'], password, albums])
                 conn.commit()
-                login_user(User(request.form['email']), remember=True, duration=timedelta(days=1))
+                login_user(User(request.form['email'], request.form['user']), remember=True, duration=timedelta(days=1))
                 return url_for('home')
             except psycopg2.IntegrityError:
                 cur.execute('ROLLBACK')
@@ -167,5 +167,5 @@ def login():
 
     if current_user.is_authenticated:
         return redirect(url_for('home'))
-    # Show the login page if it wasn't submitted yet
-    return render_template('login.html')
+    else:
+        return render_template('login.html')
