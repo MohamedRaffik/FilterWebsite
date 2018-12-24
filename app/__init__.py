@@ -8,7 +8,7 @@ import psycopg2
 
 app = Flask(__name__)
 
-app.secret_key = os.urandom(16)
+app.secret_key = b'Y\xf7\xec\xe3m\x99r\x19A\x9d*l[\xdd\xa1\xf9\xe7P\x8a\x88\xd7\x067<'
 
 app.config.update(
     MAIL_SERVER   = 'smtp.gmail.com',
