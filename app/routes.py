@@ -132,7 +132,7 @@ def home():
 @app.route('/logout', methods=['GET'])
 def logout():
     logout_user()
-    return url_for('index')
+    return redirect(url_for('index'), 303)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -147,7 +147,7 @@ def login():
             if not bcrypt.verify(request.form['pass'], data[2]): return '', 299
             # If good go to home page
             login_user(User(data[0], data[1]), remember=True, duration=timedelta(days=1))
-            return url_for('home')
+            return redirect(url_for('home'), 303)
 
         elif request.form['type'] == 'signup':
             try:
@@ -160,7 +160,7 @@ def login():
                             [request.form['email'], request.form['user'], password, albums])
                 conn.commit()
                 login_user(User(request.form['email'], request.form['user']), remember=True, duration=timedelta(days=1))
-                return url_for('home')
+                return redirect(url_for('home'), 303)
             except psycopg2.IntegrityError:
                 cur.execute('ROLLBACK')
                 return '', 299

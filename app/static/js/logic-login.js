@@ -10,7 +10,7 @@ function signin() {
             else if (xhr.status === 298)
                 alert('No account with this email.');
             else {
-                window.location.href = xhr.responseText;
+                window.location.href = xhr.responseURL;
             }
         }
     };
@@ -41,7 +41,7 @@ function signup() {
                 if (xhr.status === 299)
                     alert('Account with this email already exists.');
                 else {
-                    window.location.href = xhr.responseText;
+                    window.location.href = xhr.responseURL;
                 }
             }
         };

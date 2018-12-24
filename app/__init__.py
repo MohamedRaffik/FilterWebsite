@@ -21,7 +21,6 @@ app.config.update(
 
 login = LoginManager(app)
 login.login_view = 'login'
-login.session_protection = 'strong'
 mail = Mail(app)
 DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')

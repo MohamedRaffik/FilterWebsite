@@ -884,7 +884,7 @@ function logout() {
                          'application/x-www-form-urlencoded;charset=UTF-8');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            window.location.href = xhr.responseText;
+            window.location.href = xhr.responseURL;
         }
     };
     xhr.send();
